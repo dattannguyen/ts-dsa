@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {},
+  "include": [
+    "main.ts",
+    "./src/*"
+  ],
+  "exclude": ["node_modules"]
+}
