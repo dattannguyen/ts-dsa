@@ -1,3 +1,1 @@
-
-
-console.log('abcyx')
+console.log('Welcome to DSA in TypeScript')
