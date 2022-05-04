@@ -42,4 +42,16 @@ export class LinkedList {
     this._tail = newNode
   }
 
+  toArray(): LinkedListNode[] {
+    const nodes: LinkedListNode[] = []
+
+    let node = this.head
+    while (node) {
+      nodes.push(node)
+      node = node.next
+    }
+
+    return nodes
+  }
+
 }

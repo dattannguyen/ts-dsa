@@ -62,3 +62,37 @@ describe('Test LinkedList append()', () => {
   })
 
 })
+
+describe('Test LinkedList toArray()', () => {
+
+  it('Should_ToEmptyArray_WhenNoHead', () => {
+    const ll = new LinkedList()
+    const nodes = ll.toArray()
+    expect(nodes.length).toBe(0)
+  })
+
+  it('Should_ToArray_WhenHasOnlyHeadAndTail', () => {
+    const ll = new LinkedList()
+    ll.append('head')
+    ll.append('tail')
+
+    const nodes = ll.toArray()
+    expect(nodes.length).toBe(2)
+    expect(nodes[0]?.value).toBe('head')
+    expect(nodes[1]?.value).toBe('tail')
+  })
+
+  it('Should_ToArray_WhenHasOnHeadAndTail', () => {
+    const ll = new LinkedList()
+    ll.append('head')
+    ll.append('tail')
+    ll.append('tail1')
+    ll.append('tail2')
+    ll.append('tail3')
+
+    const nodeValues = ll.toArray().map(node => node.value)
+    expect(nodeValues.length).toBe(5)
+    expect(nodeValues).toEqual(expect.arrayContaining(['head', 'tail', 'tail1', 'tail2', 'tail3']))
+  })
+
+})
