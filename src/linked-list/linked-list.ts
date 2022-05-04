@@ -25,4 +25,21 @@ export class LinkedList {
     return this
   }
 
+  append(value: unknown): LinkedList {
+    if (!this._head) {
+      return this.prepend(value)
+    }
+
+    if (!this._tail) {
+      this._tail = new LinkedListNode(value, undefined, this._head)
+      this._head.next = this.tail
+
+      return this
+    }
+
+    const newNode = new LinkedListNode(value, undefined, this._tail)
+    this._tail.next = newNode
+    this._tail = newNode
+  }
+
 }

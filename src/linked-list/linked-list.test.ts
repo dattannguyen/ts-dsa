@@ -22,3 +22,43 @@ describe('Test LinkedList prepend()', () => {
   })
 
 })
+
+describe('Test LinkedList append()', () => {
+
+  it('Should_AppendNewNode_WhenHasNoHead', () => {
+    const ll = new LinkedList()
+    ll.append('head')
+
+    expect(ll.head?.value).toBe('head')
+    expect(ll.tail).toBe(undefined)
+  })
+
+  it('Should_AppendNewNode_WhenHasHead&NoTail', () => {
+    const ll = new LinkedList()
+    ll.append('head')
+    ll.append('tail')
+
+    expect(ll.head?.value).toBe('head')
+    expect(ll.tail?.value).toBe('tail')
+    expect(ll.head?.next).toBe(ll.tail)
+  })
+
+  it('Should_AppendNewNode_WhenHasHead&Tail', () => {
+    const ll = new LinkedList()
+    ll.append('head')
+    ll.append('tail')
+
+    ll.append('tail1')
+    expect(ll.head?.next?.value).toBe('tail')
+    expect(ll.tail?.prev?.value).toBe('tail')
+    expect(ll.tail?.next?.value).toBe(undefined)
+    expect(ll.tail?.value).toBe('tail1')
+
+    ll.append('tail2')
+    expect(ll.head?.next?.value).toBe('tail')
+    expect(ll.head?.next?.next?.value).toBe('tail1')
+    expect(ll.tail?.value).toBe('tail2')
+    expect(ll.tail?.prev?.value).toBe('tail1')
+  })
+
+})
