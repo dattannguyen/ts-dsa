@@ -1,9 +1,9 @@
-import { LinkedList } from './linked-list'
+import { DoublyLinkedList } from './doubly-linked-list'
 
-describe('Test LinkedList prepend()', () => {
+describe('Test DoublyLinkedList prepend()', () => {
 
   it('Should_PrependNewNode_WhenHasNoHead', () => {
-    const ll = new LinkedList()
+    const ll = new DoublyLinkedList()
     ll.prepend('head')
 
     expect(ll.head?.value).toBe('head')
@@ -11,7 +11,7 @@ describe('Test LinkedList prepend()', () => {
   })
 
   it('Should_PrependNewNode_WhenHasHead', () => {
-    const ll = new LinkedList()
+    const ll = new DoublyLinkedList()
     ll.prepend('head')
     ll.prepend('newHead')
 
@@ -23,10 +23,10 @@ describe('Test LinkedList prepend()', () => {
 
 })
 
-describe('Test LinkedList append()', () => {
+describe('Test DoublyLinkedList append()', () => {
 
   it('Should_AppendNewNode_WhenHasNoHead', () => {
-    const ll = new LinkedList()
+    const ll = new DoublyLinkedList()
     ll.append('head')
 
     expect(ll.head?.value).toBe('head')
@@ -34,7 +34,7 @@ describe('Test LinkedList append()', () => {
   })
 
   it('Should_AppendNewNode_WhenHasHead&NoTail', () => {
-    const ll = new LinkedList()
+    const ll = new DoublyLinkedList()
     ll.append('head')
     ll.append('tail')
 
@@ -44,7 +44,7 @@ describe('Test LinkedList append()', () => {
   })
 
   it('Should_AppendNewNode_WhenHasHead&Tail', () => {
-    const ll = new LinkedList()
+    const ll = new DoublyLinkedList()
     ll.append('head')
     ll.append('tail')
 
@@ -63,16 +63,16 @@ describe('Test LinkedList append()', () => {
 
 })
 
-describe('Test LinkedList toArray()', () => {
+describe('Test DoublyLinkedList toArray()', () => {
 
   it('Should_ToEmptyArray_WhenNoHead', () => {
-    const ll = new LinkedList()
+    const ll = new DoublyLinkedList()
     const nodes = ll.toArray()
     expect(nodes.length).toBe(0)
   })
 
   it('Should_ToArray_WhenHasOnlyHeadAndTail', () => {
-    const ll = new LinkedList()
+    const ll = new DoublyLinkedList()
     ll.append('head')
     ll.append('tail')
 
@@ -83,7 +83,7 @@ describe('Test LinkedList toArray()', () => {
   })
 
   it('Should_ToArray_WhenHasOnHeadAndTail', () => {
-    const ll = new LinkedList()
+    const ll = new DoublyLinkedList()
     ll.append('head')
     ll.append('tail')
     ll.append('tail1')
