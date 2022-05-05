@@ -99,7 +99,7 @@ describe('Test DoublyLinkedList toArray()', () => {
 
 describe('Test DoublyLinkedList reverse()', () => {
 
-  it('Should_ReverseArray_WhenNoHeadOrNoTail', () => {
+  it('Should_ReverseLinkedList_WhenNoHeadOrNoTail', () => {
     const ll = new DoublyLinkedList()
     ll.prepend('no-head-tail')
 
@@ -107,7 +107,7 @@ describe('Test DoublyLinkedList reverse()', () => {
     expect(ll.head?.value).toBe('no-head-tail')
   })
 
-  it('Should_ReverseArray_WhenHasBothHead&Tail', () => {
+  it('Should_ReverseLinkedList_WhenHasBothHead&Tail', () => {
     const ll = new DoublyLinkedList()
     ll.prepend('head')
         .append('item0')
@@ -136,6 +136,44 @@ describe('Test DoublyLinkedList reverse()', () => {
     expect(nodes[4]?.value).toBe('item0')
     expect(nodes[4]?.next?.value).toBe('head')
     expect(nodes[4]?.prev?.value).toBe('item1')
+  })
+
+  it('Should_BackToOriginalLinkedList_WhenReverseTwoTime', () => {
+    const ll = new DoublyLinkedList()
+    ll.prepend(1)
+        .append(2)
+        .append(3)
+        .append(4)
+        .append(5)
+        .append(6)
+
+    ll.reverse()
+    expect(ll.head?.value).toBe(6)
+    expect(ll.tail?.value).toBe(1)
+
+    expect(ll.head.next?.value).toBe(5)
+    expect(ll.head.prev?.value).toBe(undefined)
+    expect(ll.tail.prev?.value).toBe(2)
+    expect(ll.tail.next?.value).toBe(undefined)
+
+    expect(ll.head?.next?.next?.value).toBe(4)
+    expect(ll.tail?.prev?.prev?.value).toBe(3)
+    expect(ll.tail?.prev?.next?.value).toBe(1)
+    expect(ll.head?.next?.next?.next?.next?.value).toBe(2)
+
+    ll.reverse()
+    expect(ll.head?.value).toBe(1)
+    expect(ll.tail?.value).toBe(6)
+
+    expect(ll.head?.next?.value).toBe(2)
+    expect(ll.head?.next?.next?.value).toBe(3)
+    expect(ll.head?.next?.next?.next?.value).toBe(4)
+    expect(ll.head?.next?.next?.next?.next?.value).toBe(5)
+
+    expect(ll.head?.next?.prev?.value).toBe(1)
+    expect(ll.head?.next?.next?.prev.value).toBe(2)
+    expect(ll.head?.next?.next?.prev?.next?.value).toBe(3)
+    expect(ll.tail?.prev?.prev?.prev?.next?.value).toBe(4)
   })
 
 })
