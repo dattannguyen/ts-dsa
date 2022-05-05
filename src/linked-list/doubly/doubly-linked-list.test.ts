@@ -1,5 +1,48 @@
 import { DoublyLinkedList } from './doubly-linked-list'
 
+describe('Test DoublyLinkedList find()', () => {
+
+  it('Should_ReturnNil_WhenHasNoHead', () => {
+    const ll = new DoublyLinkedList()
+    const node = ll.find(100)
+
+    expect(node).toBe(undefined)
+  })
+
+  it('Should_ReturnNil_WhenHasNoMatchNode', () => {
+    const ll = new DoublyLinkedList()
+    ll.append(1).append(2).append(4).append(5)
+
+    const node = ll.find(100)
+    expect(node).toBe(undefined)
+  })
+
+  it('Should_ReturnNode_WhenHasFullyLinkedList', () => {
+    const ll = new DoublyLinkedList()
+    ll.append(1)
+        .append(2)
+        .append(4)
+        .append(5)
+        .append(6)
+
+    const head = ll.find(1)
+    expect(head?.value).toBe(1)
+    expect(head?.next?.value).toBe(2)
+    expect(head?.prev?.value).toBe(undefined)
+
+    const tail = ll.find(6)
+    expect(tail?.value).toBe(6)
+    expect(tail?.next?.value).toBe(undefined)
+    expect(tail?.prev?.value).toBe(5)
+
+    const random = ll.find(4)
+    expect(random?.value).toBe(4)
+    expect(random?.next?.value).toBe(5)
+    expect(random?.prev?.value).toBe(2)
+  })
+
+})
+
 describe('Test DoublyLinkedList prepend()', () => {
 
   it('Should_PrependNewNode_WhenHasNoHead', () => {

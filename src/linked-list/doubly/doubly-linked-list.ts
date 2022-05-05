@@ -13,6 +13,21 @@ export class DoublyLinkedList {
     return this._tail
   }
 
+  find(value: unknown): DoublyLinkedListNode | undefined {
+    if (!this._head) {
+      return
+    }
+
+    let node = this._head
+    while (node) {
+      if (node.value === value) {
+        return node
+      }
+
+      node = node.next
+    }
+  }
+
   prepend(value: unknown): DoublyLinkedList {
     const newNode = new DoublyLinkedListNode(value, this._head)
     if (this._head) {
