@@ -54,4 +54,26 @@ export class DoublyLinkedList {
     return nodes
   }
 
+  reverse(): DoublyLinkedList {
+    if (!this._head || !this._tail) {
+      return this
+    }
+
+    let node = this._tail
+    while (node) {
+      const next = node.next
+      const prev = node.prev
+
+      node.next = prev
+      node.prev = next
+      node = prev
+    }
+
+    const head = this._head
+    this._head = this._tail
+    this._tail = head
+
+    return this
+  }
+
 }

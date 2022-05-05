@@ -96,3 +96,46 @@ describe('Test DoublyLinkedList toArray()', () => {
   })
 
 })
+
+describe('Test DoublyLinkedList reverse()', () => {
+
+  it('Should_ReverseArray_WhenNoHeadOrNoTail', () => {
+    const ll = new DoublyLinkedList()
+    ll.prepend('no-head-tail')
+
+    ll.reverse()
+    expect(ll.head?.value).toBe('no-head-tail')
+  })
+
+  it('Should_ReverseArray_WhenHasBothHead&Tail', () => {
+    const ll = new DoublyLinkedList()
+    ll.prepend('head')
+    ll.append('item0')
+    ll.append('item1')
+    ll.append('item2')
+    ll.append('item3')
+    ll.append('tail')
+
+    ll.reverse()
+    const nodes = ll.toArray()
+    const head = nodes[0]
+    const tail = nodes[nodes.length - 1]
+
+    expect(head?.value).toBe('tail')
+    expect(tail?.value).toBe('head')
+
+    expect(head.next?.value).toBe('item3')
+    expect(head.prev?.value).toBe(undefined)
+    expect(tail.prev?.value).toBe('item0')
+    expect(tail.next?.value).toBe(undefined)
+
+    expect(nodes[2]?.value).toBe('item2')
+    expect(nodes[2]?.next?.value).toBe('item1')
+    expect(nodes[2]?.prev?.value).toBe('item3')
+
+    expect(nodes[4]?.value).toBe('item0')
+    expect(nodes[4]?.next?.value).toBe('head')
+    expect(nodes[4]?.prev?.value).toBe('item1')
+  })
+
+})
