@@ -91,18 +91,6 @@ export class DoublyLinkedList {
     return this
   }
 
-  toArray(): DoublyLinkedListNode[] {
-    const nodes: DoublyLinkedListNode[] = []
-
-    let node = this.head
-    while (node) {
-      nodes.push(node)
-      node = node.next
-    }
-
-    return nodes
-  }
-
   reverse(): DoublyLinkedList {
     if (!this._head || !this._tail) {
       return this
@@ -123,6 +111,18 @@ export class DoublyLinkedList {
     this._tail = head
 
     return this
+  }
+
+  toArray(): DoublyLinkedListNode[] {
+    const nodes: DoublyLinkedListNode[] = []
+
+    let node = this.head
+    while (node) {
+      nodes.push(node)
+      node = node.next
+    }
+
+    return nodes
   }
 
 }
