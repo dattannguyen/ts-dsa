@@ -40,6 +40,13 @@ export class DoublyLinkedList {
     const newNode = new DoublyLinkedListNode(value, undefined, this._tail)
     this._tail.next = newNode
     this._tail = newNode
+
+    return this
+  }
+
+  delete(value: unknown): DoublyLinkedList {
+
+    return this
   }
 
   toArray(): DoublyLinkedListNode[] {

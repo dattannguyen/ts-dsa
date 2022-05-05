@@ -110,11 +110,11 @@ describe('Test DoublyLinkedList reverse()', () => {
   it('Should_ReverseArray_WhenHasBothHead&Tail', () => {
     const ll = new DoublyLinkedList()
     ll.prepend('head')
-    ll.append('item0')
-    ll.append('item1')
-    ll.append('item2')
-    ll.append('item3')
-    ll.append('tail')
+        .append('item0')
+        .append('item1')
+        .append('item2')
+        .append('item3')
+        .append('tail')
 
     ll.reverse()
     const nodes = ll.toArray()
