@@ -63,6 +63,55 @@ describe('Test DoublyLinkedList append()', () => {
 
 })
 
+describe('Test DoublyLinkedList delete()', () => {
+
+  it('Should_DeleteHead_WhenOnlyOneHead', () => {
+    const ll = new DoublyLinkedList()
+    ll.prepend(1)
+
+    ll.delete(1)
+    expect(ll.head).toBe(undefined)
+  })
+
+  it('Should_DeleteTail_WhenHasOnlyHead&Tail', () => {
+    const ll = new DoublyLinkedList()
+    ll.prepend(1).append(2)
+    expect(ll.head.next?.value).toBe(2)
+
+    ll.delete(2)
+    expect(ll.head?.value).toBe(1)
+    expect(ll.head?.next).toBe(undefined)
+    expect(ll.tail).toBe(undefined)
+  })
+
+  it('Should_DeleteNode_WhenHasFullDoublyLinkedList', () => {
+    const ll = new DoublyLinkedList()
+    ll.prepend(1)
+        .append(2)
+        .append(3)
+        .append(4)
+        .append(5)
+        .append(6)
+
+    expect(ll.head.next?.value).toBe(2)
+    expect(ll.tail.prev?.value).toBe(5)
+
+    ll.delete(3)
+    expect(ll.head?.next?.next?.value).toBe(4)
+    expect(ll.head?.next?.next?.prev?.value).toBe(2)
+
+    ll.delete(6)
+    expect(ll.toArray().length).toBe(4)
+    expect(ll.tail.value).toBe(5)
+    expect(ll.tail.next).toBe(undefined)
+
+    ll.delete(1)
+    expect(ll.toArray().length).toBe(3)
+    expect(ll.head?.value).toBe(2)
+  })
+
+})
+
 describe('Test DoublyLinkedList toArray()', () => {
 
   it('Should_ToEmptyArray_WhenNoHead', () => {

@@ -45,6 +45,48 @@ export class DoublyLinkedList {
   }
 
   delete(value: unknown): DoublyLinkedList {
+    if (!this._head) {
+      return this
+    }
+
+    if (this._head.value === value) {
+      this._head = this._head.next
+      if (this._head) {
+        this._head.prev = undefined
+      }
+
+      return
+    }
+
+    if (this._tail.value === value) {
+      // If prev of tail is head
+      if (!this._tail.prev?.prev) {
+        this._tail = undefined
+        this._head.next = undefined
+
+        return
+      }
+
+      this._tail = this._tail.prev
+      this._tail.next = undefined
+
+      return
+    }
+
+    let node = this._head?.next
+    while (node?.next) {
+      if (node.value === value) {
+        if (node.prev) {
+          node.prev.next = node.next
+        }
+
+        if (node.next) {
+          node.next.prev = node.prev
+        }
+      }
+
+      node = node.next
+    }
 
     return this
   }
