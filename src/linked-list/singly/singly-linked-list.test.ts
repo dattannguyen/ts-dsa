@@ -104,3 +104,52 @@ describe('Test SinglyLinkedList reverse()', () => {
   })
 
 })
+
+describe('Test SinglyLinkedList delete()', () => {
+
+  it('Should_DeleteHead_WhenMatch', () => {
+    const ll = new SinglyLinkedList()
+    ll.append('head')
+    ll.append('head')
+    ll.append('no-deleted-head')
+
+    ll.delete('head')
+    expect(ll.head?.value).toBe('no-deleted-head')
+    expect(ll.tail).toBe(undefined)
+  })
+
+  it('Should_DeleteMultipleNode_WhenMatch', () => {
+    const ll = new SinglyLinkedList()
+    ll.append('head')
+    ll.append('head1')
+    ll.append('head1')
+    ll.append('head2')
+    ll.append('no-deleted-head')
+
+    ll.delete('head1')
+    expect(ll.head?.value).toBe('head')
+    expect(ll.head?.next?.value).toBe('head2')
+    expect(ll.tail?.value).toBe('no-deleted-head')
+  })
+
+  it('Should_DeleteHeadAndTailNode_WhenMatch', () => {
+    const ll = new SinglyLinkedList()
+    ll.append('head')
+    ll.append('head1')
+    ll.append('head3')
+    ll.append('head1')
+    ll.append('head2')
+    ll.append('head4')
+    ll.append('head')
+
+    ll.delete('head')
+    expect(ll.head?.value).toBe('head1')
+    expect(ll.tail?.value).toBe('head4')
+
+    ll.delete('head1')
+    expect(ll.head?.value).toBe('head3')
+    expect(ll.head?.next?.value).toBe('head2')
+    expect(ll.tail?.value).toBe('head4')
+  })
+
+})

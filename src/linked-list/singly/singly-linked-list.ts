@@ -40,6 +40,33 @@ export class SinglyLinkedList {
     return this
   }
 
+  delete(value: unknown): SinglyLinkedList {
+    if (!this._head || !this._tail) {
+      return this
+    }
+
+    while (this._head?.value === value) {
+      this._head = this._head.next
+    }
+
+    let node = this._head
+    while (node?.next) {
+      if (node.next?.value === value) {
+        node.next = node.next?.next
+      } else {
+        node = node.next
+      }
+    }
+
+    if (this._head?.next === undefined) {
+      this._tail = undefined
+    }
+
+    if (this._tail?.value === value) {
+      this._tail = node
+    }
+  }
+
   reverse(): SinglyLinkedList {
     if (!this._head || !this.tail) {
       return this
