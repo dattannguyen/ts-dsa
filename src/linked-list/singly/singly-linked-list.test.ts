@@ -93,7 +93,7 @@ describe('Test SinglyLinkedList reverse()', () => {
     ll.reverse()
     expect(ll.head?.value).toBe(51)
     expect(ll.tail?.value).toBe(10)
-    expect(ll.head?.next?.next?.next?.next?.value).toBe(8)
+    expect(ll.head?.next?.next?.next?.next?.value).toBe(9)
     expect(ll.tail.next?.value).toBe(undefined)
 
     ll.reverse()

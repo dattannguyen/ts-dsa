@@ -16,7 +16,6 @@ export class SinglyLinkedList {
   prepend(value: unknown): SinglyLinkedList {
     if (this._head) {
       this._tail = new SinglyLinkedListNode(this._head.value)
-      return this
     }
 
     this._head = new SinglyLinkedListNode(value, this._tail)
