@@ -54,3 +54,53 @@ describe('Test SinglyLinkedList append()', () => {
   })
 
 })
+
+describe('Test SinglyLinkedList reverse()', () => {
+
+  it('Should_ReverseLinkedList_WhenNoHeadOrNoTail', () => {
+    const ll = new SinglyLinkedList()
+    ll.prepend('no-head-tail')
+
+    ll.reverse()
+    expect(ll.head?.value).toBe('no-head-tail')
+  })
+
+  it('Should_ReverseLinkedList_WhenHasBothHead&Tail', () => {
+    const ll = new SinglyLinkedList()
+    ll.prepend(10)
+        .append(9)
+        .append(8)
+        .append(7)
+        .append(6)
+        .append(5)
+
+    ll.reverse()
+    expect(ll.head?.value).toBe(5)
+    expect(ll.tail?.value).toBe(10)
+    expect(ll.head?.next?.next?.next?.value).toBe(8)
+    expect(ll.tail?.next).toBe(undefined)
+  })
+
+  it('Should_BackToOriginalLinkedList_WhenReverseTwoTime', () => {
+    const ll = new SinglyLinkedList()
+    ll.prepend(10)
+        .append(9)
+        .append(8)
+        .append(7)
+        .append(6)
+        .append(51)
+
+    ll.reverse()
+    expect(ll.head?.value).toBe(51)
+    expect(ll.tail?.value).toBe(10)
+    expect(ll.head?.next?.next?.next?.next?.value).toBe(8)
+    expect(ll.tail.next?.value).toBe(undefined)
+
+    ll.reverse()
+    expect(ll.head?.value).toBe(10)
+    expect(ll.tail?.value).not.toBe(10)
+    expect(ll.head?.next?.next?.next?.next?.value).not.toBe(8)
+    expect(ll.head?.next?.next?.next?.next?.value).toBe(6)
+  })
+
+})

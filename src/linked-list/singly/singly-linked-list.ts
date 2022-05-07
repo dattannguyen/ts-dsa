@@ -1,11 +1,9 @@
 import { SinglyLinkedListNode } from './singly-linked-list-node'
 
-
 export class SinglyLinkedList {
 
   private _head: SinglyLinkedListNode
   private _tail: SinglyLinkedListNode
-
 
   get head(): SinglyLinkedListNode | undefined {
     return this._head
@@ -38,6 +36,27 @@ export class SinglyLinkedList {
       this._tail.next = newNode
       this._tail = newNode
     }
+
+    return this
+  }
+
+  reverse(): SinglyLinkedList {
+    if (!this._head || !this.tail) {
+      return this
+    }
+
+    let prevNode
+    let node = this._head
+    while (node) {
+      let nextNode = node.next
+      node.next = prevNode
+
+      prevNode = node
+      node = nextNode
+    }
+
+    this._tail = this._head
+    this._head = prevNode
 
     return this
   }
