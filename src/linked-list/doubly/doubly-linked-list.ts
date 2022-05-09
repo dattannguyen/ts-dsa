@@ -106,6 +106,28 @@ export class DoublyLinkedList {
     return this
   }
 
+  deleteTail(): DoublyLinkedListNode {
+    if (!this._head || !this._tail) {
+      const head = this._head
+      this._head = undefined
+
+      return head
+    }
+
+
+    const tail = this._tail
+    if (!this._tail.prev?.prev) { // If prev of tail is head
+      this._tail = undefined
+      this._head.next = undefined
+
+      return tail
+    }
+
+    this._tail = this._tail.prev
+    this._tail.next = undefined
+    return tail
+  }
+
   reverse(): DoublyLinkedList {
     if (!this._head || !this._tail) {
       return this

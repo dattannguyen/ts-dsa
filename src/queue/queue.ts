@@ -1,7 +1,6 @@
 import { SinglyLinkedList } from '../linked-list/singly/singly-linked-list'
 
 export class Queue {
-
   private readonly linkedList: SinglyLinkedList
 
   constructor() {
