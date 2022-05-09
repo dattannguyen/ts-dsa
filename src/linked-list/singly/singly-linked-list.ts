@@ -66,6 +66,21 @@ export class SinglyLinkedList {
     }
   }
 
+  deleteHead(): SinglyLinkedListNode | undefined {
+    const head = this._head
+    if (!head) {
+      return
+    }
+
+    // If next of head is tail
+    if (head.next && !head.next.next) {
+      this._tail = undefined
+    }
+
+    this._head = head.next
+    return head
+  }
+
   reverse(): SinglyLinkedList {
     if (!this._head || !this.tail) {
       return this

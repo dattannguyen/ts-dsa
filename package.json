@@ -8,6 +8,18 @@
     "test": "npx jest",
     "coverage": "npm run test --coverage"
   },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "jest": "^28.0.3",
+    "nodemon": "^2.0.16",
+    "ts-jest": "^28.0.1",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
+  },
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6.14.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dattannguyen/ts-dsa.git"
@@ -17,13 +29,5 @@
   "bugs": {
     "url": "https://github.com/dattannguyen/ts-dsa/issues"
   },
-  "homepage": "https://github.com/dattannguyen/ts-dsa#readme",
-  "devDependencies": {
-    "@types/jest": "^27.4.1",
-    "jest": "^28.0.3",
-    "nodemon": "^2.0.16",
-    "ts-jest": "^28.0.1",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.4"
-  }
+  "homepage": "https://github.com/dattannguyen/ts-dsa#readme"
 }
