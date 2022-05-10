@@ -1,5 +1,31 @@
 import { HashTable } from './hash-table'
 
+describe('Test HashTable keys() & values()', () => {
+
+  it('Should_ReturnListOfKey_WhenCalled', () => {
+    const hashTable = new HashTable()
+    hashTable.set('name', 'Robert')
+    hashTable.set('gender', 'Male')
+
+    const keys = hashTable.keys()
+    expect(keys).toEqual(expect.arrayContaining(['name', 'gender']))
+  })
+
+  it('Should_ReturnListValue_WhenCalled', () => {
+    const hashTable = new HashTable()
+    hashTable.set('name', 'Robert')
+    hashTable.set('gender', 'Male')
+
+    hashTable.set('a', 'b')
+    hashTable.set('azf', 'bb')
+
+    const values = hashTable.values()
+    expect(values).toEqual(expect.arrayContaining(['Robert', 'Male']))
+    expect(values).toEqual(expect.arrayContaining(['b', 'bb']))
+  })
+
+})
+
 describe('Test HashTable get() & set()', () => {
 
   it('Should_CreateNewHashNode_WhenSetNewValue', () => {

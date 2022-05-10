@@ -116,4 +116,15 @@ export class SinglyLinkedList {
 
     return this
   }
+
+  toArray(): SinglyLinkedListNode[] {
+    const nodes = []
+    let node = this._head
+    while (node) {
+      nodes.push(node)
+      node = node.next
+    }
+
+    return nodes
+  }
 }

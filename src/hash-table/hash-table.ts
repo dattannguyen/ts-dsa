@@ -22,6 +22,16 @@ export class HashTable {
     return this._hashArray
   }
 
+  keys(): string[] {
+    return Object.keys(this._hashKeys)
+  }
+
+  values(): any[] {
+    return this._hashArray.reduce((acc, ll: SinglyLinkedList) => [
+      ...acc,
+      ...(ll.toArray().map(node => node.data))
+    ], [])
+  }
 
   get(key: string): unknown {
     const hashKey = this._hashKeys[key]
