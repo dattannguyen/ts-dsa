@@ -37,9 +37,9 @@ export class SinglyLinkedList {
     return this
   }
 
-  append(value: unknown, data: unknown): SinglyLinkedList {
+  append(value: unknown, data?: unknown): SinglyLinkedList {
     if (!this._head) {
-      return this.prepend(value)
+      return this.prepend(value, data)
     }
 
     const newNode = new SinglyLinkedListNode(value, undefined, data)
