@@ -10,10 +10,11 @@ describe('Test SinglyLinkedListNode', () => {
 
   it('Should_CreateSinglyLinkedListNode_WhenGivenValueAndNextAndPrev', () => {
     const next = new SinglyLinkedListNode('next')
-    const node = new SinglyLinkedListNode('node', next)
+    const node = new SinglyLinkedListNode('node', next, 'value')
 
     expect(node.value).toBe('node')
     expect(node.next).toBe(next)
+    expect(node.data).toBe('value')
   })
 
 })
