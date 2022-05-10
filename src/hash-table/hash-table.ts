@@ -61,6 +61,17 @@ export class HashTable {
     return this
   }
 
+  delete(key: string): HashTable {
+    const hashKey = this._hashKeys[key]
+    if (!hashKey) {
+      return this
+    }
+
+    this._hashArray[hashKey]?.delete(key)
+    delete this._hashKeys[key]
+    return this
+  }
+
   private hash(key: string): number {
     const hash = this.hashFunction || (key => Array.from(key).reduce((acc, symbol) => acc + symbol.charCodeAt(0), 0))
     return hash(key) % this._hashSize

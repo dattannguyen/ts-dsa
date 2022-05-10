@@ -55,7 +55,7 @@ export class SinglyLinkedList {
   }
 
   delete(value: unknown): SinglyLinkedList {
-    if (!this._head || !this._tail) {
+    if (!this._head) {
       return this
     }
 

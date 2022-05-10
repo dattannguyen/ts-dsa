@@ -107,3 +107,31 @@ describe('Test HashTable get() & set()', () => {
   })
 
 })
+
+describe('Test HashTable delete()', () => {
+
+  it('Should_Return_WhenDeleteUnsetKey', () => {
+    const hashTable = new HashTable()
+    hashTable.set('name', 'Robert')
+    hashTable.set('gender', 'Male')
+
+    hashTable.delete('key')
+    expect(hashTable.keys().length).toBe(2)
+  })
+
+
+  it('Should_DeleteKey_WhenCalled', () => {
+    const hashTable = new HashTable()
+    hashTable.set('name', 'Robert')
+    hashTable.set('gender', 'Male')
+
+    hashTable.delete('key')
+    expect(hashTable.keys().length).toBe(2)
+
+    const hashKey = hashTable.hashKeys['name']
+    hashTable.delete('name')
+    expect(hashTable.keys().length).toBe(1)
+    expect(hashTable.get('name')).toBeFalsy()
+    expect(hashTable.hashArray[hashKey].head).toBeFalsy()
+  })
+})
