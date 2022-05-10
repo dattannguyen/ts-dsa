@@ -135,3 +135,31 @@ describe('Test HashTable delete()', () => {
     expect(hashTable.hashArray[hashKey].head).toBeFalsy()
   })
 })
+
+describe('Test HashTable entries()', () => {
+  it('Should_LoopThroughAllKeyValue_WhenGiveCallback', () => {
+    const hashTable = new HashTable()
+    hashTable.set('name', 'Robert')
+    hashTable.set('gender', 'Male')
+
+    const callback = jest.fn((key: string, value: unknown) => `${key}:${value}`)
+    hashTable.entries(callback)
+    expect(callback).toHaveBeenNthCalledWith(1, 'name', 'Robert')
+    expect(callback).toHaveBeenNthCalledWith(2, 'gender', 'Male')
+
+    hashTable.set('a', 'b')
+    hashTable.set('azf', 'bb')
+    hashTable.set('d', 'e')
+    hashTable.set('dzf', 'ee')
+    hashTable.delete('name')
+
+    const newCallback = jest.fn((key: string, value: unknown) => `${key}:${value}`)
+    hashTable.entries(newCallback)
+    expect(newCallback).toHaveBeenCalledTimes(5)
+    expect(newCallback).toHaveBeenCalledWith('gender', 'Male')
+    expect(newCallback).toHaveBeenCalledWith('a', 'b')
+    expect(newCallback).toHaveBeenCalledWith('azf', 'bb')
+    expect(newCallback).toHaveBeenCalledWith('d', 'e')
+    expect(newCallback).toHaveBeenCalledWith('dzf', 'ee')
+  })
+})

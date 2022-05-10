@@ -72,6 +72,16 @@ export class HashTable {
     return this
   }
 
+  entries(callback: (key: string, value: unknown) => any) {
+    for (let hashLL of this._hashArray) {
+      let node = hashLL.head
+      while (node) {
+        callback(node.value as string, node.data)
+        node = node.next
+      }
+    }
+  }
+
   private hash(key: string): number {
     const hash = this.hashFunction || (key => Array.from(key).reduce((acc, symbol) => acc + symbol.charCodeAt(0), 0))
     return hash(key) % this._hashSize
