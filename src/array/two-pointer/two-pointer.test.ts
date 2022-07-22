@@ -27,22 +27,48 @@ describe('Test twoSumAsTwoPointerTechnique()', () => {
 
 describe('Test detectLinkedListCycleAsTwoPointerTechnique()', () => {
 
-  it('Should_ReturnFalse_WhenLinkedListHasOnlyHeadOrTail', () => {
+  it('Should_ReturnFalse_WhenLinkedListHasOnlyHead', () => {
     const ll = new SinglyLinkedList()
     ll.append(1)
 
-    const pair = detectLinkedListCycleAsTwoPointerTechnique(ll)
-    expect(pair).toBeFalsy()
+    const isCyclic = detectLinkedListCycleAsTwoPointerTechnique(ll)
+    expect(isCyclic).toBeFalsy()
+  })
+
+  it('Should_ReturnTrue_WhenTailPointToHead', () => {
+    const ll = new SinglyLinkedList()
+    ll.append(1).append(1)
+    ll.tail.next = ll.head
+
+    const isCyclic = detectLinkedListCycleAsTwoPointerTechnique(ll)
+    expect(isCyclic).toBeTruthy()
+  })
+
+  it('Should_ReturnFalse_WhenGivenNoCycleLinkedList', () => {
+    const ll = new SinglyLinkedList()
+    ll.append(1).append(2).append(3).append(4).append(5).append(6)
+
+    const isCyclic = detectLinkedListCycleAsTwoPointerTechnique(ll)
+    expect(isCyclic).toBeFalsy()
   })
 
   it('Should_ReturnTrue_WhenGivenCyclicLinkedList', () => {
-    const ll = new SinglyLinkedList()
-    ll.append(1)
-    ll.append(2)
-    ll.append(1)
+    const firstLL = new SinglyLinkedList()
+    firstLL.append(1).append(2).append(3).append(4)
 
-    const pair = detectLinkedListCycleAsTwoPointerTechnique(ll)
-    expect(pair).toBeTruthy()
+    const secondNode = firstLL.head.next
+    const thirdNode = firstLL.head.next.next
+    thirdNode.next = secondNode
+
+    const isFirstLLCyclic = detectLinkedListCycleAsTwoPointerTechnique(firstLL)
+    expect(isFirstLLCyclic).toBeTruthy()
+
+    const secondLL = new SinglyLinkedList()
+    secondLL.append(1).append(2).append(3).append(4).append(5).append(6).append(7)
+    secondLL.head.next.next.next.next.next.next = secondLL.head.next
+
+    const isSecondLLCyclic = detectLinkedListCycleAsTwoPointerTechnique(secondLL)
+    expect(isSecondLLCyclic).toBeTruthy()
   })
 
 })
