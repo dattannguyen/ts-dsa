@@ -1,4 +1,5 @@
-import { twoSumAsTwoPointerTechnique } from './two-pointer.technique'
+import { detectLinkedListCycleAsTwoPointerTechnique, twoSumAsTwoPointerTechnique } from './two-pointer.technique'
+import { SinglyLinkedList } from '../../linked-list/singly/singly-linked-list'
 
 describe('Test twoSumAsTwoPointerTechnique()', () => {
 
@@ -22,5 +23,26 @@ describe('Test twoSumAsTwoPointerTechnique()', () => {
     expect(secondPair[1]).toBe(3)
   })
 
+})
+
+describe('Test detectLinkedListCycleAsTwoPointerTechnique()', () => {
+
+  it('Should_ReturnFalse_WhenLinkedListHasOnlyHeadOrTail', () => {
+    const ll = new SinglyLinkedList()
+    ll.append(1)
+
+    const pair = detectLinkedListCycleAsTwoPointerTechnique(ll)
+    expect(pair).toBeFalsy()
+  })
+
+  it('Should_ReturnTrue_WhenGivenCyclicLinkedList', () => {
+    const ll = new SinglyLinkedList()
+    ll.append(1)
+    ll.append(2)
+    ll.append(1)
+
+    const pair = detectLinkedListCycleAsTwoPointerTechnique(ll)
+    expect(pair).toBeTruthy()
+  })
 
 })
