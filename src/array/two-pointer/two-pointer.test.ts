@@ -1,37 +1,37 @@
-import { detectLinkedListCycleAsTwoPointerTechnique, twoSumAsTwoPointerTechnique } from './two-pointer.technique'
+import { detectLinkedListCycleByTwoPointer, twoSumByTwoPointer } from './two-pointer.technique'
 import { SinglyLinkedList } from '../../linked-list/singly/singly-linked-list'
 
-describe('Test twoSumAsTwoPointerTechnique()', () => {
+describe('Test twoSumByTwoPointer()', () => {
 
   it('Should_ReturnUndefined_WhenGivenEmptyArray', () => {
-    const pair = twoSumAsTwoPointerTechnique([], 10)
+    const pair = twoSumByTwoPointer([], 10)
     expect(pair).toBeFalsy()
   })
 
   it('Should_ReturnUndefined_WhenNoMatchSumPair', () => {
-    const pair = twoSumAsTwoPointerTechnique([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 20)
+    const pair = twoSumByTwoPointer([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 20)
     expect(pair).toBeFalsy()
   })
 
   it('Should_ReturnExpectedIndexPair_WhenGivenMatchSumPair', () => {
-    const firstPair = twoSumAsTwoPointerTechnique([10, 20, 35, 50, 75, 80], 70)
+    const firstPair = twoSumByTwoPointer([10, 20, 35, 50, 75, 80], 70)
     expect(firstPair[0]).toBe(1)
     expect(firstPair[1]).toBe(3)
 
-    const secondPair = twoSumAsTwoPointerTechnique([4, 2, 10, 23], 27)
+    const secondPair = twoSumByTwoPointer([4, 2, 10, 23], 27)
     expect(secondPair[0]).toBe(0)
     expect(secondPair[1]).toBe(3)
   })
 
 })
 
-describe('Test detectLinkedListCycleAsTwoPointerTechnique()', () => {
+describe('Test detectLinkedListCycleByTwoPointer()', () => {
 
   it('Should_ReturnFalse_WhenLinkedListHasOnlyHead', () => {
     const ll = new SinglyLinkedList()
     ll.append(1)
 
-    const isCyclic = detectLinkedListCycleAsTwoPointerTechnique(ll)
+    const isCyclic = detectLinkedListCycleByTwoPointer(ll)
     expect(isCyclic).toBeFalsy()
   })
 
@@ -40,7 +40,7 @@ describe('Test detectLinkedListCycleAsTwoPointerTechnique()', () => {
     ll.append(1).append(1)
     ll.tail.next = ll.head
 
-    const isCyclic = detectLinkedListCycleAsTwoPointerTechnique(ll)
+    const isCyclic = detectLinkedListCycleByTwoPointer(ll)
     expect(isCyclic).toBeTruthy()
   })
 
@@ -48,7 +48,7 @@ describe('Test detectLinkedListCycleAsTwoPointerTechnique()', () => {
     const ll = new SinglyLinkedList()
     ll.append(1).append(2).append(3).append(4).append(5).append(6)
 
-    const isCyclic = detectLinkedListCycleAsTwoPointerTechnique(ll)
+    const isCyclic = detectLinkedListCycleByTwoPointer(ll)
     expect(isCyclic).toBeFalsy()
   })
 
@@ -60,14 +60,14 @@ describe('Test detectLinkedListCycleAsTwoPointerTechnique()', () => {
     const thirdNode = firstLL.head.next.next
     thirdNode.next = secondNode
 
-    const isFirstLLCyclic = detectLinkedListCycleAsTwoPointerTechnique(firstLL)
+    const isFirstLLCyclic = detectLinkedListCycleByTwoPointer(firstLL)
     expect(isFirstLLCyclic).toBeTruthy()
 
     const secondLL = new SinglyLinkedList()
     secondLL.append(1).append(2).append(3).append(4).append(5).append(6).append(7)
     secondLL.head.next.next.next.next.next.next = secondLL.head.next
 
-    const isSecondLLCyclic = detectLinkedListCycleAsTwoPointerTechnique(secondLL)
+    const isSecondLLCyclic = detectLinkedListCycleByTwoPointer(secondLL)
     expect(isSecondLLCyclic).toBeTruthy()
   })
 

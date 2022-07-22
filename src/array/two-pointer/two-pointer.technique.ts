@@ -4,7 +4,7 @@ import { SinglyLinkedList } from '../../linked-list/singly/singly-linked-list'
  * Given a sorted array A (sorted in ascending order), having N integers, find if there exists any pair of elements
  * (A[i], A[j]) such that their sum is equal to X
  */
-export const twoSumAsTwoPointerTechnique = (numbers: number[], sumTarget: number): [number, number] | undefined => {
+export const twoSumByTwoPointer = (numbers: number[], sumTarget: number): [number, number] | undefined => {
   const length = numbers.length
   if (length === 0) {
     return
@@ -27,7 +27,7 @@ export const twoSumAsTwoPointerTechnique = (numbers: number[], sumTarget: number
 /**
  * Given a singly linked list, detect if there is a cycle.
  */
-export const detectLinkedListCycleAsTwoPointerTechnique = (ll: SinglyLinkedList): boolean => {
+export const detectLinkedListCycleByTwoPointer = (ll: SinglyLinkedList): boolean => {
   if (!ll.head || !ll.tail) {
     return false
   }

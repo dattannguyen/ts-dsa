@@ -1,9 +1,8 @@
 /**
- * Given an array of integers of size ‘n’, Our aim is to calculate the maximum sum of ‘k’ consecutive elements in the array.
- * Input: arr[] = {100, 200, 300, 400}, k = 2
- * Output: 700
+ * Given an array of integers of size ‘n’, Our aim is to calculate the maximum sum of ‘k’ consecutive elements in the
+ * array. Input: arr[] = {100, 200, 300, 400}, k = 2 Output: 700
  * **/
-export const windowSlidingTechnique = (numbers: number[], kElement: number): number => {
+export const findMaxSumOfAdjacentElementByWindowSliding = (numbers: number[], kElement: number): number => {
   let max = 0
   const length = numbers.length
   if (length <= 0) {
