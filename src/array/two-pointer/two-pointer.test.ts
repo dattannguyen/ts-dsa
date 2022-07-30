@@ -1,4 +1,8 @@
-import { detectLinkedListCycleByTwoPointer, twoSumByTwoPointer } from './two-pointer.technique'
+import {
+  detectLinkedListCycleByTwoPointer,
+  findMaxProfitOfStockByTwoPointer,
+  twoSumByTwoPointer
+} from './two-pointer.technique'
 import { SinglyLinkedList } from '../../linked-list/singly/singly-linked-list'
 
 describe('Test twoSumByTwoPointer()', () => {
@@ -69,6 +73,26 @@ describe('Test detectLinkedListCycleByTwoPointer()', () => {
 
     const isSecondLLCyclic = detectLinkedListCycleByTwoPointer(secondLL)
     expect(isSecondLLCyclic).toBeTruthy()
+  })
+
+})
+
+describe('Test findMaxProfitOfStockByTwoPointer()', () => {
+
+  it('Should_ReturnZero_WhenGivenOnlyOneTransaction', () => {
+    const profit = findMaxProfitOfStockByTwoPointer([1])
+    expect(profit).toBe(0)
+  })
+
+  it('Should_ReturnMaxProfit_WhenAnArrayOfTransaction', () => {
+    const profitOfFive = findMaxProfitOfStockByTwoPointer([7, 1, 5, 3, 6, 4])
+    expect(profitOfFive).toBe(5)
+
+    const profitOfSeven = findMaxProfitOfStockByTwoPointer([7, 2, 5, 3, 6, 4, 1, 2, 8, 4])
+    expect(profitOfSeven).toBe(7)
+
+    const profitOfSix = findMaxProfitOfStockByTwoPointer([2,8,1,3])
+    expect(profitOfSix).toBe(6)
   })
 
 })

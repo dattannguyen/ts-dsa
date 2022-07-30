@@ -44,3 +44,23 @@ export const detectLinkedListCycleByTwoPointer = (ll: SinglyLinkedList): boolean
 
   return false
 }
+
+export const findMaxProfitOfStockByTwoPointer = (stocks: number[]): number => {
+  const stockLength = stocks.length
+  if (stockLength <= 1) {
+    return 0
+  }
+
+
+  let profit = 0
+  for (let buyPointer = 0, sellPointer = 1; sellPointer < stockLength; sellPointer++) {
+    const change = stocks[sellPointer] - stocks[buyPointer]
+    if (change < 0) {
+      buyPointer = sellPointer
+    }
+
+    profit = Math.max(profit, change)
+  }
+
+  return profit
+}
