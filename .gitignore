@@ -16,3 +16,4 @@
 .idea
 /coverage/*/**
 /coverage/**
+/node_modules/**

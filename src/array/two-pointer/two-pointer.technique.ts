@@ -3,6 +3,8 @@ import { SinglyLinkedList } from '../../linked-list/singly/singly-linked-list'
 /**
  * Given a sorted array A (sorted in ascending order), having N integers, find if there exists any pair of elements
  * (A[i], A[j]) such that their sum is equal to X
+ * Input: numbers = [1, 3, 3, 9, 5, 6], sumTarget = 10
+ * Output: [0, 3] because numbers[0] + numbers[3] = 10
  */
 export const twoSumByTwoPointer = (numbers: number[], sumTarget: number): [number, number] | undefined => {
   const length = numbers.length
@@ -45,6 +47,12 @@ export const detectLinkedListCycleByTwoPointer = (ll: SinglyLinkedList): boolean
   return false
 }
 
+/**
+ * Given an array of stock price where each is price on each day. Find maximum profit you can get if applying buy low
+ * sell high.
+ * Input: stocks = [7, 1, 5, 3, 6, 4]
+ * Output: 5 where you buy at stock[1] = 1 and sell at stocks[4] = 6, profit = 6 - 1 = 5
+ */
 export const findMaxProfitOfStockByTwoPointer = (stocks: number[]): number => {
   const stockLength = stocks.length
   if (stockLength <= 1) {
