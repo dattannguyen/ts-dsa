@@ -1,4 +1,7 @@
-import { findMaxSumOfAdjacentElementByWindowSliding } from './window-sliding.technique'
+import {
+  findLongestSubstringWithUniqueChar,
+  findMaxSumOfAdjacentElementByWindowSliding
+} from './window-sliding.technique'
 
 describe('Test findMaxSumOfAdjacentElementByWindowSliding()', () => {
 
@@ -20,5 +23,40 @@ describe('Test findMaxSumOfAdjacentElementByWindowSliding()', () => {
     expect(maxIsThirtyThree).toBe(33)
   })
 
+})
+
+describe('Test findLongestSubstringWithUniqueChar()', () => {
+
+  it('Should_ReturnEmptyOrOneLengthString_WhenGivenInputString', () => {
+    const emptyStr = findLongestSubstringWithUniqueChar('')
+    expect(emptyStr).toBe('')
+
+    const oneLengthStr = findLongestSubstringWithUniqueChar('g')
+    expect(oneLengthStr).toBe('g')
+  })
+
+  it('Should_ReturnUniqueCharSubstring_WhenString', () => {
+    const firstSubstr = findLongestSubstringWithUniqueChar('abcabcbb')
+    expect(firstSubstr).toBe('abc')
+
+    const secondSubstr = findLongestSubstringWithUniqueChar('bbbbb')
+    expect(secondSubstr).toBe('b')
+
+    const thirdSubstr = findLongestSubstringWithUniqueChar('pwwkew')
+    expect(thirdSubstr).toBe('wke')
+
+    const fourthStr = findLongestSubstringWithUniqueChar('aab')
+    expect(fourthStr).toBe('ab')
+
+    const fifthStr = findLongestSubstringWithUniqueChar('dvdf')
+    expect(fifthStr).toBe('vdf')
+
+    const sixthStr = findLongestSubstringWithUniqueChar('tmmzuxt')
+    expect(sixthStr).toBe('mzuxt')
+
+    const seventhStr = findLongestSubstringWithUniqueChar('ohvhjdml')
+    expect(seventhStr).toBe('vhjdml')
+
+  })
 
 })
