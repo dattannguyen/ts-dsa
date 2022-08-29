@@ -76,7 +76,7 @@ export const findLongestSubstringWithUniqueChar = (string: string): string => {
 /**
  * LeetCode question: https://leetcode.com/problems/minimum-window-substring/
  */
-export const findingMinimumWindowSubstring = (string: string, substring: string): string => {
+export const findMinimumWindowSubstring = (string: string, substring: string): string => {
   const hadByChar = new Map()
   const neededByChar = new Map()
   for (let char of substring) {
