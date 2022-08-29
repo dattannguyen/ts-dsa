@@ -1,4 +1,5 @@
 import {
+  findingMinimumWindowSubstring,
   findLongestSubstringWithUniqueChar,
   findMaxSumOfAdjacentElementByWindowSliding
 } from './window-sliding.technique'
@@ -57,6 +58,32 @@ describe('Test findLongestSubstringWithUniqueChar()', () => {
     const seventhStr = findLongestSubstringWithUniqueChar('ohvhjdml')
     expect(seventhStr).toBe('vhjdml')
 
+  })
+
+})
+
+describe('Test findMinimumWindowSubstring()', () => {
+
+  it('Should_ReturnEmptyString_WhenNoSubstringMatch', () => {
+    const emptyStr = findingMinimumWindowSubstring('abcxya', 'def')
+    expect(emptyStr).toBe('')
+
+    const nextEmptyStr = findingMinimumWindowSubstring('aaa', 'aaaa')
+    expect(nextEmptyStr).toBe('')
+  })
+
+  it('Should_ReturnExpectedMinimumWindowSubstring_WhenGivenParam', () => {
+    const firstSubstr = findingMinimumWindowSubstring('ADOBECODEBANC', 'ABC')
+    expect(firstSubstr).toBe('BANC')
+
+    const secondSubstr = findingMinimumWindowSubstring('a', 'a')
+    expect(secondSubstr).toBe('a')
+
+    const thirdSubstr = findingMinimumWindowSubstring('rtyuiopoiuytghvbn', 'igh')
+    expect(thirdSubstr).toBe('iuytgh')
+
+    const fourthSubstr = findingMinimumWindowSubstring('ab', 'b')
+    expect(fourthSubstr).toBe('b')
   })
 
 })
