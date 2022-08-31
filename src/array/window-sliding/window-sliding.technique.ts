@@ -125,3 +125,50 @@ export const findMinimumWindowSubstring = (string: string, substring: string): s
 
   return string.substring(slow, fast + 1)
 }
+
+/**
+ * LeetCode question: https://leetcode.com/problems/permutation-in-string/
+ */
+export const isPermutationInString = (first: string, second: string): boolean => {
+  const hadByChar = new Map()
+  const neededByChar = new Map()
+  for (let char of first) {
+    neededByChar.set(char, (neededByChar.get(char) || 0) + 1)
+  }
+
+  let neededLength = first.length
+  for (let fast = 0, slow = -1; fast < second.length; fast++) {
+    const char = second[fast]
+    const neededCount = neededByChar.get(char)
+    if (!neededCount) {
+      hadByChar.clear()
+      slow = -1
+      continue
+    }
+
+    const hadCount = hadByChar.get(char) || 0
+    let newHadCount = hadCount + 1
+    if (newHadCount <= neededCount) {
+      hadByChar.set(char, newHadCount)
+      if (slow === -1) {
+        slow = fast
+      }
+
+    } else {
+      while (newHadCount > neededCount && slow <= fast) {
+        const slowChar = second[slow]
+        char === slowChar
+            ? newHadCount--
+            : hadByChar.set(slowChar, hadByChar.get(slowChar) - 1)
+
+        slow++
+      }
+    }
+
+    if ((fast - slow + 1) === neededLength) {
+      return true
+    }
+  }
+
+  return false
+}

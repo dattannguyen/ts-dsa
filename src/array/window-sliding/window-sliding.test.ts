@@ -1,7 +1,8 @@
 import {
   findLongestSubstringWithUniqueChar,
   findMaxSumOfAdjacentElementByWindowSliding,
-  findMinimumWindowSubstring
+  findMinimumWindowSubstring,
+  isPermutationInString
 } from './window-sliding.technique'
 
 describe('Test findMaxSumOfAdjacentElementByWindowSliding()', () => {
@@ -84,6 +85,47 @@ describe('Test findMinimumWindowSubstring()', () => {
 
     const fourthSubstr = findMinimumWindowSubstring('ab', 'b')
     expect(fourthSubstr).toBe('b')
+  })
+
+})
+
+describe('Test isPermutationInString()', () => {
+
+  it('Should_ReturnTrue_WhenHasPermutation', () => {
+    const firstTrue = isPermutationInString('ab', 'eidbaooo')
+    expect(firstTrue).toBeTruthy()
+
+    const secondTrue = isPermutationInString('a', 'a')
+    expect(secondTrue).toBeTruthy()
+
+    const thirdTrue = isPermutationInString('lhlf', 'ahsdlfhl')
+    expect(thirdTrue).toBeTruthy()
+
+    const fourthTrue = isPermutationInString('aabb', 'abcabab')
+    expect(fourthTrue).toBeTruthy()
+
+    const fifTrue = isPermutationInString('abc', 'cba')
+    expect(fifTrue).toBeTruthy()
+
+    const sixthTrue = isPermutationInString('hello', 'ooollelhoooleh')
+    expect(sixthTrue).toBeTruthy()
+
+    const eighthTrue = isPermutationInString('adc', 'dcda')
+    expect(eighthTrue).toBeTruthy()
+  })
+
+  it('Should_ReturnFalse_WhenNoPermutation', () => {
+    const firstFalse = isPermutationInString('false', 'aaaaaaaaa')
+    expect(firstFalse).toBeFalsy()
+
+    const secondFalse = isPermutationInString('true', 'trufe')
+    expect(secondFalse).toBeFalsy()
+
+    const thirdFalse = isPermutationInString('ab', 'eidboaoo')
+    expect(thirdFalse).toBeFalsy()
+
+    const fourthFalse = isPermutationInString('hello', 'ooolleoooleh')
+    expect(fourthFalse).toBeFalsy()
   })
 
 })
