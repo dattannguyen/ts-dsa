@@ -72,8 +72,25 @@ export const findLongestSubstringWithUniqueChar = (string: string): string => {
   return result
 }
 
-
 /**
+ * Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every
+ * character in t (including duplicates) is included in the window. If there is no such substring, return the empty
+ * string "". The testcases will be generated such that the answer is unique.
+ * A substring is a contiguous sequence of characters within the string.
+ *
+ * Input: s = "ADOBECODEBANC", t = "ABC"
+ * Output: "BANC"
+ * Explanation: The minimum window substring "BANC" includes 'A', 'B', and 'C' from string t.
+ *
+ * Input: s = "a", t = "a"
+ * Output: "a"
+ * Explanation: The entire string s is the minimum window.
+ *
+ * Input: s = "a", t = "aa"
+ * Output: ""
+ * Explanation: Both 'a's from t must be included in the window.
+ * Since the largest window of s only has one 'a', return empty string.
+ *
  * LeetCode question: https://leetcode.com/problems/minimum-window-substring/
  */
 export const findMinimumWindowSubstring = (string: string, substring: string): string => {
@@ -127,6 +144,16 @@ export const findMinimumWindowSubstring = (string: string, substring: string): s
 }
 
 /**
+ * Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise. In other words,
+ * return true if one of s1's permutations is the substring of s2.
+ *
+ * Input: s1 = "ab", s2 = "eidbaooo"
+ * Output: true
+ * Explanation: s2 contains one permutation of s1 ("ba").
+ *
+ * Input: s1 = "ab", s2 = "eidboaoo"
+ * Output: false
+ *
  * LeetCode question: https://leetcode.com/problems/permutation-in-string/
  */
 export const isPermutationInString = (first: string, second: string): boolean => {
@@ -171,4 +198,31 @@ export const isPermutationInString = (first: string, second: string): boolean =>
   }
 
   return false
+}
+
+
+/**
+ * You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of
+ * the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right
+ * by one position. Return the max sliding window.
+ *
+ * Input: nums = [1, 3, -1, -3, 5, 3, 6, 7], k = 3
+ * Output: [3, 3, 5, 5, 6, 7]
+ * Explanation:
+ * Window position                Max
+ * ---------------               -----
+ * [1  3  -1] -3  5  3  6  7       3
+ *  1 [3  -1  -3] 5  3  6  7       3
+ *  1  3 [-1  -3  5] 3  6  7       5
+ *  1  3  -1 [-3  5  3] 6  7       5
+ *  1  3  -1  -3 [5  3  6] 7       6
+ *  1  3  -1  -3  5 [3  6  7]      7
+ *
+ * Input: nums = [1], k = 1
+ * Output: [1]
+ *
+ * LeetCode question: https://leetcode.com/problems/sliding-window-maximum/
+ */
+export const findMaximumWindowSliding = (numbers: number[], k: number): number[] => {
+  return []
 }
