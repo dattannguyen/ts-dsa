@@ -224,7 +224,7 @@ export const isPermutationInString = (first: string, second: string): boolean =>
  * LeetCode question: https://leetcode.com/problems/sliding-window-maximum/
  *
  */
-export const findMaxSlidingWindow = (numbers: number[], k: number): number[] => {
+export const findMaxSlidingWindowByLinkedListDeque = (numbers: number[], k: number): number[] => {
 
   class DequeNode {
     constructor(
@@ -335,4 +335,27 @@ export const findMaxSlidingWindow = (numbers: number[], k: number): number[] => 
 
   return result
 
+}
+
+export const findMaxSlidingWindowByArrayDeque = (numbers: number[], k: number): number[] => {
+  let result: number[] = []
+  let deque: number[] = []
+
+  for (let index = 0; index < numbers.length; index++) {
+    const value = numbers[index]
+    while (numbers[deque[deque.length - 1]] < value) {
+      deque.pop()
+    }
+
+    deque.push(index)
+    while (deque[0] < (index - k + 1)) {
+      deque.shift()
+    }
+
+    if (index >= k - 1) {
+      result.push(numbers[deque[0]])
+    }
+  }
+
+  return result
 }

@@ -1,6 +1,7 @@
 import {
   findLongestSubstringWithUniqueChar,
-  findMaxSlidingWindow,
+  findMaxSlidingWindowByArrayDeque,
+  findMaxSlidingWindowByLinkedListDeque,
   findMaxSumOfAdjacentElementByWindowSliding,
   findMinimumWindowSubstring,
   isPermutationInString
@@ -133,23 +134,43 @@ describe('Test isPermutationInString()', () => {
 
 describe('Test findMaxSlidingWindow()', () => {
 
-  it('Should_ReturnExpectedMaxSlidingWindow_WhenGivenParam', () => {
-    const firstWindow = findMaxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3)
+  it('Should_ReturnExpectedMaxSlidingWindowByLinkedListDeque_WhenGivenParam', () => {
+    const firstWindow = findMaxSlidingWindowByLinkedListDeque([1, 3, -1, -3, 5, 3, 6, 7], 3)
     expect(firstWindow.toString()).toBe([3, 3, 5, 5, 6, 7].toString())
 
-    const secondWindow = findMaxSlidingWindow([1], 1)
+    const secondWindow = findMaxSlidingWindowByLinkedListDeque([1], 1)
     expect(secondWindow.toString()).toBe([1].toString())
 
-    const thirdWindow = findMaxSlidingWindow([1, -1], 1)
+    const thirdWindow = findMaxSlidingWindowByLinkedListDeque([1, -1], 1)
     expect(thirdWindow.toString()).toBe([1, -1].toString())
 
-    const fourthWindow = findMaxSlidingWindow([3, 1, 1, 1, 2], 3)
+    const fourthWindow = findMaxSlidingWindowByLinkedListDeque([3, 1, 1, 1, 2], 3)
     expect(fourthWindow.toString()).toBe([3, 1, 2].toString())
 
-    const fifWindow = findMaxSlidingWindow([-6, -10, -7, -1, -9, 9, -8, -4, 10, -5, 2, 9, 0, -7, 7, 4, -2, -10, 8, 7], 7)
+    const fifWindow = findMaxSlidingWindowByLinkedListDeque([-6, -10, -7, -1, -9, 9, -8, -4, 10, -5, 2, 9, 0, -7, 7, 4, -2, -10, 8, 7], 7)
     expect(fifWindow.toString()).toBe([9, 9, 10, 10, 10, 10, 10, 10, 10, 9, 9, 9, 8, 8].toString())
 
-    const sixthWindow = findMaxSlidingWindow([1, 3, 1, 2, 0, 5], 3)
+    const sixthWindow = findMaxSlidingWindowByLinkedListDeque([1, 3, 1, 2, 0, 5], 3)
+    expect(sixthWindow.toString()).toBe([3, 3, 2, 5].toString())
+  })
+
+  it('Should_ReturnExpectedMaxSlidingWindowByArrayDeque_WhenGivenParam', () => {
+    const firstWindow = findMaxSlidingWindowByArrayDeque([1, 3, -1, -3, 5, 3, 6, 7], 3)
+    expect(firstWindow.toString()).toBe([3, 3, 5, 5, 6, 7].toString())
+
+    const secondWindow = findMaxSlidingWindowByArrayDeque([1], 1)
+    expect(secondWindow.toString()).toBe([1].toString())
+
+    const thirdWindow = findMaxSlidingWindowByArrayDeque([1, -1], 1)
+    expect(thirdWindow.toString()).toBe([1, -1].toString())
+
+    const fourthWindow = findMaxSlidingWindowByArrayDeque([3, 1, 1, 1, 2], 3)
+    expect(fourthWindow.toString()).toBe([3, 1, 2].toString())
+
+    const fifWindow = findMaxSlidingWindowByArrayDeque([-6, -10, -7, -1, -9, 9, -8, -4, 10, -5, 2, 9, 0, -7, 7, 4, -2, -10, 8, 7], 7)
+    expect(fifWindow.toString()).toBe([9, 9, 10, 10, 10, 10, 10, 10, 10, 9, 9, 9, 8, 8].toString())
+
+    const sixthWindow = findMaxSlidingWindowByArrayDeque([1, 3, 1, 2, 0, 5], 3)
     expect(sixthWindow.toString()).toBe([3, 3, 2, 5].toString())
   })
 
