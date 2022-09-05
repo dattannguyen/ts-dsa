@@ -207,7 +207,7 @@ export const isPermutationInString = (first: string, second: string): boolean =>
  * by one position. Return the max sliding window.
  *
  * Input: nums = [1, 3, -1, -3, 5, 3, 6, 7], k = 3
- * Output: [3, 3, 5, 5, 6, 7]
+ * Output: [3, 3, 5, 5, 6, 7], combine all max values of each window
  * Explanation:
  * Window position                Max
  * ---------------               -----
@@ -222,7 +222,117 @@ export const isPermutationInString = (first: string, second: string): boolean =>
  * Output: [1]
  *
  * LeetCode question: https://leetcode.com/problems/sliding-window-maximum/
+ *
  */
-export const findMaximumWindowSliding = (numbers: number[], k: number): number[] => {
-  return []
+export const findMaxSlidingWindow = (numbers: number[], k: number): number[] => {
+
+  class DequeNode {
+    constructor(
+        readonly value: number,
+        readonly index: number,
+        public _next?: DequeNode,
+        public _prev?: DequeNode
+    ) {
+    }
+  }
+
+  class Deque {
+
+    private size = 0
+    private tail?: DequeNode
+
+    constructor(private head: DequeNode, private windowSize: number) {
+      this.size++
+    }
+
+    getMax(): number {
+      return this.head?.value
+    }
+
+    getMin(): number {
+      return this.tail?.value !== undefined
+          ? this.tail.value
+          : this.head?.value
+    }
+
+    pop() {
+      if (this.size === 1) {
+        delete this.head
+        this.size = 0
+        return
+      }
+
+      if (this.size === 2) {
+        delete this.tail
+        this.size = 1
+        return
+      }
+
+      this.tail = this.tail?._prev
+      this.tail._next = undefined
+      this.size--
+    }
+
+    popHead() {
+      this.head = this.head?._next
+      this.head._prev = undefined
+
+      if (this.size === 2) {
+        this.tail = undefined
+      }
+
+      this.size--
+    }
+
+    append(node: DequeNode) {
+      while (this.getMin() !== undefined && this.getMin() <= node.value) {
+        this.pop()
+      }
+
+      if (!this.head) {
+        this.head = node
+      } else if (!this.tail) {
+        this.tail = node
+        this.tail._prev = this.head
+        this.head._next = this.tail
+      } else {
+        node._prev = this.tail
+        this.tail._next = node
+        this.tail = node
+      }
+
+      this.size++
+      while ((this.tail?.index - this.head.index + 1) > this.windowSize) {
+        this.popHead()
+      }
+    }
+  }
+
+  let deque
+  let result = []
+
+  let i = 0
+  while (i < k) {
+    const node = new DequeNode(numbers[i], i)
+    if (!deque) {
+      deque = new Deque(node, k)
+    } else {
+      deque.append(node)
+    }
+
+    i++
+  }
+
+  result.push(deque.getMax())
+  while (i < numbers.length) {
+    const value = numbers[i]
+    const node = new DequeNode(value, i)
+    deque.append(node)
+
+    result.push(deque.getMax())
+    i++
+  }
+
+  return result
+
 }

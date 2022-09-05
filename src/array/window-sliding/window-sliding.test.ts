@@ -1,5 +1,6 @@
 import {
   findLongestSubstringWithUniqueChar,
+  findMaxSlidingWindow,
   findMaxSumOfAdjacentElementByWindowSliding,
   findMinimumWindowSubstring,
   isPermutationInString
@@ -126,6 +127,30 @@ describe('Test isPermutationInString()', () => {
 
     const fourthFalse = isPermutationInString('hello', 'ooolleoooleh')
     expect(fourthFalse).toBeFalsy()
+  })
+
+})
+
+describe('Test findMaxSlidingWindow()', () => {
+
+  it('Should_ReturnExpectedMaxSlidingWindow_WhenGivenParam', () => {
+    const firstWindow = findMaxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3)
+    expect(firstWindow.toString()).toBe([3, 3, 5, 5, 6, 7].toString())
+
+    const secondWindow = findMaxSlidingWindow([1], 1)
+    expect(secondWindow.toString()).toBe([1].toString())
+
+    const thirdWindow = findMaxSlidingWindow([1, -1], 1)
+    expect(thirdWindow.toString()).toBe([1, -1].toString())
+
+    const fourthWindow = findMaxSlidingWindow([3, 1, 1, 1, 2], 3)
+    expect(fourthWindow.toString()).toBe([3, 1, 2].toString())
+
+    const fifWindow = findMaxSlidingWindow([-6, -10, -7, -1, -9, 9, -8, -4, 10, -5, 2, 9, 0, -7, 7, 4, -2, -10, 8, 7], 7)
+    expect(fifWindow.toString()).toBe([9, 9, 10, 10, 10, 10, 10, 10, 10, 9, 9, 9, 8, 8].toString())
+
+    const sixthWindow = findMaxSlidingWindow([1, 3, 1, 2, 0, 5], 3)
+    expect(sixthWindow.toString()).toBe([3, 3, 2, 5].toString())
   })
 
 })
