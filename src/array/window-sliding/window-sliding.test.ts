@@ -1,4 +1,5 @@
 import {
+  findLongestRepeatingCharacterReplacement,
   findLongestSubstringWithUniqueChar,
   findMaxSlidingWindowByArrayDeque,
   findMaxSlidingWindowByLinkedListDeque,
@@ -174,4 +175,24 @@ describe('Test findMaxSlidingWindow()', () => {
     expect(sixthWindow.toString()).toBe([3, 3, 2, 5].toString())
   })
 
+})
+
+describe('Test findLongestRepeatingReplacement()', () => {
+
+  it('Should_findLongestRepeatingReplacement_WhenGivenParam', () => {
+    const firstLength = findLongestRepeatingCharacterReplacement('ABAB', 2)
+    expect(firstLength).toBe(4)
+
+    const secondLength = findLongestRepeatingCharacterReplacement('AABABBA', 1)
+    expect(secondLength).toBe(4)
+
+    const thirdLength = findLongestRepeatingCharacterReplacement('ABBB', 2)
+    expect(thirdLength).toBe(4)
+
+    const fourthLength = findLongestRepeatingCharacterReplacement('ABAA', 0)
+    expect(fourthLength).toBe(2)
+
+    const fifLength = findLongestRepeatingCharacterReplacement('KRSCDCSONAJNHLBMDQGIFCPEKPOHQIHLTDIQGEKLRLCQNBOHNDQGHJPNDQPERNFSSSRDEQLFPCCCARFMDLHADJADAGNNSBNCJQOF', 4)
+    expect(fifLength).toBe(7)
+  })
 })
