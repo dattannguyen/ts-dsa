@@ -91,7 +91,7 @@ describe('Test findMaxProfitOfStockByTwoPointer()', () => {
     const profitOfSeven = findMaxProfitOfStockByTwoPointer([7, 2, 5, 3, 6, 4, 1, 2, 8, 4])
     expect(profitOfSeven).toBe(7)
 
-    const profitOfSix = findMaxProfitOfStockByTwoPointer([2,8,1,3])
+    const profitOfSix = findMaxProfitOfStockByTwoPointer([2, 8, 1, 3])
     expect(profitOfSix).toBe(6)
   })
 
