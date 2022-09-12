@@ -1,11 +1,11 @@
 export class Heap<T = any> {
 
   private readonly container: T[]
-  private readonly comparator: (parentValue: T, childValue: T) => boolean
+  private readonly compare: (parentValue: T, childValue: T) => boolean
 
-  constructor(comparator: (parentValue: T, childValue: T) => boolean) {
+  constructor(compare: (parentValue: T, childValue: T) => boolean) {
     this.container = []
-    this.comparator = comparator
+    this.compare = compare
   }
 
   get size(): number {
@@ -44,6 +44,10 @@ export class Heap<T = any> {
     return this.container[0]
   }
 
+  last(): T | undefined {
+    return this.container[this.size - 1]
+  }
+
   poll(): T | undefined {
     if (this.size <= 0) {
       return this.container.pop()
@@ -65,7 +69,7 @@ export class Heap<T = any> {
     return this
   }
 
-  delete(value: T): Heap {
+  remove(value: T): Heap {
     return this
   }
 
@@ -73,7 +77,7 @@ export class Heap<T = any> {
     let lastIndex = this.size - 1
     while (
         this.hasParent(lastIndex)
-        && !this.comparator(this.container[this.getParentIndex(lastIndex)], this.container[lastIndex])
+        && !this.compare(this.container[this.getParentIndex(lastIndex)], this.container[lastIndex])
         ) {
       this.swap(this.getParentIndex(lastIndex), lastIndex)
       lastIndex = this.getParentIndex(lastIndex)
@@ -86,11 +90,11 @@ export class Heap<T = any> {
     while (this.hasLeftChild(fromIndex)) {
       let nextIndex = this.getLeftChildIndex(fromIndex)
       const rightIndex = this.getRightChildIndex(fromIndex)
-      if (this.hasRightChild(fromIndex) && this.comparator(this.container[rightIndex], this.container[nextIndex])) {
+      if (this.hasRightChild(fromIndex) && this.compare(this.container[rightIndex], this.container[nextIndex])) {
         nextIndex = rightIndex
       }
 
-      if (this.comparator(this.container[fromIndex], this.container[nextIndex])) {
+      if (this.compare(this.container[fromIndex], this.container[nextIndex])) {
         break
       } else {
         this.swap(fromIndex, nextIndex)
