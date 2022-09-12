@@ -29,6 +29,20 @@ describe('Test Heap insert()', () => {
     expect(minHeap.get(minHeap.getParentIndex(minHeap.size - 1))).toBe(4)
   })
 
+  it('Should_InsertInRightOrder_WhenGivenMinHeapThatAllowDuplicatedValue', function () {
+    const minHeap = new Heap<number>((parent: number, child: number) => parent < child)
+    minHeap.insert(1)
+    minHeap.insert(5)
+    minHeap.insert(15)
+    minHeap.insert(20)
+    minHeap.insert(30)
+
+    minHeap.insert(15)
+    expect(minHeap.peek()).toBe(1)
+    expect(minHeap.last()).toBe(15)
+    expect(minHeap.get(minHeap.getParentIndex(minHeap.size - 1))).toBe(minHeap.last())
+  })
+
   it('Should_InsertInRightOrder_WhenGivenMaxHeap', function () {
     const maxHeap = new Heap<number>((parent: number, child: number) => parent > child)
     maxHeap.insert(1)
@@ -58,6 +72,20 @@ describe('Test Heap insert()', () => {
     expect(maxHeap.get(maxHeap.getParentIndex(maxHeap.size - 1))).toBe(4)
   })
 
+  it('Should_InsertInRightOrder_WhenGivenMaxHeapThatAllowDuplicatedValue', function () {
+    const maxHeap = new Heap<number>((parent: number, child: number) => parent > child)
+    maxHeap.insert(1)
+    maxHeap.insert(5)
+    maxHeap.insert(15)
+    maxHeap.insert(20)
+    maxHeap.insert(30)
+
+    maxHeap.insert(20)
+    expect(maxHeap.peek()).toBe(30)
+    expect(maxHeap.last()).toBe(5)
+    expect(maxHeap.get(maxHeap.getLeftChildIndex(0))).toBe(20)
+    expect(maxHeap.get(maxHeap.getRightChildIndex(0))).toBe(20)
+  })
 })
 
 describe('Test Heap poll()', () => {
