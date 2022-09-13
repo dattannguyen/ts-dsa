@@ -14,6 +14,8 @@
  *
  * LeetCode question: https://leetcode.com/problems/group-anagrams
  */
+import { Heap } from '../heap/heap'
+
 export const groupAnagram = (strings: string[]): Array<string[]> => {
   const groupByAnagram: Map<string, string[]> = new Map()
   for (let string of strings) {
@@ -30,4 +32,37 @@ export const groupAnagram = (strings: string[]): Array<string[]> => {
   }
 
   return Array.from(groupByAnagram.values())
+}
+
+/**
+ * Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any
+ * order.
+ *
+ * Input: nums = [1,1,1,2,2,3], k = 2
+ * Output: [1,2]
+ *
+ * Input: nums = [1], k = 1
+ * Output: [1]
+ *
+ * LeetCode question: https://leetcode.com/problems/top-k-frequent-elements/
+ */
+export const findTopFrequentElement = (nums: number[], k: number): number[] => {
+  const frequentMap: Map<number, number> = new Map()
+  for (let num of nums) {
+    frequentMap.set(num, (frequentMap.get(num) || 0) + 1)
+  }
+
+  const minHeap = new Heap<number>(
+      (first: number, second: number) => (frequentMap.get(first) || 0) < (frequentMap.get(second) || 0)
+  )
+
+  frequentMap.forEach((_, num: number) => {
+    minHeap.insert(num)
+    if (minHeap.size > k) {
+      minHeap.poll()
+    }
+  })
+
+
+  return minHeap.nodes
 }
