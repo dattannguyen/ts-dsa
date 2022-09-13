@@ -132,3 +132,62 @@ describe('Test Heap poll()', () => {
   })
 
 })
+
+describe('Test Heap remove()', function () {
+
+  it('Should_RemoveRootNode_WhenGivenMinxHeap', function () {
+    const minHeap = new Heap<number>((parent: number, child: number) => parent < child)
+    minHeap.insert(3)
+    minHeap.insert(12)
+    minHeap.insert(10)
+    minHeap.insert(11)
+    minHeap.insert(11)
+    expect(minHeap.toString()).toBe('3,11,10,12,11')
+
+    minHeap.remove(3)
+    expect(minHeap.toString()).toBe('10,11,11,12')
+
+    minHeap.remove(10)
+    expect(minHeap.toString()).toBe('11,12,11')
+  })
+
+  it('Should_RemoveNodeAndHeapifyUp_WhenGivenMinHeap', function () {
+    const minHeap = new Heap<number>((parent: number, child: number) => parent < child)
+    minHeap.insert(3)
+    minHeap.insert(10)
+    minHeap.insert(5)
+    minHeap.insert(6)
+    minHeap.insert(7)
+    minHeap.insert(4)
+    minHeap.insert(6)
+    minHeap.insert(8)
+    minHeap.insert(2)
+    minHeap.insert(1)
+    expect(minHeap.toString()).toBe('1,2,4,6,3,5,6,10,8,7')
+
+    minHeap.remove(8)
+    expect(minHeap.toString()).toBe('1,2,4,6,3,5,6,10,7')
+
+    minHeap.remove(6)
+    expect(minHeap.toString()).toBe('1,2,4,7,3,5,10')
+
+    minHeap.remove(10)
+    expect(minHeap.toString()).toBe('1,2,4,7,3,5')
+  })
+
+  it('Should_RemoveRootNode_WhenGivenMaxHeap', function () {
+    const maxHeap = new Heap<number>((parent: number, child: number) => parent > child)
+    maxHeap.insert(3)
+    maxHeap.insert(12)
+    maxHeap.insert(10)
+    maxHeap.insert(11)
+    maxHeap.insert(11)
+    expect(maxHeap.toString()).toBe('12,11,10,3,11')
+
+    maxHeap.remove(12)
+    expect(maxHeap.toString()).toBe('11,11,10,3')
+
+    maxHeap.remove(11)
+    expect(maxHeap.toString()).toBe('10,3')
+  })
+})
