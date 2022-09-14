@@ -66,3 +66,30 @@ export const findTopFrequentElementByHeap = (nums: number[], k: number): number[
 
   return minHeap.nodes
 }
+
+export const findTopFrequentElementByBucket = (nums: number[], k: number): number[] => {
+  const frequentMap: Map<number, number> = new Map()
+  const frequentBucket: Map<any, any>[] = new Array(nums.length)
+
+  for (let num of nums) {
+    const count = frequentMap.get(num) || 0
+    const nextCount = count + 1
+
+    if (frequentBucket[nextCount] === undefined) {
+      frequentBucket[nextCount] = new Map()
+    }
+
+    frequentMap.set(num, nextCount)
+    frequentBucket[count]?.delete(num)
+    frequentBucket[nextCount].set(num, nextCount)
+  }
+
+  const result = []
+  let j = frequentBucket.length - 1
+  while (result.length < k && j >= 0) {
+    result.push(...(frequentBucket[j]?.keys() || []))
+    j--
+  }
+
+  return result
+}
