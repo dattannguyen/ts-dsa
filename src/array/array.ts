@@ -46,7 +46,7 @@ export const groupAnagram = (strings: string[]): Array<string[]> => {
  *
  * LeetCode question: https://leetcode.com/problems/top-k-frequent-elements/
  */
-export const findTopFrequentElement = (nums: number[], k: number): number[] => {
+export const findTopFrequentElementByHeap = (nums: number[], k: number): number[] => {
   const frequentMap: Map<number, number> = new Map()
   for (let num of nums) {
     frequentMap.set(num, (frequentMap.get(num) || 0) + 1)

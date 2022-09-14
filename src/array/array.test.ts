@@ -1,4 +1,4 @@
-import { findTopFrequentElement, groupAnagram } from './array'
+import { findTopFrequentElementByHeap, groupAnagram } from './array'
 
 describe('Test groupAnagram()', () => {
 
@@ -33,15 +33,15 @@ describe('Test groupAnagram()', () => {
 describe('Test findTopFrequentElement()', () => {
 
   it('Should_ReturnTopKElement_WhenGivenParam', () => {
-    const topOne = findTopFrequentElement([1, 1, 1, 2, 2, 3], 2)
+    const topOne = findTopFrequentElementByHeap([1, 1, 1, 2, 2, 3], 2)
     expect(topOne).toContainEqual(1)
     expect(topOne).toContainEqual(2)
     expect(topOne).not.toContainEqual(3)
 
-    const topTwo = findTopFrequentElement([1], 1)
+    const topTwo = findTopFrequentElementByHeap([1], 1)
     expect(topTwo).toContainEqual(1)
 
-    const topThree = findTopFrequentElement([1, 2], 2)
+    const topThree = findTopFrequentElementByHeap([1, 2], 2)
     expect(topThree).toContainEqual(1)
     expect(topThree).toContainEqual(2)
   })
