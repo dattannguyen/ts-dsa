@@ -109,11 +109,10 @@ describe('Test union()', () => {
         .makeSet('H')
         .makeSet('I')
 
-    disjointSet
-        .union('E', 'F')
-        .union('F', 'G')
-        .union('G', 'H')
-        .union('H', 'I')
+    disjointSet.union('E', 'F')
+    disjointSet.union('F', 'G')
+    disjointSet.union('G', 'H')
+    disjointSet.union('H', 'I')
 
     expect(disjointSet.isInSameSet('A', 'I')).toBeFalsy()
     expect(disjointSet.isInSameSet('E', 'I')).toBeTruthy()

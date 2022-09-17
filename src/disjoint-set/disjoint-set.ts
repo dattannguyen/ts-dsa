@@ -33,21 +33,21 @@ export class DisjointSet<T = any> {
     return this._items.get(targetItem.key)?.root
   }
 
-  union(first: T, second: T): DisjointSet<T> {
+  union(first: T, second: T): DisjointSetItem<T> {
     const firstRepresentative = this.find(first)
     const secondRepresentative = this.find(second)
 
     if (firstRepresentative.key === secondRepresentative.key) {
-      return this
+      return firstRepresentative
     }
 
     if (this._rank(firstRepresentative, secondRepresentative)) {
       this._items.get(firstRepresentative.key).addChild(secondRepresentative)
+      return firstRepresentative
     } else {
       this._items.get(secondRepresentative.key).addChild(firstRepresentative)
+      return secondRepresentative
     }
-
-    return this
   }
 
   isInSameSet(first: T, second: T): boolean {
