@@ -120,6 +120,7 @@ describe('Test union()', () => {
 
     disjointSet.union('I', 'C')
     expect(disjointSet.find('I').value).toBe('A')
+    expect(disjointSet.find('I').totalChildren).toBe(7)
     expect(disjointSet.isInSameSet('A', 'I')).toBeTruthy()
   })
 
