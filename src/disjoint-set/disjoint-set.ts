@@ -38,9 +38,9 @@ export class DisjointSet<T = any> {
 
 
     if (this._rank(firstRepresentative, secondRepresentative)) {
-      this._items.get(firstRepresentative.key).addChild(firstRepresentative)
+      this._items.get(firstRepresentative.key).addChild(secondRepresentative)
     } else {
-      this._items.get(secondRepresentative.key).addChild(secondRepresentative)
+      this._items.get(secondRepresentative.key).addChild(firstRepresentative)
     }
 
     return this
