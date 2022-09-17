@@ -2,18 +2,22 @@ import { DisjointSetItem } from './disjoint-set-item'
 
 export class DisjointSet<T = any> {
 
-  private readonly _set: Map<string, DisjointSetItem<T>>
+  private readonly _items: Map<string, DisjointSetItem<T>>
   private readonly _rank: (first: DisjointSetItem<T>, second: DisjointSetItem<T>) => boolean
 
   constructor(rank?: (first: DisjointSetItem<T>, second: DisjointSetItem<T>) => boolean) {
-    this._set = new Map()
+    this._items = new Map()
     this._rank = rank || ((first, second) => first.totalChildren < second.totalChildren)
+  }
+
+  get items(): Map<string, DisjointSetItem<T>> {
+    return this._items
   }
 
   makeSet(value: T): DisjointSet<T> {
     const item = new DisjointSetItem(value)
-    if (!this._set.has(item.key)) {
-      this._set.set(item.key, item)
+    if (!this._items.has(item.key)) {
+      this._items.set(item.key, item)
     }
 
     return this
@@ -21,7 +25,7 @@ export class DisjointSet<T = any> {
 
   find(value: T): DisjointSetItem<T> {
     const targetItem = new DisjointSetItem(value)
-    return this._set.get(targetItem.key)?.root
+    return this._items.get(targetItem.key)?.root
   }
 
   union(first: T, second: T): DisjointSet<T> {
@@ -34,9 +38,9 @@ export class DisjointSet<T = any> {
 
 
     if (this._rank(firstRepresentative, secondRepresentative)) {
-      this._set.get(firstRepresentative.key).addChild(firstRepresentative)
+      this._items.get(firstRepresentative.key).addChild(firstRepresentative)
     } else {
-      this._set.get(secondRepresentative.key).addChild(secondRepresentative)
+      this._items.get(secondRepresentative.key).addChild(secondRepresentative)
     }
 
     return this
