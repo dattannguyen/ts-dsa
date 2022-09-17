@@ -1,4 +1,9 @@
-import { findTopFrequentElementByBucket, findTopFrequentElementByHeap, groupAnagram } from './array'
+import {
+  findLongestConsecutiveSequence,
+  findTopFrequentElementByBucket,
+  findTopFrequentElementByHeap,
+  groupAnagram
+} from './array'
 
 describe('Test groupAnagram()', () => {
 
@@ -58,6 +63,36 @@ describe('Test findTopFrequentElement()', () => {
     const topBucketThree = findTopFrequentElementByBucket([1, 2], 2)
     expect(topBucketThree).toContainEqual(1)
     expect(topBucketThree).toContainEqual(2)
+  })
+
+})
+
+describe('Test findLongestConsecutiveSequence', () => {
+
+  it('Should_ReturnZero_WhenGivenEmptyInput', () => {
+    const length = findLongestConsecutiveSequence([])
+    expect(length).toBe(0)
+  })
+
+  it('Should_ReturnExpectedLength_WhenGivenValidArray', () => {
+    const firstLength = findLongestConsecutiveSequence([1, 1000, 2000, 2, 3, 200, 409, 5, 1, 6])
+    expect(firstLength).toBe(3)
+
+    const secondLength = findLongestConsecutiveSequence([100, 4, 200, 1, 3, 2])
+    expect(secondLength).toBe(4)
+
+    const thirdLength = findLongestConsecutiveSequence([0, 3, 7, 2, 5, 8, 4, 6, 0, 1])
+    expect(thirdLength).toBe(9)
+
+    const fourthLength = findLongestConsecutiveSequence([0, 1, 2, 3, 4, 10, 11, 12, 13, 14, 15, 16])
+    expect(fourthLength).toBe(7)
+
+    const fifLength = findLongestConsecutiveSequence([0])
+    expect(fifLength).toBe(1)
+
+    const sixthLength = findLongestConsecutiveSequence([0, 0])
+    expect(sixthLength).toBe(1)
+
   })
 
 })

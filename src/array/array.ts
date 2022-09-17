@@ -15,6 +15,7 @@
  * LeetCode question: https://leetcode.com/problems/group-anagrams
  */
 import { Heap } from '../heap/heap'
+import { DisjointSet } from '../disjoint-set/disjoint-set'
 
 export const groupAnagram = (strings: string[]): Array<string[]> => {
   const groupByAnagram: Map<string, string[]> = new Map()
@@ -92,4 +93,39 @@ export const findTopFrequentElementByBucket = (nums: number[], k: number): numbe
   }
 
   return result
+}
+
+/**
+ * Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+ *
+ * Input: nums = [100,4,200,1,3,2]
+ * Output: 4
+ * Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
+ *
+ * Input: nums = [0,3,7,2,5,8,4,6,0,1]
+ * Output: 9
+ *
+ * LeetCode question: https://leetcode.com/problems/longest-consecutive-sequence/
+ */
+export const findLongestConsecutiveSequence = (nums: number[]): number => {
+  let longestLength: number = 0
+  const disjointSet = new DisjointSet<number>()
+
+  for (let num of nums) {
+    disjointSet.makeSet(num)
+  }
+
+  for (let setItem of disjointSet.items.values()) {
+    const next = setItem.value + 1
+    const representativeOfNext = disjointSet.find(next)
+    if (!representativeOfNext) {
+      longestLength = Math.max(longestLength, setItem.root.totalChildren + 1)
+      continue
+    }
+
+    const newRepresentative = disjointSet.union(next, setItem.value)
+    longestLength = Math.max(longestLength, newRepresentative.totalChildren + 1)
+  }
+
+  return longestLength
 }
