@@ -3,10 +3,15 @@ import { DisjointSetItem } from './disjoint-set-item'
 export class DisjointSet<T = any> {
 
   private readonly _items: Map<string, DisjointSetItem<T>>
-  private readonly _rank: (first: DisjointSetItem<T>, second: DisjointSetItem<T>) => boolean
+  private readonly _hash?: (disjointSetItem: DisjointSetItem) => string
+  private readonly _rank?: (first: DisjointSetItem<T>, second: DisjointSetItem<T>) => boolean
 
-  constructor(rank?: (first: DisjointSetItem<T>, second: DisjointSetItem<T>) => boolean) {
+  constructor(
+      rank?: (first: DisjointSetItem<T>, second: DisjointSetItem<T>) => boolean,
+      hash?: (disjointSetItem: DisjointSetItem<T>) => string
+  ) {
     this._items = new Map()
+    this._hash = hash
     this._rank = rank || ((first, second) => first.totalChildren < second.totalChildren)
   }
 
@@ -15,7 +20,7 @@ export class DisjointSet<T = any> {
   }
 
   makeSet(value: T): DisjointSet<T> {
-    const item = new DisjointSetItem(value)
+    const item = new DisjointSetItem(value, this._hash)
     if (!this._items.has(item.key)) {
       this._items.set(item.key, item)
     }
@@ -24,7 +29,7 @@ export class DisjointSet<T = any> {
   }
 
   find(value: T): DisjointSetItem<T> {
-    const targetItem = new DisjointSetItem(value)
+    const targetItem = new DisjointSetItem(value, this._hash)
     return this._items.get(targetItem.key)?.root
   }
 
@@ -35,7 +40,6 @@ export class DisjointSet<T = any> {
     if (firstRepresentative.key === secondRepresentative.key) {
       return this
     }
-
 
     if (this._rank(firstRepresentative, secondRepresentative)) {
       this._items.get(firstRepresentative.key).addChild(secondRepresentative)
