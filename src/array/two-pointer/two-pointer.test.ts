@@ -2,7 +2,7 @@ import {
   detectLinkedListCycleByTwoPointer,
   findMaxProfitOfStockByTwoPointer,
   isPalindrome,
-  twoSumByTwoPointer
+  twoSum
 } from './two-pointer.technique'
 import { SinglyLinkedList } from '../../linked-list/singly/singly-linked-list'
 
@@ -34,21 +34,21 @@ describe('Test isPalindrome()', () => {
 describe('Test twoSumByTwoPointer()', () => {
 
   it('Should_ReturnUndefined_WhenGivenEmptyArray', () => {
-    const pair = twoSumByTwoPointer([], 10)
+    const pair = twoSum([], 10)
     expect(pair).toBeFalsy()
   })
 
   it('Should_ReturnUndefined_WhenNoMatchSumPair', () => {
-    const pair = twoSumByTwoPointer([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 20)
+    const pair = twoSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 20)
     expect(pair).toBeFalsy()
   })
 
   it('Should_ReturnExpectedIndexPair_WhenGivenMatchSumPair', () => {
-    const firstPair = twoSumByTwoPointer([10, 20, 35, 50, 75, 80], 70)
+    const firstPair = twoSum([10, 20, 35, 50, 75, 80], 70)
     expect(firstPair[0]).toBe(1)
     expect(firstPair[1]).toBe(3)
 
-    const secondPair = twoSumByTwoPointer([4, 2, 10, 23], 27)
+    const secondPair = twoSum([4, 2, 10, 23], 27)
     expect(secondPair[0]).toBe(0)
     expect(secondPair[1]).toBe(3)
   })

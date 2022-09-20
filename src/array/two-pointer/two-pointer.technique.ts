@@ -49,7 +49,7 @@ export const isPalindrome = (string: string): boolean => {
  * Input: numbers = [1, 3, 3, 9, 5, 6], sumTarget = 10
  * Output: [0, 3] because numbers[0] + numbers[3] = 10
  */
-export const twoSumByTwoPointer = (numbers: number[], sumTarget: number): [number, number] | undefined => {
+export const twoSum = (numbers: number[], sumTarget: number): [number, number] | undefined => {
   const length = numbers.length
   if (length === 0) {
     return
