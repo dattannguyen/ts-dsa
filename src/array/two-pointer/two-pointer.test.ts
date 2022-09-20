@@ -1,9 +1,35 @@
 import {
   detectLinkedListCycleByTwoPointer,
   findMaxProfitOfStockByTwoPointer,
+  isPalindrome,
   twoSumByTwoPointer
 } from './two-pointer.technique'
 import { SinglyLinkedList } from '../../linked-list/singly/singly-linked-list'
+
+describe('Test isPalindrome()', () => {
+
+  it('Should_ReturnTrue_WhenGivenEmptyString', () => {
+    const truthy = isPalindrome(' ')
+    expect(truthy).toBeTruthy()
+  })
+
+  it('Should_ReturnTrue_WhenGivenPalindromeString', () => {
+    const firstTruthy = isPalindrome('A man, a plan, a canal: Panama')
+    expect(firstTruthy).toBeTruthy()
+
+    const secondTruthy = isPalindrome('level')
+    expect(secondTruthy).toBeTruthy()
+  })
+
+  it('Should_ReturnFalse_WhenGivenInvalidPalindromeString', () => {
+    const firstFalsy = isPalindrome('race a car')
+    expect(firstFalsy).toBeFalsy()
+
+    const secondFalsy = isPalindrome('0P')
+    expect(secondFalsy).toBeFalsy()
+  })
+
+})
 
 describe('Test twoSumByTwoPointer()', () => {
 

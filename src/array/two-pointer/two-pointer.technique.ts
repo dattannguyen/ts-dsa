@@ -1,6 +1,49 @@
 import { SinglyLinkedList } from '../../linked-list/singly/singly-linked-list'
 
 /**
+ * A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all
+ * non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and
+ * numbers. Given a string s, return true if it is a palindrome, or false otherwise.
+ *
+ * Input: s = "A man, a plan, a canal: Panama"
+ * Output: true
+ * Explanation: "amanaplanacanalpanama" is a palindrome.
+ *
+ * Input: s = "race a car"
+ * Output: false
+ * Explanation: "raceacar" is not a palindrome.
+ *
+ * Input: s = " "
+ * Output: true
+ * Explanation: s is an empty string "" after removing non-alphanumeric characters.
+ * Since an empty string reads the same forward and backward, it is a palindrome.
+ *
+ * LeetCode question: https://leetcode.com/problems/valid-palindrome/
+ */
+export const isPalindrome = (string: string): boolean => {
+  for (let i = 0, j = string.length - 1; i < j; i++, j--) {
+    let iChar = string[i].toLowerCase()
+    let jChar = string[j].toLowerCase()
+
+    while (i < j && (iChar < 'a' || iChar > 'z') && (iChar < '0' || iChar > '9')) {
+      i++
+      iChar = string[i].toLowerCase()
+    }
+
+    while (i < j && (jChar < 'a' || jChar > 'z') && (jChar < '0' || jChar > '9')) {
+      j--
+      jChar = string[j].toLowerCase()
+    }
+
+    if (iChar !== jChar) {
+      return false
+    }
+  }
+
+  return true
+}
+
+/**
  * Given a sorted array A (sorted in ascending order), having N integers, find if there exists any pair of elements
  * (A[i], A[j]) such that their sum is equal to X
  * Input: numbers = [1, 3, 3, 9, 5, 6], sumTarget = 10
