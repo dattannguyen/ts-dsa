@@ -31,7 +31,7 @@ describe('Test isPalindrome()', () => {
 
 })
 
-describe('Test twoSumByTwoPointer()', () => {
+describe('Test twoSum()', () => {
 
   it('Should_ReturnUndefined_WhenGivenEmptyArray', () => {
     const pair = twoSum([], 10)
