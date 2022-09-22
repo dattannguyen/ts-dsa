@@ -1,5 +1,6 @@
 import {
   detectLinkedListCycleByTwoPointer,
+  findMaxAmountOfWaterContainer,
   findMaxProfitOfStockByTwoPointer,
   isPalindrome,
   twoSum
@@ -119,6 +120,18 @@ describe('Test findMaxProfitOfStockByTwoPointer()', () => {
 
     const profitOfSix = findMaxProfitOfStockByTwoPointer([2, 8, 1, 3])
     expect(profitOfSix).toBe(6)
+  })
+
+})
+
+describe('Test findMaxAmountOfWaterContainer()', () => {
+
+  it('Should_ReturnMaximumContainer_WhenGivenValid', function () {
+    const first = findMaxAmountOfWaterContainer([1, 8, 6, 2, 5, 4, 8, 3, 7])
+    expect(first).toBe(49)
+
+    const second = findMaxAmountOfWaterContainer([1, 1])
+    expect(second).toBe(1)
   })
 
 })
