@@ -3,6 +3,7 @@ import {
   findMaxAmountOfWaterContainer,
   findMaxProfitOfStockByTwoPointer,
   isPalindrome,
+  threeSum,
   twoSum
 } from './two-pointer.technique'
 import { SinglyLinkedList } from '../../linked-list/singly/singly-linked-list'
@@ -52,6 +53,28 @@ describe('Test twoSum()', () => {
     const secondPair = twoSum([4, 2, 10, 23], 27)
     expect(secondPair[0]).toBe(0)
     expect(secondPair[1]).toBe(3)
+  })
+
+})
+
+describe('Test threeSum()', () => {
+
+  it('Should_ReturnEmpty_WhenGivenEmptyArray', () => {
+    const result = threeSum([])
+    expect(result.length).toBe(0)
+  })
+
+  it('Should_ReturnEmpty_WhenNoMatchSumPair', () => {
+    const result = threeSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    expect(result.length).toBe(0)
+  })
+
+  it('Should_ReturnExpectedTriplet_WhenGivenMatchSum', () => {
+    const first = threeSum([-1, 0, 1, 2, -1, -4])
+    expect(first.toString()).toBe('-1,-1,2,-1,0,1')
+
+    const second = threeSum([0, 0, 0])
+    expect(second.toString()).toBe('0,0,0')
   })
 
 })
