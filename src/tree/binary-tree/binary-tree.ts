@@ -46,6 +46,56 @@ export class BinaryTree<T = any> extends TreeNode<T> {
     return this._compareLeftOrder(this.value, node.value)
   }
 
+  traverseInOrder(): T[] {
+    const result = []
+    if (this.left) {
+      const traverseLeft = this.left.traverseInOrder()
+      result.push(...traverseLeft)
+    }
+
+    result.push(this.value)
+
+    if (this.right) {
+      const traverseRight = this.right.traverseInOrder()
+      result.push(...traverseRight)
+    }
+
+    return result
+  }
+
+  traversePreOrder(): T[] {
+    const result = []
+    result.push(this.value)
+
+    if (this.left) {
+      const traverseLeft = this.left.traversePreOrder()
+      result.push(...traverseLeft)
+    }
+
+    if (this.right) {
+      const traverseRight = this.right.traversePreOrder()
+      result.push(...traverseRight)
+    }
+
+    return result
+  }
+
+  traversePostOrder(): T[] {
+    const result = []
+    if (this.left) {
+      const traverseLeft = this.left.traversePostOrder()
+      result.push(...traverseLeft)
+    }
+
+    if (this.right) {
+      const traverseRight = this.right.traversePostOrder()
+      result.push(...traverseRight)
+    }
+
+    result.push(this.value)
+    return result
+  }
+
   find(value: T): BinaryTree<T> | undefined {
     const node = new BinaryTree(value, this._compareLeftOrder, this._enableDuplicated, this._compareEqual)
     if (this.isEqual(node)) {
@@ -88,8 +138,46 @@ export class BinaryTree<T = any> extends TreeNode<T> {
     return node
   }
 
-  private isLeft(node: TreeNode): boolean {
-    return this._compareLeftOrder(this.value, node.value)
+  delete(value: T): BinaryTree<T> | undefined {
+    const node = new BinaryTree(value, this._compareLeftOrder, this._enableDuplicated, this._compareEqual)
+
+    // Traverse to children if not equal
+    if (!this.isEqual(node)) {
+      const isLeftChild = this.isLeft(node)
+      if (this.left && isLeftChild) {
+        return this.left.delete(value)
+      }
+
+      if (this.right) {
+        return this.right.delete(value)
+      }
+
+      return
+    }
+
+    const isRoot = !this.parent
+    if (isRoot) {
+
+    } else if (this.left && this.right) {
+
+    }
+
+
+    const isThisBeingLeftNode = this.parent.isLeft(this)
+    if (!this.left && !this.right) {
+      isThisBeingLeftNode
+          ? this.parent.left = undefined
+          : this.parent.right = undefined
+
+      return this
+    }
+
+    if (!this.left || !this.right) {
+      const successor = this.left || this.right
+      isThisBeingLeftNode
+          ? this.parent.left = successor
+          : this.parent.right = successor
+    }
   }
 
 }

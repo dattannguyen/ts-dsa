@@ -1,5 +1,73 @@
 import { BinaryTree } from './binary-tree'
 
+describe('Test traverse()', () => {
+
+  it('Should_ReturnInOrder_WhenTraverseInOrder', () => {
+    const firstTree = new BinaryTree(3)
+    firstTree.insert(1)
+    firstTree.insert(5)
+
+    const firstInOrder = firstTree.traverseInOrder().join(',')
+    expect(firstInOrder).toBe('1,3,5')
+
+    const secondTree = new BinaryTree(50)
+    secondTree.insert(25)
+    secondTree.insert(75)
+    secondTree.insert(10)
+    secondTree.insert(33)
+    secondTree.insert(56)
+    secondTree.insert(89)
+    secondTree.insert(4)
+    secondTree.insert(11)
+
+    const secondInOrder = secondTree.traverseInOrder().join(',')
+    expect(secondInOrder).toBe('4,10,11,25,33,50,56,75,89')
+  })
+
+  it('Should_ReturnPreOrder_WhenTraversePreOrder', () => {
+    const firstTree = new BinaryTree(3)
+    firstTree.insert(1)
+    firstTree.insert(5)
+
+    const firstInOrder = firstTree.traversePreOrder().join(',')
+    expect(firstInOrder).toBe('3,1,5')
+
+    const secondTree = new BinaryTree(50)
+    secondTree.insert(30)
+    secondTree.insert(80)
+    secondTree.insert(40)
+    secondTree.insert(20)
+    secondTree.insert(90)
+    secondTree.insert(70)
+
+    const secondInOrder = secondTree.traversePreOrder().join(',')
+    expect(secondInOrder).toBe('50,30,20,40,80,70,90')
+  })
+
+  it('Should_ReturnPostOrder_WhenTraversePostOrder', () => {
+    const firstTree = new BinaryTree(3)
+    firstTree.insert(1)
+    firstTree.insert(5)
+
+    const firstInOrder = firstTree.traversePostOrder().join(',')
+    expect(firstInOrder).toBe('1,5,3')
+
+    const secondTree = new BinaryTree(50)
+    secondTree.insert(24)
+    secondTree.insert(74)
+    secondTree.insert(9)
+    secondTree.insert(32)
+    secondTree.insert(55)
+    secondTree.insert(87)
+    secondTree.insert(3)
+    secondTree.insert(10)
+
+    const secondInOrder = secondTree.traversePostOrder().join(',')
+    expect(secondInOrder).toBe('3,10,9,32,24,55,87,74,50')
+  })
+
+})
+
 describe('Test find()', () => {
 
   it('Should_ReturnUndefined_WhenFindUndefinedNode', () => {
@@ -97,6 +165,21 @@ describe('Test insert()', () => {
 
     root.insert(89)
     expect(root.right?.right.value).toBe(89)
+  })
+
+})
+
+describe('Test delete()', () => {
+
+  it('Should_DeleteLeaf_WhenGivenLeafNode', () => {
+    const root = new BinaryTree(50)
+    root.insert(25)
+    root.insert(75)
+    root.insert(10)
+    root.insert(11)
+    root.insert(33)
+
+    root.delete(11)
   })
 
 })
