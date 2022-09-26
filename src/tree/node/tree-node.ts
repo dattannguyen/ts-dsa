@@ -2,8 +2,8 @@ export class TreeNode<T = any> {
 
   private _value: T
   private _parent?: TreeNode<T>
-  private readonly _metadata?: Map<string | number, any>
-  private readonly _compare?: (first: TreeNode, second: TreeNode) => boolean
+  protected readonly _metadata?: Map<string | number, any>
+  protected readonly _compare?: (first: TreeNode, second: TreeNode) => boolean
 
   constructor(_value: T, _compare?: (first: TreeNode, second: TreeNode) => boolean) {
     this._value = _value
@@ -23,6 +23,10 @@ export class TreeNode<T = any> {
     return this._parent
   }
 
+  set parent(parent: TreeNode<T>) {
+    this._parent = parent
+  }
+
   get metadata(): Map<string | number, any> {
     return this._metadata
   }
@@ -30,6 +34,5 @@ export class TreeNode<T = any> {
   isEqual(node: TreeNode<T>): boolean {
     return this._compare(this, node)
   }
-
 
 }
