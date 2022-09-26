@@ -90,6 +90,11 @@ describe('Test Heap insert()', () => {
 
 describe('Test Heap poll()', () => {
 
+  it('Should_DoNothing_WhenGivenEmptyHeap', () => {
+    const minHeap = new Heap<number>((parent: number, child: number) => parent < child)
+    expect(minHeap.poll()).toBeFalsy()
+  })
+
   it('Should_PollRootNode_WhenGivenMinHeap', function () {
     const minHeap = new Heap<number>((parent: number, child: number) => parent < child)
     minHeap.insert(1)

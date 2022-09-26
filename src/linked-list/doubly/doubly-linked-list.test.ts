@@ -108,6 +108,13 @@ describe('Test DoublyLinkedList append()', () => {
 
 describe('Test DoublyLinkedList delete()', () => {
 
+  it('Should_DoNothing_WhenGivenNoHead', () => {
+    const ll = new DoublyLinkedList()
+    ll.delete(1)
+
+    expect(ll.head).toBeFalsy()
+  })
+
   it('Should_DeleteHead_WhenOnlyOneHead', () => {
     const ll = new DoublyLinkedList()
     ll.prepend(1)

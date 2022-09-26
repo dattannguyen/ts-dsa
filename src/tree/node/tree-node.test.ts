@@ -9,6 +9,9 @@ describe('Test initialization()', () => {
 
     node.value = 10
     expect(node.value).toBe(10)
+
+    node.parent = new TreeNode<number>(2)
+    expect(node.parent.value).toBe(2)
   })
 
   it('Should_ReturnSetMetadata_WhenCalled', () => {

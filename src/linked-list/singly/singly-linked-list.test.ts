@@ -107,6 +107,13 @@ describe('Test SinglyLinkedList reverse()', () => {
 
 describe('Test SinglyLinkedList delete()', () => {
 
+  it('Should_DoNothing_WhenGivenNoHead', () => {
+    const ll = new SinglyLinkedList()
+    ll.delete(1)
+
+    expect(ll.head).toBeFalsy()
+  })
+
   it('Should_DeleteHead_WhenMatch', () => {
     const ll = new SinglyLinkedList()
     ll.append('head')
