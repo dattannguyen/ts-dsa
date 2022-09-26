@@ -156,28 +156,75 @@ export class BinaryTree<T = any> extends TreeNode<T> {
     }
 
     const isRoot = !this.parent
-    if (isRoot) {
 
-    } else if (this.left && this.right) {
+    // Case node has both left & right left
+    if (this.left && this.right) {
+      const successor = this.right.findMin()
 
-    }
+      // The right of success will replace its
+      if (successor.right) {
+        successor.right.parent = successor.parent
+        successor.parent.left = successor.right
+        successor.right = undefined
+      } else {
+        // Remove left of successor's parent if successor has no children
+        successor.parent.left = undefined
+      }
 
+      // Replace parent, left, and child of successor by ones of current node
+      successor.parent = this.parent
+      successor.left = this.left
+      successor.right = this.right
 
-    const isThisBeingLeftNode = this.parent.isLeft(this)
-    if (!this.left && !this.right) {
-      isThisBeingLeftNode
-          ? this.parent.left = undefined
-          : this.parent.right = undefined
+      // Replace parent of left & right of current node by successor
+      this.left.parent = successor
+      this.right.parent = successor
+      if (isRoot) {
+        this.copy(successor)
+      }
+
+      if (!isRoot) {
+        this.parent.isLeft(this)
+            ? this.parent.left = successor
+            : this.parent.right = successor
+      }
 
       return this
     }
 
-    if (!this.left || !this.right) {
+    // Case node has either left or right child
+    if (this.left || this.right) {
       const successor = this.left || this.right
-      isThisBeingLeftNode
-          ? this.parent.left = successor
-          : this.parent.right = successor
+      if (isRoot) {
+        this.copy(successor)
+        this.left = successor.left
+        this.right = successor.right
+      } else {
+        this.parent.isLeft(this)
+            ? this.parent.left = successor
+            : this.parent.right = successor
+      }
+
+      return this
     }
+
+    // Case node has no left & right child
+    if (isRoot) {
+      this.value = undefined
+      this.metadata.clear()
+    } else {
+      this.parent.isLeft(this)
+          ? this.parent.left = undefined
+          : this.parent.right = undefined
+    }
+
+    return this
+  }
+
+  private findMin(): BinaryTree<T> {
+    return this.left
+        ? this.left.findMin()
+        : this
   }
 
 }

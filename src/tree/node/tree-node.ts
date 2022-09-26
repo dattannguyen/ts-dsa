@@ -31,6 +31,11 @@ export class TreeNode<T = any> {
     return this._metadata
   }
 
+  copy(node: TreeNode<T>) {
+    this.value = node.value
+    node.metadata.forEach((value, key) => this._metadata.set(key, value))
+  }
+
   isEqual(node: TreeNode<T>): boolean {
     return this._compareEqual(this, node)
   }

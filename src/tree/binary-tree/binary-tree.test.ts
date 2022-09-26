@@ -171,15 +171,118 @@ describe('Test insert()', () => {
 
 describe('Test delete()', () => {
 
-  it('Should_DeleteLeaf_WhenGivenLeafNode', () => {
-    const root = new BinaryTree(50)
-    root.insert(25)
-    root.insert(75)
-    root.insert(10)
-    root.insert(11)
-    root.insert(33)
+  it('Should_DeleteNode_WhenGivenLeafNode', () => {
+    const root = new BinaryTree(10)
+    root.insert(20)
+    root.insert(5)
 
-    root.delete(11)
+    const deletedNode = root.delete(5)
+    expect(deletedNode.value).toBe(5)
+    expect(root.traverseInOrder().join('-')).toBe('10-20')
+
+    root.delete(20)
+    expect(root.traverseInOrder().join('-')).toBe('10')
+  })
+
+  it('Should_DeleteRootNode_WhenGivenLeafNode', () => {
+    const root = new BinaryTree(10)
+    root.metadata.set(1, 2)
+    root.metadata.set(3, 4)
+
+    expect(root.metadata.size).toBe(2)
+    expect(root.traverseInOrder().join(',')).toBe('10')
+
+    root.delete(10)
+    expect(root.value).toBeFalsy()
+    expect(root.metadata.size).toBe(0)
+    expect(root.traverseInOrder().join(',')).toBe('')
+  })
+
+  it('Should_DeleteNode_WhenGivenNodeHasEitherLeftOrRight', () => {
+    const root = new BinaryTree(10)
+    root.insert(20)
+    root.insert(5)
+    root.insert(30)
+
+    root.delete(20)
+    expect(root.traverseInOrder().join(',')).toBe('5,10,30')
+
+    root.insert(1)
+    expect(root.traverseInOrder().join(',')).toBe('1,5,10,30')
+
+    root.delete(5)
+    expect(root.traverseInOrder().join(',')).toBe('1,10,30')
+  })
+
+  it('Should_DeleteRootNode_WhenGivenNodeHasEitherLeftOrRight', () => {
+    const root = new BinaryTree(10)
+    root.metadata.set(1, 2)
+    root.insert(20)
+    root.insert(15)
+    root.insert(30)
+    expect(root.traverseInOrder().join(',')).toBe('10,15,20,30')
+
+    const twentyNode = root.find(20)
+    twentyNode.metadata
+        .set(1, 3)
+        .set(2, 4)
+
+    root.delete(10)
+    expect(root.traverseInOrder().join(',')).toBe('15,20,30')
+    expect(root.value).toBe(20)
+    expect(root.metadata.get(1)).toBe(3)
+    expect(root.metadata.get(2)).toBe(4)
+  })
+
+  it('Should_DeleteNode_WhenGivenNodeHasTwoChildren', () => {
+    const root = new BinaryTree(10)
+    root.insert(20)
+    root.insert(5)
+    root.insert(30)
+    root.insert(15)
+    root.insert(25)
+    root.insert(27)
+
+    root.delete(20)
+    expect(root.traverseInOrder().join(',')).toBe('5,10,15,25,27,30')
+
+    root.delete(15)
+    expect(root.traverseInOrder().join(',')).toBe('5,10,25,27,30')
+  })
+
+  it('Should_DeleteRootNode_WhenGivenNodeHasTwoChildren', () => {
+    const root = new BinaryTree(10)
+    root.metadata.set(5, 6)
+    root.insert(20)
+    root.insert(5)
+    root.insert(30)
+    root.insert(17)
+    root.insert(15)
+    root.insert(25)
+
+    const twentyNode = root.find(15)
+    twentyNode.metadata
+        .set(5, 10)
+        .set(15, 20)
+
+    root.delete(10)
+    expect(root.traverseInOrder().join(',')).toBe('5,15,17,20,25,30')
+    expect(root.value).toBe(15)
+    expect(root.metadata.get(5)).toBe(10)
+    expect(root.metadata.get(15)).toBe(20)
+  })
+
+  it('Should_ReturnUndefined_WhenGivenNonExistentNode', () => {
+    const root = new BinaryTree(10)
+    root.insert(20)
+    root.insert(5)
+    root.insert(30)
+    root.insert(15)
+    root.insert(25)
+    root.insert(27)
+
+    const undefinedNode = root.delete(200)
+    expect(undefinedNode).toBeFalsy()
   })
 
 })
