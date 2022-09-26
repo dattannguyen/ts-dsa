@@ -26,6 +26,24 @@ export class BinaryTree<T = any> extends TreeNode<T> {
     return this._right
   }
 
+  find(value: T): BinaryTree<T> {
+    const node = new BinaryTree(value, this._compareLeftOrder, this._enableDuplicated, this._compareEqual)
+    if (this.isEqual(node)) {
+      return this
+    }
+
+    const isLeftChild = this.isLeft(node)
+    if (this.left && isLeftChild) {
+      return this._left.find(value)
+    }
+
+    if (this.right) {
+      return this._right.find(value)
+    }
+
+    return
+  }
+
   insert(value: T): BinaryTree<T> {
     const node = new BinaryTree(value, this._compareLeftOrder, this._enableDuplicated, this._compareEqual)
     if (this._enableDuplicated && this.isEqual(node)) {
@@ -37,7 +55,7 @@ export class BinaryTree<T = any> extends TreeNode<T> {
       return this._left.insert(value)
     }
 
-    if (this.right) {
+    if (this.right && !isLeftChild) {
       return this._right.insert(value)
     }
 
@@ -47,7 +65,7 @@ export class BinaryTree<T = any> extends TreeNode<T> {
         ? this._left = node
         : this._right = node
 
-    return this
+    return node
   }
 
   private isLeft(node: TreeNode): boolean {
