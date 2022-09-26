@@ -27,7 +27,7 @@ export class BinaryTree<T = any> extends TreeNode<T> {
   }
 
   insert(value: T): BinaryTree<T> {
-    const node = new BinaryTree(value, this._compareLeftOrder, this._enableDuplicated, this._compare)
+    const node = new BinaryTree(value, this._compareLeftOrder, this._enableDuplicated, this._compareEqual)
     if (this._enableDuplicated && this.isEqual(node)) {
       return this
     }
