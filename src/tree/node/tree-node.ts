@@ -1,7 +1,7 @@
 export class TreeNode<T = any> {
 
   private _value: T
-  private _parent?: TreeNode<T>
+  protected _parent?: TreeNode<T>
   protected readonly _metadata?: Map<string | number, any>
   protected readonly _compareEqual?: (first: TreeNode, second: TreeNode) => boolean
 

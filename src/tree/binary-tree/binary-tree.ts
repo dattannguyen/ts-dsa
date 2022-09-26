@@ -18,15 +18,35 @@ export class BinaryTree<T = any> extends TreeNode<T> {
     this._compareLeftOrder = _compareLeftOrder || ((parentValue, childValue) => parentValue > childValue)
   }
 
+  get parent(): BinaryTree<T> {
+    return this._parent as BinaryTree<T>
+  }
+
+  set parent(parent: BinaryTree<T>) {
+    this._parent = parent
+  }
+
   get left() {
     return this._left
+  }
+
+  set left(left: BinaryTree<T>) {
+    this._left = left
   }
 
   get right() {
     return this._right
   }
 
-  find(value: T): BinaryTree<T> {
+  set right(right: BinaryTree<T>) {
+    this._right = right
+  }
+
+  isLeft(node: TreeNode): boolean {
+    return this._compareLeftOrder(this.value, node.value)
+  }
+
+  find(value: T): BinaryTree<T> | undefined {
     const node = new BinaryTree(value, this._compareLeftOrder, this._enableDuplicated, this._compareEqual)
     if (this.isEqual(node)) {
       return this
