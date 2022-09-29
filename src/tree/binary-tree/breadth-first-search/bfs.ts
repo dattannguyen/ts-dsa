@@ -7,14 +7,14 @@ export const bfs = <T = any>(node: BinaryTree<T>, onVisited: (node: BinaryTree<T
 
   while (queue.first()) {
     const node = queue.dequeue()
+    onVisited(node)
+
     if (node.left) {
       queue.enqueue(node.left)
-      onVisited(node.left)
     }
 
     if (node.right) {
       queue.enqueue(node.right)
-      onVisited(node.right)
     }
   }
 }
