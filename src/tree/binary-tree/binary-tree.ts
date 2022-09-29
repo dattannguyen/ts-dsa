@@ -34,12 +34,32 @@ export class BinaryTree<T = any> extends TreeNode<T> {
     this._left = left
   }
 
+  get leftHeight(): number {
+    if (!this.left) {
+      return 0
+    }
+
+    return this.left.leftHeight + 1
+  }
+
   get right() {
     return this._right
   }
 
   set right(right: BinaryTree<T>) {
     this._right = right
+  }
+
+  get rightHeight(): number {
+    if (!this.right) {
+      return 0
+    }
+
+    return this.right.rightHeight + 1
+  }
+
+  get height(): number {
+    return Math.max(this.leftHeight, this.rightHeight)
   }
 
   isLeft(node: TreeNode): boolean {

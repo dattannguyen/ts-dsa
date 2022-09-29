@@ -68,6 +68,40 @@ describe('Test traverse()', () => {
 
 })
 
+describe('Test height()', () => {
+
+  it('Should_ReturnZero_WhenGivenOnlyRootTree', () => {
+    const firstRoot = new BinaryTree(0)
+    expect(firstRoot.height).toBe(0)
+
+    const secondRoot = new BinaryTree(1)
+    expect(secondRoot.height).toBe(0)
+  })
+
+  it('Should_ReturnExpectedHeight_WhenGivenTree', () => {
+    const higherLeft = new BinaryTree(50)
+    higherLeft.insert(25)
+    higherLeft.insert(75)
+    higherLeft.insert(10)
+    higherLeft.insert(33)
+    higherLeft.insert(56)
+    higherLeft.insert(89)
+    higherLeft.insert(4)
+    expect(higherLeft.height).toBe(3)
+
+    const higherRight = new BinaryTree(50)
+    higherRight.insert(25)
+    higherRight.insert(75)
+    higherRight.insert(56)
+    higherRight.insert(89)
+    higherRight.insert(82)
+    higherRight.insert(95)
+    higherRight.insert(100)
+    expect(higherRight.height).toBe(4)
+  })
+
+})
+
 describe('Test find()', () => {
 
   it('Should_ReturnUndefined_WhenFindUndefinedNode', () => {
