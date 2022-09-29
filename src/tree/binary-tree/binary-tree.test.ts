@@ -1,4 +1,5 @@
 import { BinaryTree } from './binary-tree'
+import { invertBinaryTreeByRecursion } from './binary-tree.practice'
 
 describe('Test traverse()', () => {
 
@@ -317,6 +318,40 @@ describe('Test delete()', () => {
 
     const undefinedNode = root.delete(200)
     expect(undefinedNode).toBeFalsy()
+  })
+
+})
+
+describe('Test invertBinaryTreeByRecursion()', () => {
+
+  it('Should_Return_WhenGivenEmptyTree', () => {
+    const onlyRoot = new BinaryTree(1)
+    expect(onlyRoot.traversePreOrder().join(',')).toBe('1')
+
+    const onlyRevertedTree = invertBinaryTreeByRecursion(onlyRoot)
+    expect(onlyRevertedTree.traversePreOrder().join(',')).toBe('1')
+  })
+
+  it('Should_InvertBinaryTree_WhenGivenParam', () => {
+    const firstTree = new BinaryTree(4)
+    firstTree.insert(2)
+    firstTree.insert(7)
+    firstTree.insert(1)
+    firstTree.insert(3)
+    firstTree.insert(6)
+    firstTree.insert(9)
+    expect(firstTree.traversePreOrder().join(',')).toBe('4,2,1,3,7,6,9')
+
+    const invertedFirstTree = invertBinaryTreeByRecursion(firstTree)
+    expect(invertedFirstTree.traversePreOrder().join(',')).toBe('4,7,9,6,2,3,1')
+
+    const secondTree = new BinaryTree(2)
+    secondTree.insert(1)
+    secondTree.insert(3)
+    expect(secondTree.traversePreOrder().join(',')).toBe('2,1,3')
+
+    const invertedSecondTree = invertBinaryTreeByRecursion(secondTree)
+    expect(invertedSecondTree.traversePreOrder().join(',')).toBe('2,3,1')
   })
 
 })
