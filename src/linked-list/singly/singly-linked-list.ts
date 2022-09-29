@@ -1,19 +1,19 @@
 import { SinglyLinkedListNode } from './singly-linked-list-node'
 
-export class SinglyLinkedList {
+export class SinglyLinkedList<T = any> {
 
-  private _head: SinglyLinkedListNode
-  private _tail: SinglyLinkedListNode
+  private _head: SinglyLinkedListNode<T>
+  private _tail: SinglyLinkedListNode<T>
 
-  get head(): SinglyLinkedListNode | undefined {
+  get head(): SinglyLinkedListNode<T> | undefined {
     return this._head
   }
 
-  get tail(): SinglyLinkedListNode | undefined {
+  get tail(): SinglyLinkedListNode<T> | undefined {
     return this._tail
   }
 
-  find(value: unknown): SinglyLinkedListNode {
+  find(value: T): SinglyLinkedListNode<T> {
     if (!this._head) {
       return
     }
@@ -28,21 +28,21 @@ export class SinglyLinkedList {
     }
   }
 
-  prepend(value: unknown, data?: unknown): SinglyLinkedList {
+  prepend(value: T, data?: unknown): SinglyLinkedList<T> {
     if (this._head) {
-      this._tail = new SinglyLinkedListNode(this._head.value, undefined, data)
+      this._tail = new SinglyLinkedListNode<T>(this._head.value, undefined, data)
     }
 
-    this._head = new SinglyLinkedListNode(value, this._tail, data)
+    this._head = new SinglyLinkedListNode<T>(value, this._tail, data)
     return this
   }
 
-  append(value: unknown, data?: unknown): SinglyLinkedList {
+  append(value: T, data?: unknown): SinglyLinkedList<T> {
     if (!this._head) {
       return this.prepend(value, data)
     }
 
-    const newNode = new SinglyLinkedListNode(value, undefined, data)
+    const newNode = new SinglyLinkedListNode<T>(value, undefined, data)
     if (!this._tail) {
       this._tail = newNode
       this._head.next = newNode
@@ -54,7 +54,7 @@ export class SinglyLinkedList {
     return this
   }
 
-  delete(value: unknown): SinglyLinkedList {
+  delete(value: T): SinglyLinkedList<T> {
     if (!this._head) {
       return this
     }
@@ -81,7 +81,7 @@ export class SinglyLinkedList {
     }
   }
 
-  deleteHead(): SinglyLinkedListNode | undefined {
+  deleteHead(): SinglyLinkedListNode<T> | undefined {
     const head = this._head
     if (!head) {
       return
@@ -96,7 +96,7 @@ export class SinglyLinkedList {
     return head
   }
 
-  reverse(): SinglyLinkedList {
+  reverse(): SinglyLinkedList<T> {
     if (!this._head || !this.tail) {
       return this
     }
@@ -117,7 +117,7 @@ export class SinglyLinkedList {
     return this
   }
 
-  toArray(): SinglyLinkedListNode[] {
+  toArray(): SinglyLinkedListNode<T>[] {
     const nodes = []
     let node = this._head
     while (node) {

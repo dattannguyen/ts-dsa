@@ -1,16 +1,16 @@
-export class SinglyLinkedListNode {
+export class SinglyLinkedListNode<T = any> {
 
-  private readonly _value: unknown
+  private readonly _value: T
   private _data: unknown
   private _next: SinglyLinkedListNode
 
-  constructor(value: unknown, next?: SinglyLinkedListNode, data?: unknown) {
+  constructor(value: T, next?: SinglyLinkedListNode, data?: unknown) {
     this._value = value
     this._next = next
     this._data = data
   }
 
-  get value(): unknown {
+  get value(): T {
     return this._value
   }
 
