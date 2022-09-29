@@ -1,26 +1,26 @@
 import { SinglyLinkedList } from '../linked-list/singly/singly-linked-list'
 
-export class Queue {
-  private readonly linkedList: SinglyLinkedList
+export class Queue<T = any> {
+  private readonly linkedList: SinglyLinkedList<T>
 
   constructor() {
-    this.linkedList = new SinglyLinkedList()
+    this.linkedList = new SinglyLinkedList<T>()
   }
 
-  first(): unknown {
+  first(): T {
     return this.linkedList.head?.value
   }
 
-  last(): unknown {
+  last(): T {
     return this.linkedList.tail?.value
   }
 
-  enqueue(value: unknown): unknown {
+  enqueue(value: T): T {
     this.linkedList.append(value)
     return value
   }
 
-  dequeue(): unknown {
+  dequeue(): T {
     const next = this.linkedList.deleteHead()
     return next?.value
   }
