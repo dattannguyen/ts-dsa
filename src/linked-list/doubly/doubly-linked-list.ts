@@ -1,19 +1,24 @@
 import { DoublyLinkedListNode } from './doubly-linked-list-node'
 
-export class DoublyLinkedList {
+export class DoublyLinkedList<T = any> {
 
-  private _head: DoublyLinkedListNode
-  private _tail: DoublyLinkedListNode
+  private _size: number = 0
+  private _head: DoublyLinkedListNode<T>
+  private _tail: DoublyLinkedListNode<T>
 
-  get head(): DoublyLinkedListNode | undefined {
+  get size(): number {
+    return this._size
+  }
+
+  get head(): DoublyLinkedListNode<T> | undefined {
     return this._head
   }
 
-  get tail(): DoublyLinkedListNode | undefined {
+  get tail(): DoublyLinkedListNode<T> | undefined {
     return this._tail
   }
 
-  find(value: unknown): DoublyLinkedListNode | undefined {
+  find(value: T): DoublyLinkedListNode<T> | undefined {
     if (!this._head) {
       return
     }
@@ -28,31 +33,33 @@ export class DoublyLinkedList {
     }
   }
 
-  prepend(value: unknown): DoublyLinkedList {
-    const newNode = new DoublyLinkedListNode(value, this._head)
+  prepend(value: T): DoublyLinkedList<T> {
+    const newNode = new DoublyLinkedListNode<T>(value, this._head)
     if (this._head) {
-      this._tail = new DoublyLinkedListNode(this._head.value, undefined, newNode)
+      this._tail = new DoublyLinkedListNode<T>(this._head.value, undefined, newNode)
       this._head = newNode
     } else {
       this._head = newNode
     }
 
+    this._size++
     return this
   }
 
-  append(value: unknown): DoublyLinkedList {
+  append(value: T): DoublyLinkedList<T> {
     if (!this._head) {
       return this.prepend(value)
     }
 
+    this._size++
     if (!this._tail) {
-      this._tail = new DoublyLinkedListNode(value, undefined, this._head)
+      this._tail = new DoublyLinkedListNode<T>(value, undefined, this._head)
       this._head.next = this.tail
 
       return this
     }
 
-    const newNode = new DoublyLinkedListNode(value, undefined, this._tail)
+    const newNode = new DoublyLinkedListNode<T>(value, undefined, this._tail)
     this._tail.next = newNode
     this._tail = newNode
 
@@ -65,6 +72,7 @@ export class DoublyLinkedList {
     }
 
     if (this._head.value === value) {
+      this._size--
       this._head = this._head.next
       if (this._head) {
         this._head.prev = undefined
@@ -74,6 +82,8 @@ export class DoublyLinkedList {
     }
 
     if (this._tail.value === value) {
+      this._size--
+
       // If prev of tail is head
       if (!this._tail.prev?.prev) {
         this._tail = undefined
@@ -91,6 +101,7 @@ export class DoublyLinkedList {
     let node = this._head?.next
     while (node?.next) {
       if (node.value === value) {
+        this._size--
         if (node.prev) {
           node.prev.next = node.next
         }
@@ -106,7 +117,8 @@ export class DoublyLinkedList {
     return this
   }
 
-  deleteTail(): DoublyLinkedListNode {
+  deleteTail(): DoublyLinkedListNode<T> {
+    this._size = Math.max(this._size - 1, 0)
     if (!this._head || !this._tail) {
       const head = this._head
       this._head = undefined
@@ -150,8 +162,8 @@ export class DoublyLinkedList {
     return this
   }
 
-  toArray(): DoublyLinkedListNode[] {
-    const nodes: DoublyLinkedListNode[] = []
+  toArray(): DoublyLinkedListNode<T>[] {
+    const nodes: DoublyLinkedListNode<T>[] = []
 
     let node = this.head
     while (node) {

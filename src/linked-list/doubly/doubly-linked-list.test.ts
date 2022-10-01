@@ -49,6 +49,7 @@ describe('Test DoublyLinkedList prepend()', () => {
     const ll = new DoublyLinkedList()
     ll.prepend('head')
 
+    expect(ll.size).toBe(1)
     expect(ll.head?.value).toBe('head')
     expect(ll.tail).toBe(undefined)
   })
@@ -56,12 +57,13 @@ describe('Test DoublyLinkedList prepend()', () => {
   it('Should_PrependNewNode_WhenHasHead', () => {
     const ll = new DoublyLinkedList()
     ll.prepend('head')
-    ll.prepend('newHead')
+    ll.prepend('newHeadDouble')
 
-    expect(ll.head?.value).toBe('newHead')
+    expect(ll.size).toBe(2)
+    expect(ll.head?.value).toBe('newHeadDouble')
     expect(ll.head?.next?.value).toBe('head')
     expect(ll.tail?.value).toBe('head')
-    expect(ll.tail?.prev?.value).toBe('newHead')
+    expect(ll.tail?.prev?.value).toBe('newHeadDouble')
   })
 
 })
@@ -72,6 +74,7 @@ describe('Test DoublyLinkedList append()', () => {
     const ll = new DoublyLinkedList()
     ll.append('head')
 
+    expect(ll.size).toBe(1)
     expect(ll.head?.value).toBe('head')
     expect(ll.tail).toBe(undefined)
   })
@@ -81,6 +84,7 @@ describe('Test DoublyLinkedList append()', () => {
     ll.append('head')
     ll.append('tail')
 
+    expect(ll.size).toBe(2)
     expect(ll.head?.value).toBe('head')
     expect(ll.tail?.value).toBe('tail')
     expect(ll.head?.next).toBe(ll.tail)
@@ -90,14 +94,17 @@ describe('Test DoublyLinkedList append()', () => {
     const ll = new DoublyLinkedList()
     ll.append('head')
     ll.append('tail')
+    expect(ll.size).toBe(2)
 
     ll.append('tail1')
+    expect(ll.size).toBe(3)
     expect(ll.head?.next?.value).toBe('tail')
     expect(ll.tail?.prev?.value).toBe('tail')
     expect(ll.tail?.next?.value).toBe(undefined)
     expect(ll.tail?.value).toBe('tail1')
 
     ll.append('tail2')
+    expect(ll.size).toBe(4)
     expect(ll.head?.next?.value).toBe('tail')
     expect(ll.head?.next?.next?.value).toBe('tail1')
     expect(ll.tail?.value).toBe('tail2')
@@ -110,25 +117,31 @@ describe('Test DoublyLinkedList delete()', () => {
 
   it('Should_DoNothing_WhenGivenNoHead', () => {
     const ll = new DoublyLinkedList()
-    ll.delete(1)
+    expect(ll.size).toBe(0)
 
+    ll.delete(1)
+    expect(ll.size).toBe(0)
     expect(ll.head).toBeFalsy()
   })
 
   it('Should_DeleteHead_WhenOnlyOneHead', () => {
     const ll = new DoublyLinkedList()
     ll.prepend(1)
+    expect(ll.size).toBe(1)
 
     ll.delete(1)
+    expect(ll.size).toBe(0)
     expect(ll.head).toBe(undefined)
   })
 
   it('Should_DeleteTail_WhenHasOnlyHead&Tail', () => {
     const ll = new DoublyLinkedList()
     ll.prepend(1).append(2)
+    expect(ll.size).toBe(2)
     expect(ll.head.next?.value).toBe(2)
 
     ll.delete(2)
+    expect(ll.size).toBe(1)
     expect(ll.head?.value).toBe(1)
     expect(ll.head?.next).toBe(undefined)
     expect(ll.tail).toBe(undefined)
@@ -143,20 +156,22 @@ describe('Test DoublyLinkedList delete()', () => {
         .append(5)
         .append(6)
 
+    expect(ll.size).toBe(6)
     expect(ll.head.next?.value).toBe(2)
     expect(ll.tail.prev?.value).toBe(5)
 
     ll.delete(3)
+    expect(ll.size).toBe(5)
     expect(ll.head?.next?.next?.value).toBe(4)
     expect(ll.head?.next?.next?.prev?.value).toBe(2)
 
     ll.delete(6)
-    expect(ll.toArray().length).toBe(4)
+    expect(ll.size).toBe(4)
     expect(ll.tail.value).toBe(5)
     expect(ll.tail.next).toBe(undefined)
 
     ll.delete(1)
-    expect(ll.toArray().length).toBe(3)
+    expect(ll.size).toBe(3)
     expect(ll.head?.value).toBe(2)
   })
 
