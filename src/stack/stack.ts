@@ -1,10 +1,14 @@
 import { DoublyLinkedList } from '../linked-list/doubly/doubly-linked-list'
 
-export class Stack {
-  private readonly linkedList: DoublyLinkedList
+export class Stack<T = any> {
+  private readonly linkedList: DoublyLinkedList<T>
 
   constructor() {
-    this.linkedList = new DoublyLinkedList()
+    this.linkedList = new DoublyLinkedList<T>()
+  }
+
+  get size(): number {
+    return this.linkedList.size
   }
 
   first(): unknown {
@@ -15,12 +19,12 @@ export class Stack {
     return this.linkedList?.head?.value
   }
 
-  push(value: unknown): unknown {
+  push(value: T): T {
     this.linkedList.append(value)
     return value
   }
 
-  pop(): unknown {
+  pop(): T {
     const pop = this.linkedList.deleteTail()
     return pop?.value
   }
