@@ -2,8 +2,13 @@ import { SinglyLinkedListNode } from './singly-linked-list-node'
 
 export class SinglyLinkedList<T = any> {
 
+  private _size: number = 0
   private _head: SinglyLinkedListNode<T>
   private _tail: SinglyLinkedListNode<T>
+
+  get size(): number {
+    return this._size
+  }
 
   get head(): SinglyLinkedListNode<T> | undefined {
     return this._head
@@ -34,6 +39,7 @@ export class SinglyLinkedList<T = any> {
     }
 
     this._head = new SinglyLinkedListNode<T>(value, this._tail, data)
+    this._size++
     return this
   }
 
@@ -51,6 +57,7 @@ export class SinglyLinkedList<T = any> {
       this._tail = newNode
     }
 
+    this._size++
     return this
   }
 
@@ -79,6 +86,8 @@ export class SinglyLinkedList<T = any> {
     if (this._tail?.value === value) {
       this._tail = node
     }
+
+    this._size--
   }
 
   deleteHead(): SinglyLinkedListNode<T> | undefined {
@@ -93,6 +102,7 @@ export class SinglyLinkedList<T = any> {
     }
 
     this._head = head.next
+    this._size--
     return head
   }
 

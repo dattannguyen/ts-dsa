@@ -7,6 +7,10 @@ export class Queue<T = any> {
     this.linkedList = new SinglyLinkedList<T>()
   }
 
+  get size(): number {
+    return this.linkedList.size
+  }
+
   first(): T {
     return this.linkedList.head?.value
   }

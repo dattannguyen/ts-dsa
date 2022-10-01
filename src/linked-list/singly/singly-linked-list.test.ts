@@ -5,6 +5,7 @@ describe('Test SinglyLinkedList prepend()', () => {
   it('Should_PrependNewNode_WhenHasNoHead', () => {
     const ll = new SinglyLinkedList()
     ll.prepend('head')
+    expect(ll.size).toBe(1)
     expect(ll.head?.value).toBe('head')
   })
 
@@ -13,6 +14,7 @@ describe('Test SinglyLinkedList prepend()', () => {
     ll.prepend('head')
     ll.prepend('newHead')
 
+    expect(ll.size).toBe(2)
     expect(ll.head?.value).toBe('newHead')
     expect(ll.head?.next?.value).toBe('head')
     expect(ll.tail?.value).toBe('head')
@@ -26,6 +28,7 @@ describe('Test SinglyLinkedList append()', () => {
     const ll = new SinglyLinkedList()
     ll.append('head')
 
+    expect(ll.size).toBe(1)
     expect(ll.head?.value).toBe('head')
     expect(ll.tail).toBe(undefined)
   })
@@ -35,6 +38,7 @@ describe('Test SinglyLinkedList append()', () => {
     ll.append('head')
     ll.append('tail')
 
+    expect(ll.size).toBe(2)
     expect(ll.head?.value).toBe('head')
     expect(ll.tail?.value).toBe('tail')
     expect(ll.head?.next).toBe(ll.tail)
@@ -45,10 +49,12 @@ describe('Test SinglyLinkedList append()', () => {
     ll.append(1).append(2)
 
     ll.append(3)
+    expect(ll.size).toBe(3)
     expect(ll.head?.next?.value).toBe(2)
     expect(ll.tail?.value).toBe(3)
 
     ll.append('tail2')
+    expect(ll.size).toBe(4)
     expect(ll.head?.next?.next?.next.value).toBe('tail2')
     expect(ll.tail?.value).toBe('tail2')
   })
@@ -119,10 +125,12 @@ describe('Test SinglyLinkedList delete()', () => {
     ll.append('head')
     ll.append('head')
     ll.append('no-deleted-head')
+    expect(ll.size).toBe(3)
 
     ll.delete('head')
     expect(ll.head?.value).toBe('no-deleted-head')
     expect(ll.tail).toBe(undefined)
+    expect(ll.size).toBe(2)
   })
 
   it('Should_DeleteMultipleNode_WhenMatch', () => {
@@ -132,8 +140,10 @@ describe('Test SinglyLinkedList delete()', () => {
     ll.append('head1')
     ll.append('head2')
     ll.append('no-deleted-head')
+    expect(ll.size).toBe(5)
 
     ll.delete('head1')
+    expect(ll.size).toBe(4)
     expect(ll.head?.value).toBe('head')
     expect(ll.head?.next?.value).toBe('head2')
     expect(ll.tail?.value).toBe('no-deleted-head')
