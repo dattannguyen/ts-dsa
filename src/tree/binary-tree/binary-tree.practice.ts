@@ -1,4 +1,5 @@
 import { BinaryTree } from './binary-tree'
+import { Queue } from '../../queue/queue'
 
 /**
  * Leetcode question: https://leetcode.com/problems/invert-binary-tree/
@@ -23,9 +24,33 @@ export const invertBinaryTreeByRecursion = (binaryTree: BinaryTree<number>): Bin
 /**
  * Leetcode question: https://leetcode.com/problems/maximum-depth-of-binary-tree/
  */
-export const findMaxDepthOfBinaryTree = (binaryTree: BinaryTree<number>): number => {
-  const leftDepth = (binaryTree.left ? findMaxDepthOfBinaryTree(binaryTree.left) : 0) + 1
-  const rightDepth = (binaryTree.right ? findMaxDepthOfBinaryTree(binaryTree.right) : 0) + 1
+export const findMaxDepthByDfs = (binaryTree: BinaryTree<number>): number => {
+  const leftDepth = (binaryTree.left ? findMaxDepthByDfs(binaryTree.left) : 0) + 1
+  const rightDepth = (binaryTree.right ? findMaxDepthByDfs(binaryTree.right) : 0) + 1
 
   return Math.max(leftDepth, rightDepth)
+}
+
+export const findMaxDepthByBfs = (binaryTree: BinaryTree<number>): number => {
+  let depth = 0
+  const queue = new Queue<BinaryTree<number>>()
+  queue.enqueue(binaryTree)
+
+  while (queue.first()) {
+    depth++
+
+    const queueSize = queue.size
+    for (let i = 0; i < queueSize; i++) {
+      const node = queue.dequeue()
+      if (node.left) {
+        queue.enqueue(node.left)
+      }
+
+      if (node.right) {
+        queue.enqueue(node.right)
+      }
+    }
+  }
+
+  return depth
 }

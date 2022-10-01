@@ -1,5 +1,5 @@
 import { BinaryTree } from './binary-tree'
-import { findMaxDepthOfBinaryTree, invertBinaryTreeByRecursion } from './binary-tree.practice'
+import { findMaxDepthByBfs, findMaxDepthByDfs, invertBinaryTreeByRecursion } from './binary-tree.practice'
 
 describe('Test traverse()', () => {
 
@@ -360,7 +360,8 @@ describe('Test findMaxDepth()', () => {
 
   it('Should_ReturnOne_WhenGivenEmptyTree', () => {
     const tree = new BinaryTree(1)
-    expect(findMaxDepthOfBinaryTree(tree)).toBe(1)
+    expect(findMaxDepthByDfs(tree)).toBe(1)
+    expect(findMaxDepthByBfs(tree)).toBe(1)
   })
 
   it('Should_ReturnDepthOfLeft_WhenGivenLeftIsDeeper', function () {
@@ -372,7 +373,9 @@ describe('Test findMaxDepth()', () => {
     firstTree.insert(8)
     firstTree.insert(20)
     firstTree.insert(15)
-    expect(findMaxDepthOfBinaryTree(firstTree)).toBe(5)
+
+    expect(findMaxDepthByDfs(firstTree)).toBe(5)
+    expect(findMaxDepthByBfs(firstTree)).toBe(5)
   })
 
   it('Should_ReturnDepthOfRight_WhenGivenRightIsDeeper', function () {
@@ -381,7 +384,8 @@ describe('Test findMaxDepth()', () => {
     firstTree.insert(9)
     firstTree.insert(20)
     firstTree.insert(15)
-    expect(findMaxDepthOfBinaryTree(firstTree)).toBe(4)
+    expect(findMaxDepthByDfs(firstTree)).toBe(4)
+    expect(findMaxDepthByBfs(firstTree)).toBe(4)
   })
 
 })
