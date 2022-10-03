@@ -54,3 +54,26 @@ export const findMaxDepthByBfs = (binaryTree: BinaryTree<number>): number => {
 
   return depth
 }
+
+/**
+ * Leetcode question: https://leetcode.com/problems/same-tree/
+ */
+export const isSameTree = (firstTree: BinaryTree<number>, secondTree: BinaryTree<number>): boolean => {
+  if (!firstTree && !secondTree) {
+    return true
+  }
+
+  if (firstTree?.value !== secondTree?.value) {
+    return false
+  }
+
+  const isSameLeft = firstTree.left && secondTree.left
+      ? isSameTree(firstTree.left, secondTree.left)
+      : firstTree?.left?.value === secondTree?.left?.value
+
+  const isSameRight = firstTree.right && secondTree.right
+      ? isSameTree(firstTree.right, secondTree.right)
+      : firstTree?.right?.value === secondTree?.right?.value
+
+  return isSameLeft && isSameRight
+}

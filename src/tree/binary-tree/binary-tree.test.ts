@@ -1,5 +1,5 @@
 import { BinaryTree } from './binary-tree'
-import { findMaxDepthByBfs, findMaxDepthByDfs, invertBinaryTreeByRecursion } from './binary-tree.practice'
+import { findMaxDepthByBfs, findMaxDepthByDfs, invertBinaryTreeByRecursion, isSameTree } from './binary-tree.practice'
 
 describe('Test traverse()', () => {
 
@@ -386,6 +386,75 @@ describe('Test findMaxDepth()', () => {
     firstTree.insert(15)
     expect(findMaxDepthByDfs(firstTree)).toBe(4)
     expect(findMaxDepthByBfs(firstTree)).toBe(4)
+  })
+
+})
+
+describe('Test isSameTree()', () => {
+
+  it('Should_ReturnTrue_WhenGivenSameTree', () => {
+    expect(isSameTree(undefined, undefined)).toBeTruthy()
+
+    const first = new BinaryTree(5)
+    first.insert(1)
+    first.insert(10)
+    const second = new BinaryTree(5)
+    second.insert(1)
+    second.insert(10)
+
+    expect(first.traverseInOrder().join(',')).toBe('1,5,10')
+    expect(second.traverseInOrder().join(',')).toBe('1,5,10')
+    expect(isSameTree(first, second)).toBeTruthy()
+
+    const third = new BinaryTree(5)
+    third.insert(10)
+    third.insert(11)
+    third.insert(12)
+    third.insert(13)
+    const fourth = new BinaryTree(5)
+    fourth.insert(10)
+    fourth.insert(11)
+    fourth.insert(12)
+    fourth.insert(13)
+
+    expect(third.traverseInOrder().join(',')).toBe('5,10,11,12,13')
+    expect(fourth.traverseInOrder().join(',')).toBe('5,10,11,12,13')
+    expect(isSameTree(third, fourth)).toBeTruthy()
+  })
+
+  it('Should_ReturnFalse_WhenGivenDifferentTree', () => {
+    const first = new BinaryTree(5)
+    const second = new BinaryTree(5)
+    second.insert(1)
+    second.insert(2)
+
+    expect(first.traverseInOrder().join(',')).toBe('5')
+    expect(second.traverseInOrder().join(',')).toBe('1,2,5')
+    expect(isSameTree(first, second)).toBeFalsy()
+
+    const third = new BinaryTree(5)
+    third.insert(10)
+    third.insert(11)
+    third.insert(12)
+    third.insert(15)
+    const fourth = new BinaryTree(5)
+    fourth.insert(10)
+    fourth.insert(11)
+    fourth.insert(12)
+    fourth.insert(14)
+
+    expect(third.traverseInOrder().join(',')).toBe('5,10,11,12,15')
+    expect(fourth.traverseInOrder().join(',')).toBe('5,10,11,12,14')
+    expect(isSameTree(third, fourth)).toBeFalsy()
+
+    const fifth = new BinaryTree(1)
+    fifth.insert(2)
+
+    const sixth = new BinaryTree(1, ((parentValue, childValue) => parentValue < childValue))
+    sixth.insert(2)
+
+    expect(fifth.traverseInOrder().join(',')).not.toBe(sixth.traverseInOrder().join(','))
+    expect(isSameTree(first, sixth)).toBeFalsy()
   })
 
 })
