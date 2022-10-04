@@ -1,5 +1,11 @@
 import { BinaryTree } from './binary-tree'
-import { findMaxDepthByBfs, findMaxDepthByDfs, invertBinaryTreeByRecursion, isSameTree } from './binary-tree.practice'
+import {
+  findMaxDepthByBfs,
+  findMaxDepthByDfs,
+  invertBinaryTreeByRecursion,
+  isSameTree,
+  isSubTree
+} from './binary-tree.practice'
 
 describe('Test traverse()', () => {
 
@@ -457,4 +463,74 @@ describe('Test isSameTree()', () => {
     expect(isSameTree(first, sixth)).toBeFalsy()
   })
 
+})
+
+describe('Test isSubTree()', () => {
+
+  it('Should_ReturnTrue_WhenGivenSubTree', () => {
+    const first = new BinaryTree(10)
+    first.insert(5)
+    first.insert(15)
+    first.insert(2)
+    first.insert(9)
+    expect(first.traverseInOrder().join(',')).toBe('2,5,9,10,15')
+
+    const second = new BinaryTree(5)
+    second.insert(2)
+    second.insert(9)
+    expect(second.traverseInOrder().join(',')).toBe('2,5,9')
+
+    expect(isSubTree(first, second)).toBeTruthy()
+
+    const third = new BinaryTree(5)
+    third.insert(1)
+    third.insert(30)
+    third.insert(-1)
+    third.insert(4)
+    third.insert(2)
+    third.insert(15)
+    third.insert(40)
+    third.insert(18)
+    expect(third.traverseInOrder().join(',')).toBe('-1,1,2,4,5,15,18,30,40')
+
+    const fourth = new BinaryTree(15)
+    fourth.insert(18)
+    expect(fourth.traverseInOrder().join(',')).toBe('15,18')
+
+    expect(isSubTree(third, fourth)).toBeTruthy()
+  })
+
+  it('Should_ReturnFalse_WhenGivenNoSubTree', () => {
+    const myKing = new BinaryTree(10)
+    myKing.insert(5)
+    myKing.insert(15)
+    myKing.insert(2)
+    myKing.insert(9)
+    expect(myKing.traverseInOrder().join(',')).toBe('2,5,9,10,15')
+
+    const myQueen = new BinaryTree(6)
+    myQueen.insert(2)
+    myQueen.insert(9)
+    expect(myQueen.traverseInOrder().join(',')).toBe('2,6,9')
+
+    expect(isSubTree(myKing, myQueen)).toBeFalsy()
+
+    const myPrince = new BinaryTree(5)
+    myPrince.insert(1)
+    myPrince.insert(30)
+    myPrince.insert(-1)
+    myPrince.insert(4)
+    myPrince.insert(2)
+    myPrince.insert(15)
+    myPrince.insert(40)
+    myPrince.insert(18)
+    myPrince.insert(16)
+    expect(myPrince.traverseInOrder().join(',')).toBe('-1,1,2,4,5,15,16,18,30,40')
+
+    const myPrincess = new BinaryTree(15)
+    myPrincess.insert(18)
+    expect(myPrincess.traverseInOrder().join(',')).toBe('15,18')
+
+    expect(isSubTree(myPrince, myPrincess)).toBeFalsy()
+  })
 })

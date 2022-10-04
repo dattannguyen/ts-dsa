@@ -77,3 +77,12 @@ export const isSameTree = (firstTree: BinaryTree<number>, secondTree: BinaryTree
 
   return isSameLeft && isSameRight
 }
+
+export const isSubTree = (tree: BinaryTree<number>, subTree: BinaryTree<number>): boolean => {
+  const subRoot = tree.find(subTree.value)
+  if (!subRoot) {
+    return false
+  }
+
+  return isSameTree(subRoot, subTree)
+}
