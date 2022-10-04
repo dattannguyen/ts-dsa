@@ -1,11 +1,5 @@
 import { BinaryTree } from './binary-tree'
-import {
-  findMaxDepthByBfs,
-  findMaxDepthByDfs,
-  invertBinaryTreeByRecursion,
-  isSameTree,
-  isSubTree
-} from './binary-tree.practice'
+import { findMaxDepthByBfs, findMaxDepthByDfs, invertByDfs, isSameTree, isSubTree } from './binary-tree.practice'
 
 describe('Test traverse()', () => {
 
@@ -328,13 +322,13 @@ describe('Test delete()', () => {
 
 })
 
-describe('Test invertBinaryTreeByRecursion()', () => {
+describe('Test invert()', () => {
 
   it('Should_Return_WhenGivenEmptyTree', () => {
     const onlyRoot = new BinaryTree(1)
     expect(onlyRoot.traversePreOrder().join(',')).toBe('1')
 
-    const onlyRevertedTree = invertBinaryTreeByRecursion(onlyRoot)
+    const onlyRevertedTree = invertByDfs(onlyRoot)
     expect(onlyRevertedTree.traversePreOrder().join(',')).toBe('1')
   })
 
@@ -348,7 +342,7 @@ describe('Test invertBinaryTreeByRecursion()', () => {
     firstTree.insert(9)
     expect(firstTree.traversePreOrder().join(',')).toBe('4,2,1,3,7,6,9')
 
-    const invertedFirstTree = invertBinaryTreeByRecursion(firstTree)
+    const invertedFirstTree = invertByDfs(firstTree)
     expect(invertedFirstTree.traversePreOrder().join(',')).toBe('4,7,9,6,2,3,1')
 
     const secondTree = new BinaryTree(2)
@@ -356,7 +350,7 @@ describe('Test invertBinaryTreeByRecursion()', () => {
     secondTree.insert(3)
     expect(secondTree.traversePreOrder().join(',')).toBe('2,1,3')
 
-    const invertedSecondTree = invertBinaryTreeByRecursion(secondTree)
+    const invertedSecondTree = invertByDfs(secondTree)
     expect(invertedSecondTree.traversePreOrder().join(',')).toBe('2,3,1')
   })
 
@@ -534,3 +528,4 @@ describe('Test isSubTree()', () => {
     expect(isSubTree(myPrince, myPrincess)).toBeFalsy()
   })
 })
+
