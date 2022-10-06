@@ -1,5 +1,12 @@
 import { BinaryTree } from './binary-tree'
-import { findMaxDepthByBfs, findMaxDepthByDfs, invertByDfs, isSameTree, isSubTree } from './binary-tree.practice'
+import {
+  findLowestCommonAncestor,
+  findMaxDepthByBfs,
+  findMaxDepthByDfs,
+  invertByDfs,
+  isSameTree,
+  isSubTree
+} from './binary-tree.practice'
 
 describe('Test traverse()', () => {
 
@@ -527,5 +534,52 @@ describe('Test isSubTree()', () => {
 
     expect(isSubTree(myPrince, myPrincess)).toBeFalsy()
   })
+})
+
+describe('Test findLowestCommonAncestor()', () => {
+
+  it('Should_ReturnNil_WhenGivenInvalidParam', () => {
+    const root = new BinaryTree<number>(6)
+    root.insert(2)
+    root.insert(8)
+    root.insert(0)
+
+    const firstLca = findLowestCommonAncestor(root, new BinaryTree<number>(2), new BinaryTree<number>(4))
+    expect(firstLca).toBeFalsy()
+  })
+
+  it('Should_ReturnLCA_WhenGivenValidParams', () => {
+    const root = new BinaryTree<number>(6)
+    root.insert(2)
+    root.insert(8)
+    root.insert(0)
+    root.insert(4)
+    root.insert(3)
+    root.insert(5)
+    root.insert(7)
+    root.insert(9)
+    expect(root.traverseInOrder().join(',')).toBe('0,2,3,4,5,6,7,8,9')
+
+    const firstLca = findLowestCommonAncestor(root, new BinaryTree<number>(2), new BinaryTree<number>(4))
+    expect(firstLca?.value).toBe(2)
+    expect(firstLca?.parent?.value).toBe(6)
+
+    const secondLca = findLowestCommonAncestor(root, new BinaryTree(5), new BinaryTree<number>(8))
+    expect(secondLca?.value).toBe(6)
+    expect(secondLca?.parent).toBeFalsy()
+
+    const thirdLca = findLowestCommonAncestor(root, new BinaryTree(5), new BinaryTree<number>(6))
+    expect(thirdLca?.value).toBe(6)
+    expect(thirdLca?.parent).toBeFalsy()
+
+    const lastRoot = new BinaryTree(2)
+    lastRoot.insert(1)
+    expect(lastRoot.traverseInOrder().join(',')).toBe('1,2')
+
+    const lastLca = findLowestCommonAncestor(lastRoot, new BinaryTree<number>(1), new BinaryTree<number>(2))
+    expect(lastLca?.value).toBe(2)
+    expect(lastLca?.parent).toBeFalsy()
+  })
+
 })
 

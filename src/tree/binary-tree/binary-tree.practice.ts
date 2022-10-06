@@ -85,3 +85,52 @@ export const isSubTree = (tree: BinaryTree<number>, subTree: BinaryTree<number>)
 
   return isSameTree(subRoot, subTree)
 }
+
+/**
+ *
+ * Leetcode question: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+ */
+export const findLowestCommonAncestor = (
+    root: BinaryTree<number>,
+    p: BinaryTree<number>,
+    q: BinaryTree<number>
+): BinaryTree<number> => {
+  let pHeight = 0
+  const pPath = []
+  const pNode = root.find(
+      p.value,
+      (node: BinaryTree<number>) => {
+        pHeight++
+        pPath.push(node)
+      }
+  )
+
+  let qHeight = 0
+  const qPath = new Map()
+  const qNode = root.find(
+      q.value,
+      (node: BinaryTree<number>) => {
+        qHeight++
+        qPath.set(node.value, (qPath.get(node.value) || 0) + 1)
+      }
+  )
+
+  if (!qNode || !pNode) {
+    return
+  }
+
+  let higherNode = pNode
+  let lowerPath = qPath
+  if (pHeight < qHeight) {
+    higherNode = qNode
+    lowerPath = qPath
+  }
+
+  while (higherNode.parent) {
+    if (lowerPath.get(higherNode.parent.value)) {
+      return higherNode.parent
+    }
+
+    higherNode = higherNode.parent
+  }
+}

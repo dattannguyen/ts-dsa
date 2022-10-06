@@ -116,19 +116,21 @@ export class BinaryTree<T = any> extends TreeNode<T> {
     return result
   }
 
-  find(value: T): BinaryTree<T> | undefined {
+  find(value: T, onTraverse?: (traversalNode: BinaryTree<T>) => any): BinaryTree<T> | undefined {
     const node = new BinaryTree(value, this._compareLeftOrder, this._enableDuplicated, this._compareEqual)
+    onTraverse?.(this)
+
     if (this.isEqual(node)) {
       return this
     }
 
     const isLeftChild = this.isLeft(node)
     if (this.left && isLeftChild) {
-      return this._left.find(value)
+      return this._left.find(value, onTraverse)
     }
 
     if (this.right) {
-      return this._right.find(value)
+      return this._right.find(value, onTraverse)
     }
 
     return
