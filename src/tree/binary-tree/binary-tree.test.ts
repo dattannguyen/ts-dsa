@@ -572,6 +572,9 @@ describe('Test findLowestCommonAncestor()', () => {
     expect(thirdLca?.value).toBe(6)
     expect(thirdLca?.parent).toBeFalsy()
 
+    const fourthLca = findLowestCommonAncestor(root, new BinaryTree<number>(7), new BinaryTree<number>(9))
+    expect(fourthLca?.value).toBe(8)
+
     const lastRoot = new BinaryTree(2)
     lastRoot.insert(1)
     expect(lastRoot.traverseInOrder().join(',')).toBe('1,2')

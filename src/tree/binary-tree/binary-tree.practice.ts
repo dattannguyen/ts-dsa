@@ -95,42 +95,20 @@ export const findLowestCommonAncestor = (
     p: BinaryTree<number>,
     q: BinaryTree<number>
 ): BinaryTree<number> => {
-  let pHeight = 0
-  const pPath = []
-  const pNode = root.find(
-      p.value,
-      (node: BinaryTree<number>) => {
-        pHeight++
-        pPath.push(node)
-      }
-  )
-
-  let qHeight = 0
-  const qPath = new Map()
-  const qNode = root.find(
-      q.value,
-      (node: BinaryTree<number>) => {
-        qHeight++
-        qPath.set(node.value, (qPath.get(node.value) || 0) + 1)
-      }
-  )
-
-  if (!qNode || !pNode) {
-    return
+  if (root.left && p.value < root.value && q.value < root.value) {
+    return findLowestCommonAncestor(root.left, p, q)
   }
 
-  let higherNode = pNode
-  let lowerPath = qPath
-  if (pHeight < qHeight) {
-    higherNode = qNode
-    lowerPath = qPath
+  if (root.right && p.value > root.value && root.value) {
+    return findLowestCommonAncestor(root.right, p, q)
   }
 
-  while (higherNode.parent) {
-    if (lowerPath.get(higherNode.parent.value)) {
-      return higherNode.parent
-    }
+  const qNode = root.find(p.value, () => '')
+  const pNode = root.find(q.value, () => '')
 
-    higherNode = higherNode.parent
+  if (qNode && pNode) {
+    return root
   }
+
+  return
 }
