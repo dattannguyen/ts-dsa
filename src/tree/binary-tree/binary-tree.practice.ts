@@ -55,6 +55,24 @@ export const findMaxDepthByBfs = (binaryTree: BinaryTree<number>): number => {
 }
 
 /**
+ * Leetcode question: https://leetcode.com/problems/validate-binary-search-tree/
+ */
+export const isValidTree = (binaryTree: BinaryTree<number>, max?: number, min?: number): boolean => {
+  if (max !== undefined && binaryTree.value >= max) {
+    return false
+  }
+
+  if (min !== undefined && binaryTree.value <= min) {
+    return false
+  }
+
+  const isLeftValid = binaryTree.left ? isValidTree(binaryTree.left, binaryTree.value, min) : true
+  const isRightValid = binaryTree.right ? isValidTree(binaryTree.right, max, binaryTree.value) : true
+
+  return isLeftValid && isRightValid
+}
+
+/**
  * Leetcode question: https://leetcode.com/problems/same-tree/
  */
 export const isSameTree = (firstTree: BinaryTree<number>, secondTree: BinaryTree<number>): boolean => {
@@ -77,6 +95,9 @@ export const isSameTree = (firstTree: BinaryTree<number>, secondTree: BinaryTree
   return isSameLeft && isSameRight
 }
 
+/**
+ * Leetcode question: https://leetcode.com/problems/subtree-of-another-tree/
+ */
 export const isSubTree = (tree: BinaryTree<number>, subTree: BinaryTree<number>): boolean => {
   const subRoot = tree.find(subTree.value)
   if (!subRoot) {

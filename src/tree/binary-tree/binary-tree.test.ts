@@ -5,7 +5,8 @@ import {
   findMaxDepthByDfs,
   invertByDfs,
   isSameTree,
-  isSubTree
+  isSubTree,
+  isValidTree
 } from './binary-tree.practice'
 
 describe('Test traverse()', () => {
@@ -393,6 +394,72 @@ describe('Test findMaxDepth()', () => {
     firstTree.insert(15)
     expect(findMaxDepthByDfs(firstTree)).toBe(4)
     expect(findMaxDepthByBfs(firstTree)).toBe(4)
+  })
+
+})
+
+describe('Test isValidTree()', () => {
+
+  it('Should_ReturnTrue_WhenGivenValidTree', () => {
+    const firstTree = new BinaryTree(2)
+    firstTree.insert(1)
+    firstTree.insert(3)
+    expect(isValidTree(firstTree)).toBeTruthy()
+
+    const secondTree = new BinaryTree<number>(6)
+    secondTree.insert(2)
+    secondTree.insert(8)
+    secondTree.insert(0)
+    secondTree.insert(4)
+    secondTree.insert(3)
+    secondTree.insert(5)
+    secondTree.insert(7)
+    secondTree.insert(9)
+    expect(isValidTree(secondTree)).toBeTruthy()
+  })
+
+  it('Should_ReturnFalse_WhenGivenInvalidTree', () => {
+    let firstTree = new BinaryTree(4)
+    firstTree.insert(2)
+    firstTree.insert(7)
+    firstTree.insert(1)
+    firstTree.insert(3)
+    firstTree.insert(6)
+    firstTree.insert(9)
+    firstTree = invertByDfs(firstTree)
+    expect(isValidTree(firstTree)).toBeFalsy()
+
+    let secondTree = new BinaryTree(2)
+    secondTree.insert(1)
+    secondTree.insert(3)
+    secondTree = invertByDfs(secondTree)
+    expect(isValidTree(secondTree)).toBeFalsy()
+
+    let thirdTree = new BinaryTree(5)
+    thirdTree.left = new BinaryTree<number>(3)
+    thirdTree.right = new BinaryTree<number>(4)
+    expect(isValidTree(thirdTree)).toBeFalsy()
+
+    let fourthTree = new BinaryTree(5)
+    fourthTree.insert(4)
+    const nodeOfSix = fourthTree.insert(6)
+    nodeOfSix.left = new BinaryTree<number>(3)
+    nodeOfSix.right = new BinaryTree<number>(7)
+    expect(isValidTree(fourthTree)).toBeFalsy()
+
+
+    const fifthTree = new BinaryTree(0)
+    fifthTree.right = new BinaryTree<number>(-1)
+    expect(isValidTree(fifthTree)).toBeFalsy()
+
+    const sixthTree = new BinaryTree<number>(32)
+    sixthTree.insert(26)
+    sixthTree.insert(47)
+    const node = sixthTree.insert(19)
+    sixthTree.insert(56)
+
+    node.right = new BinaryTree<number>(27)
+    expect(isValidTree(sixthTree)).toBeFalsy()
   })
 
 })
