@@ -1,5 +1,6 @@
 import { BinaryTree } from './binary-tree'
 import {
+  findKthSmallestNode,
   findLowestCommonAncestor,
   findMaxDepthByBfs,
   findMaxDepthByDfs,
@@ -662,6 +663,42 @@ describe('Test findLowestCommonAncestor()', () => {
     const lastLca = findLowestCommonAncestor(lastRoot, new BinaryTree<number>(1), new BinaryTree<number>(2))
     expect(lastLca?.value).toBe(2)
     expect(lastLca?.parent).toBeFalsy()
+  })
+
+})
+
+describe('Test findKthSmallestElement()', () => {
+
+  it('Should_ReturnNil_WhenGivenEmptyTreeOrOutOfBound', () => {
+    const first = new BinaryTree<number>(1)
+    expect(findKthSmallestNode(first, 5)).toBeFalsy()
+  })
+
+  it('Should_ReturnExpectedValue_WhenGivenTree', () => {
+    const first = new BinaryTree<number>(3)
+    first.insert(1)
+    first.insert(4)
+    first.insert(2)
+    expect(findKthSmallestNode(first, 2)).toBe(2)
+
+    const second = new BinaryTree<number>(5)
+    second.insert(3)
+    second.insert(6)
+    second.insert(2)
+    second.insert(4)
+    second.insert(1)
+    expect(findKthSmallestNode(second, 3)).toBe(3)
+
+    const third = new BinaryTree<number>(5)
+    third.insert(2)
+    third.insert(30)
+    third.insert(-1)
+    third.insert(4)
+    third.insert(3)
+    third.insert(15)
+    third.insert(40)
+    third.insert(19)
+    expect(findKthSmallestNode(third, 7)).toBe(19)
   })
 
 })

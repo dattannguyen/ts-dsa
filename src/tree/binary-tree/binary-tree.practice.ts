@@ -169,3 +169,11 @@ export const findLowestCommonAncestor = (
 
   return
 }
+
+/**
+ * Leetcode question: https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+ */
+export const findKthSmallestNode = (binaryTree: BinaryTree<number>, k: number): number => {
+  const inorderNodes = binaryTree.traverseInOrder()
+  return inorderNodes[Math.max(k - 1, 0)]
+}
