@@ -453,7 +453,6 @@ describe('Test isValidTree()', () => {
     expect(isValidTree(fourthTree)).toBeFalsy()
     expect(isValidTreeByDownToUp(fourthTree)).toBeFalsy()
 
-
     const fifthTree = new BinaryTree(0)
     fifthTree.right = new BinaryTree<number>(-1)
     expect(isValidTree(fifthTree)).toBeFalsy()
@@ -467,6 +466,13 @@ describe('Test isValidTree()', () => {
     nodeOfNineteen.insert(27)
     expect(isValidTree(sixthTree)).toBeFalsy()
     expect(isValidTreeByDownToUp(sixthTree)).toBeFalsy()
+
+    const seventhTree = new BinaryTree<number>(32)
+    seventhTree.insert(26)
+    seventhTree.insert(47)
+    seventhTree.insert(56).insert(27)
+    expect(isValidTree(seventhTree)).toBeFalsy()
+    expect(isValidTreeByDownToUp(seventhTree)).toBeFalsy()
   })
 
 })
