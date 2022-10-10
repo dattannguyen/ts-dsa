@@ -1,5 +1,6 @@
 import { BinaryTree } from './binary-tree'
 import {
+  findKthSmallestByStack,
   findKthSmallestNode,
   findKthSmallestNodeByMinHeap,
   findLowestCommonAncestor,
@@ -681,6 +682,7 @@ describe('Test findKthSmallestElement()', () => {
     first.insert(4)
     first.insert(2)
     expect(findKthSmallestNode(first, 2)).toBe(2)
+    expect(findKthSmallestByStack(first, 2)).toBe(2)
     expect(findKthSmallestNodeByMinHeap(first, 2)).toBe(2)
 
     const second = new BinaryTree<number>(5)
@@ -690,6 +692,7 @@ describe('Test findKthSmallestElement()', () => {
     second.insert(4)
     second.insert(1)
     expect(findKthSmallestNode(second, 3)).toBe(3)
+    expect(findKthSmallestByStack(second, 3)).toBe(3)
     expect(findKthSmallestNodeByMinHeap(second, 3)).toBe(3)
 
     const third = new BinaryTree<number>(5)
@@ -702,6 +705,7 @@ describe('Test findKthSmallestElement()', () => {
     third.insert(40)
     third.insert(19)
     expect(findKthSmallestNode(third, 7)).toBe(19)
+    expect(findKthSmallestByStack(third, 7)).toBe(19)
     expect(findKthSmallestNodeByMinHeap(third, 7)).toBe(19)
   })
 

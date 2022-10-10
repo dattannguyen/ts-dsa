@@ -178,6 +178,27 @@ export const findKthSmallestNode = (binaryTree: BinaryTree<number>, k: number): 
   return inorderNodes[Math.max(k - 1, 0)]
 }
 
+export const findKthSmallestByStack = (binaryTree: BinaryTree<number>, k: number): number => {
+  const stack: BinaryTree<number>[] = []
+  const smallestOfLeft = (node: BinaryTree<number>): BinaryTree<number> => {
+    while (node) {
+      stack.push(node)
+      node = node.left
+    }
+
+    return stack.pop()
+  }
+
+  while (k--) {
+    const leftMost = smallestOfLeft(binaryTree)
+    if (k === 0) {
+      return leftMost.value
+    }
+
+    binaryTree = leftMost.right
+  }
+}
+
 export const findKthSmallestNodeByMinHeap = (binaryTree: BinaryTree<number>, k: number): number => {
   const minHeap: number[] = []
   const heapifyUp = (node: BinaryTree<number>) => {
