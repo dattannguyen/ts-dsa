@@ -72,6 +72,42 @@ export const isValidTree = (binaryTree: BinaryTree<number>, max?: number, min?: 
   return isLeftValid && isRightValid
 }
 
+export const isValidTreeByDownToUp = (binaryTree: BinaryTree<number>) => {
+  if (binaryTree.left && binaryTree.left.value > binaryTree.value) {
+    return false
+  }
+
+  if (binaryTree.right && binaryTree.right.value < binaryTree.value) {
+    return false
+  }
+
+  const isValidDownToUp = (node: BinaryTree, value: number = node.value): boolean => {
+    while (node.parent) {
+      const isRight = node.value > node.parent.value
+      if (isRight && value < node.parent.value) {
+        return false
+      }
+
+      if (!isRight && value > node.parent.value) {
+        return false
+      }
+
+      node = node.parent
+    }
+
+    return true
+  }
+
+  if (!isValidDownToUp(binaryTree)) {
+    return false
+  }
+
+  const isLeftValid = binaryTree.left ? isValidTreeByDownToUp(binaryTree.left) : true
+  const isRightValid = binaryTree.right ? isValidTreeByDownToUp(binaryTree.right) : true
+
+  return isLeftValid && isRightValid
+}
+
 /**
  * Leetcode question: https://leetcode.com/problems/same-tree/
  */

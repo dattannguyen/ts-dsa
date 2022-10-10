@@ -6,7 +6,8 @@ import {
   invertByDfs,
   isSameTree,
   isSubTree,
-  isValidTree
+  isValidTree,
+  isValidTreeByDownToUp
 } from './binary-tree.practice'
 
 describe('Test traverse()', () => {
@@ -405,6 +406,7 @@ describe('Test isValidTree()', () => {
     firstTree.insert(1)
     firstTree.insert(3)
     expect(isValidTree(firstTree)).toBeTruthy()
+    expect(isValidTreeByDownToUp(firstTree)).toBeTruthy()
 
     const secondTree = new BinaryTree<number>(6)
     secondTree.insert(2)
@@ -416,6 +418,7 @@ describe('Test isValidTree()', () => {
     secondTree.insert(7)
     secondTree.insert(9)
     expect(isValidTree(secondTree)).toBeTruthy()
+    expect(isValidTreeByDownToUp(secondTree)).toBeTruthy()
   })
 
   it('Should_ReturnFalse_WhenGivenInvalidTree', () => {
@@ -428,38 +431,42 @@ describe('Test isValidTree()', () => {
     firstTree.insert(9)
     firstTree = invertByDfs(firstTree)
     expect(isValidTree(firstTree)).toBeFalsy()
+    expect(isValidTreeByDownToUp(firstTree)).toBeFalsy()
 
     let secondTree = new BinaryTree(2)
     secondTree.insert(1)
     secondTree.insert(3)
     secondTree = invertByDfs(secondTree)
     expect(isValidTree(secondTree)).toBeFalsy()
+    expect(isValidTreeByDownToUp(secondTree)).toBeFalsy()
 
     let thirdTree = new BinaryTree(5)
     thirdTree.left = new BinaryTree<number>(3)
     thirdTree.right = new BinaryTree<number>(4)
     expect(isValidTree(thirdTree)).toBeFalsy()
+    expect(isValidTreeByDownToUp(thirdTree)).toBeFalsy()
 
-    let fourthTree = new BinaryTree(5)
-    fourthTree.insert(4)
+    const fourthTree = new BinaryTree(5).insert(4)
     const nodeOfSix = fourthTree.insert(6)
-    nodeOfSix.left = new BinaryTree<number>(3)
-    nodeOfSix.right = new BinaryTree<number>(7)
+    nodeOfSix.insert(3)
+    nodeOfSix.insert(7)
     expect(isValidTree(fourthTree)).toBeFalsy()
+    expect(isValidTreeByDownToUp(fourthTree)).toBeFalsy()
 
 
     const fifthTree = new BinaryTree(0)
     fifthTree.right = new BinaryTree<number>(-1)
     expect(isValidTree(fifthTree)).toBeFalsy()
+    expect(isValidTreeByDownToUp(fifthTree)).toBeFalsy()
 
     const sixthTree = new BinaryTree<number>(32)
     sixthTree.insert(26)
     sixthTree.insert(47)
-    const node = sixthTree.insert(19)
     sixthTree.insert(56)
-
-    node.right = new BinaryTree<number>(27)
+    const nodeOfNineteen = sixthTree.insert(19)
+    nodeOfNineteen.insert(27)
     expect(isValidTree(sixthTree)).toBeFalsy()
+    expect(isValidTreeByDownToUp(sixthTree)).toBeFalsy()
   })
 
 })
