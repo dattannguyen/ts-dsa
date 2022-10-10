@@ -177,3 +177,55 @@ export const findKthSmallestNode = (binaryTree: BinaryTree<number>, k: number): 
   const inorderNodes = binaryTree.traverseInOrder()
   return inorderNodes[Math.max(k - 1, 0)]
 }
+
+export const findKthSmallestNodeByMinHeap = (binaryTree: BinaryTree<number>, k: number): number => {
+  const minHeap: number[] = []
+  const heapifyUp = (node: BinaryTree<number>) => {
+    minHeap.push(node.value)
+
+    let index = minHeap.length - 1
+    while (Math.floor((index - 1) / 2) >= 0 && minHeap[Math.floor((index - 1) / 2)] > node.value) {
+      const parentIndex = Math.floor((index - 1) / 2)
+      minHeap[index] = minHeap[parentIndex]
+      minHeap[parentIndex] = node.value
+
+      index = parentIndex
+    }
+  }
+
+  const heapifyDown = (): number => {
+    const smallest = minHeap[0]
+    minHeap[0] = minHeap.pop()
+
+    let index = 0
+    while ((2 * index + 1) < minHeap.length) {
+      let nextIndex = 2 * index + 1
+      const rightIndex = 2 * index + 2
+      if (rightIndex < minHeap.length && minHeap[rightIndex] < minHeap[nextIndex]) {
+        nextIndex = rightIndex
+      }
+
+      if (minHeap[index] < minHeap[nextIndex]) {
+        break
+      } else {
+        const temp = minHeap[index]
+        minHeap[index] = minHeap[nextIndex]
+        minHeap[nextIndex] = temp
+      }
+
+      index = nextIndex
+    }
+
+    return smallest
+  }
+
+  binaryTree.traverseInOrder(heapifyUp)
+
+  let kthSmallest
+  while (k > 0) {
+    kthSmallest = heapifyDown()
+    k--
+  }
+
+  return kthSmallest
+}

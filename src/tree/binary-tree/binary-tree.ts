@@ -66,17 +66,19 @@ export class BinaryTree<T = any> extends TreeNode<T> {
     return this._compareLeftOrder(this.value, node.value)
   }
 
-  traverseInOrder(): T[] {
+  traverseInOrder(onTraverse?: (traversalNode: BinaryTree<T>) => any): T[] {
     const result = []
+    onTraverse?.(this)
+
     if (this.left) {
-      const traverseLeft = this.left.traverseInOrder()
+      const traverseLeft = this.left.traverseInOrder(onTraverse)
       result.push(...traverseLeft)
     }
 
     result.push(this.value)
 
     if (this.right) {
-      const traverseRight = this.right.traverseInOrder()
+      const traverseRight = this.right.traverseInOrder(onTraverse)
       result.push(...traverseRight)
     }
 
