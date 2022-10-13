@@ -1,4 +1,4 @@
-import { TreeNode } from '../node/tree-node'
+import { TreeNode } from '../_node/tree-node'
 
 export class BinaryTree<T = any> extends TreeNode<T> {
 
