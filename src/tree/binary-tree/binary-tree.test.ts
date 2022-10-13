@@ -6,6 +6,7 @@ import {
   findLowestCommonAncestor,
   findMaxDepthByBfs,
   findMaxDepthByDfs,
+  findMaxPathSum,
   invertByDfs,
   isSameTree,
   isSubTree,
@@ -707,6 +708,39 @@ describe('Test findKthSmallestElement()', () => {
     expect(findKthSmallestNode(third, 7)).toBe(19)
     expect(findKthSmallestByStack(third, 7)).toBe(19)
     expect(findKthSmallestNodeByMinHeap(third, 7)).toBe(19)
+  })
+
+})
+
+describe('Test findMaxPathSum()', () => {
+
+  it('Should_ReturnExpectedMaxPathSum_WhenGivenParams', () => {
+    const first = new BinaryTree<number>(1)
+    first.insert(2)
+    first.insert(3)
+    expect(findMaxPathSum(first)).toBe(6)
+
+    const second = new BinaryTree<number>(-10)
+    second.left = new BinaryTree<number>(9)
+    second.right = new BinaryTree<number>(20)
+    second.right.left = new BinaryTree<number>(15)
+    second.right.right = new BinaryTree<number>(7)
+    expect(findMaxPathSum(second)).toBe(42)
+
+    const third = new BinaryTree(-2)
+    third.insert(-1)
+    expect(findMaxPathSum(third)).toBe(-1)
+
+    const fourth = new BinaryTree(-3)
+    expect(findMaxPathSum(fourth)).toBe(-3)
+
+    const fifth = new BinaryTree(-1)
+    fifth.insert(-2)
+    fifth.insert(10)
+    fifth.insert(-6)
+    fifth.insert(-3)
+    fifth.insert(-6)
+    expect(findMaxPathSum(fifth)).toBe(10)
   })
 
 })

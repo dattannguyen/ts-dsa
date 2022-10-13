@@ -147,11 +147,7 @@ export const isSubTree = (tree: BinaryTree<number>, subTree: BinaryTree<number>)
  *
  * Leetcode question: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
  */
-export const findLowestCommonAncestor = (
-    root: BinaryTree<number>,
-    p: BinaryTree<number>,
-    q: BinaryTree<number>
-): BinaryTree<number> => {
+export const findLowestCommonAncestor = (root: BinaryTree<number>, p: BinaryTree<number>, q: BinaryTree<number>): BinaryTree<number> => {
   if (root.left && p.value < root.value && q.value < root.value) {
     return findLowestCommonAncestor(root.left, p, q)
   }
@@ -249,4 +245,24 @@ export const findKthSmallestNodeByMinHeap = (binaryTree: BinaryTree<number>, k: 
   }
 
   return kthSmallest
+}
+
+/**
+ * Leetcode question: https://leetcode.com/problems/binary-tree-maximum-path-sum/
+ */
+export const findMaxPathSum = (binary: BinaryTree<number>): number => {
+  let max = binary.value
+
+  const calculateSum = (node: BinaryTree<number>) => {
+    const leftSum = node.left ? calculateSum(node.left) : 0
+    const rightSum = node.right ? calculateSum(node.right) : 0
+
+    const fullSum = node.value + leftSum + rightSum
+    max = Math.max(max, fullSum)
+
+    return Math.max(node.value + leftSum, node.value + rightSum)
+  }
+
+  const onePathSum = calculateSum(binary)
+  return Math.max(max, onePathSum)
 }
