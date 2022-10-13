@@ -296,5 +296,11 @@ export const deserialize = (rootAsString: string): BinaryTree<number> => {
   }
 
   const root = new BinaryTree<number>(parseInt(values[0]))
+  for (let i = 1; i < values.length; i++) {
+    if (values[i] !== 'n') {
+      root.insert(parseInt(values[i]))
+    }
+  }
+
   return root
 }

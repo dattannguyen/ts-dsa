@@ -1,5 +1,6 @@
 import { BinaryTree } from './binary-tree'
 import {
+  deserialize,
   findKthSmallestByStack,
   findKthSmallestNode,
   findKthSmallestNodeByMinHeap,
@@ -758,6 +759,9 @@ describe('Test serialize() & deserialize()', () => {
     const firstSerialized = serialize(firstTree)
     expect(firstSerialized).toBe('-1,-2,-6,n,-3,n,n,n,10,n,n')
 
+    const firstDeserialized = deserialize(firstSerialized)
+    expect(firstDeserialized.traverseInOrder().join(',')).toBe('-6,-3,-2,-1,10')
+
     const secondTree = new BinaryTree(50)
     secondTree.insert(25)
     secondTree.insert(75)
@@ -778,6 +782,9 @@ describe('Test serialize() & deserialize()', () => {
 
     const secondSerialized = serialize(secondTree)
     expect(secondSerialized).toBe('50,25,12,6,n,n,15,n,n,35,30,n,n,40,n,n,75,60,55,n,n,65,n,n,85,80,n,n,90,n,n')
+
+    const secondDeserialized = deserialize(secondSerialized)
+    expect(secondDeserialized.traverseInOrder().join(',')).toBe('6,12,15,25,30,35,40,50,55,60,65,75,80,85,90')
   })
 
 })
