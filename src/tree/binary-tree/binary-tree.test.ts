@@ -11,7 +11,8 @@ import {
   isSameTree,
   isSubTree,
   isValidTree,
-  isValidTreeByDownToUp
+  isValidTreeByDownToUp,
+  serialize
 } from './binary-tree.practice'
 
 describe('Test traverse()', () => {
@@ -741,6 +742,42 @@ describe('Test findMaxPathSum()', () => {
     fifth.insert(-3)
     fifth.insert(-6)
     expect(findMaxPathSum(fifth)).toBe(10)
+  })
+
+})
+
+describe('Test serialize() & deserialize()', () => {
+
+  it('Should_Serialized&Deserialized_WhenGivenTree', () => {
+    const firstTree = new BinaryTree(-1)
+    firstTree.insert(-2)
+    firstTree.insert(10)
+    firstTree.insert(-6)
+    firstTree.insert(-3)
+
+    const firstSerialized = serialize(firstTree)
+    expect(firstSerialized).toBe('-1,-2,-6,n,-3,n,n,n,10,n,n')
+
+    const secondTree = new BinaryTree(50)
+    secondTree.insert(25)
+    secondTree.insert(75)
+
+    secondTree.insert(12)
+    secondTree.insert(35)
+    secondTree.insert(60)
+    secondTree.insert(85)
+
+    secondTree.insert(6)
+    secondTree.insert(15)
+    secondTree.insert(30)
+    secondTree.insert(40)
+    secondTree.insert(55)
+    secondTree.insert(65)
+    secondTree.insert(80)
+    secondTree.insert(90)
+
+    const secondSerialized = serialize(secondTree)
+    expect(secondSerialized).toBe('50,25,12,6,n,n,15,n,n,35,30,n,n,40,n,n,75,60,55,n,n,65,n,n,85,80,n,n,90,n,n')
   })
 
 })

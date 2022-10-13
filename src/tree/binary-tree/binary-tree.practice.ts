@@ -266,3 +266,35 @@ export const findMaxPathSum = (binary: BinaryTree<number>): number => {
   const onePathSum = calculateSum(binary)
   return Math.max(max, onePathSum)
 }
+
+/**
+ * Leetcode question: https://leetcode.com/problems/serialize-and-deserialize-binary-tree/
+ */
+export const serialize = (root: BinaryTree<number>): string => {
+  const values = []
+
+  const preOrderTraverse = (root: BinaryTree<number>) => {
+    values.push(root.value)
+
+    root.left
+        ? preOrderTraverse(root.left)
+        : values.push('n')
+
+    root.right
+        ? preOrderTraverse(root.right)
+        : values.push('n')
+  }
+
+  preOrderTraverse(root)
+  return values.join(',')
+}
+
+export const deserialize = (rootAsString: string): BinaryTree<number> => {
+  const values = rootAsString.split(',')
+  if (!values?.[0]) {
+    return
+  }
+
+  const root = new BinaryTree<number>(parseInt(values[0]))
+  return root
+}
