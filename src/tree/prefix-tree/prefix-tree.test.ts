@@ -67,6 +67,17 @@ describe('Test autocomplete()', () => {
     expect(secondWords.find(word => word === 'bake')).toBeTruthy()
     expect(secondWords.find(word => word === 'batter')).toBeTruthy()
     expect(secondWords.find(word => word === 'bat')).toBeTruthy()
+
+    const third = new PrefixTree()
+    third
+        .insert('abc', 8)
+        .insert('abf', 10)
+        .insert('abt', 9)
+        .insert('abs', 20)
+
+    const thirdWords = third.autocomplete('ab')
+    expect(thirdWords.length).toBe(4)
+    expect(thirdWords.join(',')).toBe('abs,abf,abt,abc')
   })
 
 })
@@ -111,13 +122,15 @@ describe('Test insert()', () => {
     const prefixTreeOne = new PrefixTree()
     prefixTreeOne
         .insert('ace')
-        .insert('act')
+        .insert('act', 10)
 
     expect(Object.keys(prefixTreeOne.children).length).toBe(1)
     expect(Object.keys(prefixTreeOne.getChild('a')?.getChild('c')?.children).length).toBe(2)
     expect(prefixTreeOne.getChild('a')?.getChild('c')?.getChild('t')).toBeTruthy()
+    expect(prefixTreeOne.getChild('a')?.getChild('c')?.getChild('t').getChild('*').metadata?.get('popularity')).toBe(10)
     expect(prefixTreeOne.getChild('a')?.getChild('c')?.getChild('e')).toBeTruthy()
     expect(prefixTreeOne.getChild('a')?.getChild('c')?.getChild('e').getChild('*')).toBeTruthy()
+    expect(prefixTreeOne.getChild('a')?.getChild('c')?.getChild('e').getChild('*').metadata?.get('popularity')).toBe(0)
     expect(prefixTreeOne.getChild('a')?.getChild('c')?.getChild('e').getChild('a')).toBeFalsy()
 
     const prefixTreeTwo = new PrefixTree()

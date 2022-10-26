@@ -46,15 +46,16 @@ export class PrefixTree extends TreeNode<string> {
   }
 
   autocomplete(prefix: string): string[] {
-    const words: string[] = []
+    const words: Array<{ word: string, popularity: number }> = []
     const lastNode = this.find(prefix, true)
     if (!lastNode) {
       return []
     }
 
     const dfs = (node: PrefixTree, prefix: string) => {
-      if (!!node.getChild('*')) {
-        words.push(prefix)
+      const asterisk = node.getChild('*')
+      if (!!asterisk) {
+        words.push({ word: prefix, popularity: asterisk.metadata.get('popularity') })
       }
 
       for (let [char, child] of Object.entries(node.children)) {
@@ -66,9 +67,11 @@ export class PrefixTree extends TreeNode<string> {
 
     dfs(lastNode, prefix)
     return words
+        .sort((first, second) => first.popularity < second.popularity ? 1 : -1)
+        .map(word => word.word)
   }
 
-  insert(word: string): PrefixTree {
+  insert(word: string, popularity: number = 0): PrefixTree {
     let currentNode: PrefixTree = this
 
     for (let i = 0; i < word.length; i++) {
@@ -85,7 +88,10 @@ export class PrefixTree extends TreeNode<string> {
       }
 
       if (i === word.length - 1) {
-        currentNode.setChild(new PrefixTree('*'))
+        const asterisk = new PrefixTree('*')
+        asterisk.metadata.set('popularity', popularity)
+
+        currentNode.setChild(asterisk)
       }
     }
 
