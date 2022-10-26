@@ -45,7 +45,7 @@ export class PrefixTree extends TreeNode<string> {
     }
   }
 
-  list(prefix: string): string[] {
+  autocomplete(prefix: string): string[] {
     const words: string[] = []
     const lastNode = this.find(prefix, true)
     if (!lastNode) {

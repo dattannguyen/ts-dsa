@@ -30,19 +30,19 @@ describe('Test find()', () => {
 
 })
 
-describe('Test list()', () => {
+describe('Test autocomplete()', () => {
 
   it('Should_ReturnEmpty_WhenGivenNonExistentWord', () => {
     const first = new PrefixTree()
     first.insert('abc').insert('cba')
 
-    const firstWords = first.list('aaa')
+    const firstWords = first.autocomplete('aaa')
     expect(firstWords.length).toBe(0)
 
     const second = new PrefixTree()
     second.insert('batter')
 
-    const secondWords = second.list('batk')
+    const secondWords = second.autocomplete('batk')
     expect(secondWords.length).toBe(0)
   })
 
@@ -50,7 +50,7 @@ describe('Test list()', () => {
     const first = new PrefixTree()
     first.insert('cab').insert('cat').insert('bat')
 
-    const firstWords = first.list('c')
+    const firstWords = first.autocomplete('c')
     expect(firstWords.length).toBe(2)
     expect(firstWords.find(word => word === 'cab')).toBeTruthy()
     expect(firstWords.find(word => word === 'cat')).toBeTruthy()
@@ -62,7 +62,7 @@ describe('Test list()', () => {
         .insert('bat')
         .insert('bct')
 
-    const secondWords = second.list('ba')
+    const secondWords = second.autocomplete('ba')
     expect(secondWords.length).toBe(3)
     expect(secondWords.find(word => word === 'bake')).toBeTruthy()
     expect(secondWords.find(word => word === 'batter')).toBeTruthy()
