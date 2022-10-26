@@ -45,6 +45,29 @@ export class PrefixTree extends TreeNode<string> {
     }
   }
 
+  list(prefix: string): string[] {
+    const words: string[] = []
+    const lastNode = this.find(prefix, true)
+    if (!lastNode) {
+      return []
+    }
+
+    const dfs = (node: PrefixTree, prefix: string) => {
+      if (!!node.getChild('*')) {
+        words.push(prefix)
+      }
+
+      for (let [char, child] of Object.entries(node.children)) {
+        if (child.value !== '*') {
+          dfs(child, prefix.concat(char))
+        }
+      }
+    }
+
+    dfs(lastNode, prefix)
+    return words
+  }
+
   insert(word: string): PrefixTree {
     let currentNode: PrefixTree = this
 

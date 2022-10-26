@@ -28,6 +28,46 @@ describe('Test find()', () => {
     expect(allowPrefix.find('bat', true)).toBeTruthy()
   })
 
+})
+
+describe('Test list()', () => {
+
+  it('Should_ReturnEmpty_WhenGivenNonExistentWord', () => {
+    const first = new PrefixTree()
+    first.insert('abc').insert('cba')
+
+    const firstWords = first.list('aaa')
+    expect(firstWords.length).toBe(0)
+
+    const second = new PrefixTree()
+    second.insert('batter')
+
+    const secondWords = second.list('batk')
+    expect(secondWords.length).toBe(0)
+  })
+
+  it('Should_ReturnAllWord_WhenGivenExistedWord', () => {
+    const first = new PrefixTree()
+    first.insert('cab').insert('cat').insert('bat')
+
+    const firstWords = first.list('c')
+    expect(firstWords.length).toBe(2)
+    expect(firstWords.find(word => word === 'cab')).toBeTruthy()
+    expect(firstWords.find(word => word === 'cat')).toBeTruthy()
+
+    const second = new PrefixTree()
+    second
+        .insert('bake')
+        .insert('batter')
+        .insert('bat')
+        .insert('bct')
+
+    const secondWords = second.list('ba')
+    expect(secondWords.length).toBe(3)
+    expect(secondWords.find(word => word === 'bake')).toBeTruthy()
+    expect(secondWords.find(word => word === 'batter')).toBeTruthy()
+    expect(secondWords.find(word => word === 'bat')).toBeTruthy()
+  })
 
 })
 
