@@ -785,6 +785,8 @@ describe('Test serialize() & deserialize()', () => {
 
     const secondDeserialized = deserialize(secondSerialized)
     expect(secondDeserialized.traverseInOrder().join(',')).toBe('6,12,15,25,30,35,40,50,55,60,65,75,80,85,90')
+
+    expect(deserialize('')).toBeFalsy()
   })
 
 })
