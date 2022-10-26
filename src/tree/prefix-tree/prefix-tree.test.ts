@@ -1,5 +1,36 @@
 import { PrefixTree } from './prefix-tree'
 
+describe('Test find()', () => {
+
+  it('Should_ReturnUndefined_WhenGivenNonExistedWord', () => {
+    const first = new PrefixTree()
+    first.insert('abc').insert('xyz').insert('bat')
+    expect(first.find('bac')).toBeFalsy()
+    expect(first.find('def')).toBeFalsy()
+
+    const second = new PrefixTree()
+    second.insert('batter').insert('bac')
+    expect(second.find('bat')).toBeFalsy()
+  })
+
+  it('Should_ReturnNode_WhenGivenExistedWord', () => {
+    const first = new PrefixTree()
+    first.insert('cab').insert('cat').insert('bat')
+    expect(first.find('bat')).toBeTruthy()
+    expect(first.find('cat')).toBeTruthy()
+
+    const second = new PrefixTree()
+    second.insert('batter').insert('bat')
+    expect(second.find('bat')).toBeTruthy()
+
+    const allowPrefix = new PrefixTree()
+    allowPrefix.insert('batter')
+    expect(allowPrefix.find('bat', true)).toBeTruthy()
+  })
+
+
+})
+
 describe('Test insert()', () => {
 
   it('Should_InsertWord_WhenGivenSeparatedWord', () => {

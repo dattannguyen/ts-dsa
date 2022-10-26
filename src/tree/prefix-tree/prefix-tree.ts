@@ -21,6 +21,30 @@ export class PrefixTree extends TreeNode<string> {
     this.children[node.value] = node
   }
 
+  find(word: string, allowPrefix: boolean = false): PrefixTree | undefined {
+    let currentNode: PrefixTree = this
+
+    for (let i = 0; i < word.length; i++) {
+      const child = currentNode.getChild(word[i])
+      if (!child) {
+        return
+      }
+
+      if (i < word.length - 1) {
+        currentNode = child
+        continue
+      }
+
+      if (allowPrefix) {
+        return child
+      } else {
+        return child.getChild('*')
+            ? child
+            : undefined
+      }
+    }
+  }
+
   insert(word: string): PrefixTree {
     let currentNode: PrefixTree = this
 
@@ -44,6 +68,5 @@ export class PrefixTree extends TreeNode<string> {
 
     return this
   }
-
 
 }
