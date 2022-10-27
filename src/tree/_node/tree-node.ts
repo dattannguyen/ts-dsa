@@ -11,6 +11,10 @@ export class TreeNode<T = any> {
     this._compareEqual = _compareEqual || ((first: TreeNode, second: TreeNode) => first._value === second._value)
   }
 
+  get key(): string {
+    return this._value.toString()
+  }
+
   get value(): T {
     return this._value
   }
