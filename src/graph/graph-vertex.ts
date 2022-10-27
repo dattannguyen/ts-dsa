@@ -10,6 +10,10 @@ export class GraphVertex<T = any> extends TreeNode<T> {
     this._adjVertices = new Map<string, { des: GraphVertex<T>, edge: GraphEdge }>()
   }
 
+  get adjVertices(): Map<string, { des: GraphVertex<T>, edge: GraphEdge }> {
+    return this._adjVertices
+  }
+
   getEdge(desVx: GraphVertex<T>): GraphEdge | undefined {
     return this._adjVertices.get(desVx.key)?.edge
   }
