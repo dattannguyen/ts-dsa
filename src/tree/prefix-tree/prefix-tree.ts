@@ -2,23 +2,23 @@ import { TreeNode } from '../_node/tree-node'
 
 export class PrefixTree extends TreeNode<string> {
 
-  private readonly _children: Record<string, PrefixTree>
+  private readonly _children: Map<string, PrefixTree>
 
   constructor(char: string = '*') {
     super(char)
-    this._children = {}
+    this._children = new Map<string, PrefixTree>()
   }
 
-  get children(): Record<string, PrefixTree> {
+  get children(): Map<string, PrefixTree> {
     return this._children
   }
 
   getChild(char: string): PrefixTree | undefined {
-    return this.children[char]
+    return this.children.get(char)
   }
 
   setChild(node: PrefixTree) {
-    this.children[node.value] = node
+    this.children.set(node.value, node)
   }
 
   find(word: string, allowPrefix: boolean = false): PrefixTree | undefined {
@@ -58,7 +58,7 @@ export class PrefixTree extends TreeNode<string> {
         words.push({ word: prefix, popularity: asterisk.metadata.get('popularity') })
       }
 
-      for (let [char, child] of Object.entries(node.children)) {
+      for (let [char, child] of node.children.entries()) {
         if (child.value !== '*') {
           dfs(child, prefix.concat(char))
         }
@@ -95,6 +95,23 @@ export class PrefixTree extends TreeNode<string> {
       }
     }
 
+    return this
+  }
+
+  delete(word: string, allowPrefix: boolean = false): PrefixTree {
+    const lastNode = this.find(word, allowPrefix)
+    if (!lastNode) {
+      return this
+    }
+
+    let key = allowPrefix ? lastNode.value : '*'
+    let parent = lastNode.parent as PrefixTree
+    while (parent?.children.size === 1 && parent.parent) {
+      key = parent.value
+      parent = parent.parent as PrefixTree
+    }
+
+    parent?.children.delete(key)
     return this
   }
 

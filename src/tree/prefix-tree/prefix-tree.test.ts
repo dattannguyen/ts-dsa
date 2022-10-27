@@ -91,24 +91,24 @@ describe('Test insert()', () => {
         .insert('abs')
         .insert('bst')
         .insert('ego')
-    expect(Object.keys(prefixTree.children).length).toBe(4)
+    expect(prefixTree.children.size).toBe(4)
 
     const aNode = prefixTree.getChild('a')
     expect(aNode).toBeTruthy()
-    expect(Object.keys(aNode.children).length).toBe(1)
+    expect(aNode.children.size).toBe(1)
     expect(aNode.getChild('b')).toBeTruthy()
     expect(aNode.getChild('b')?.getChild('c')).toBeFalsy()
 
     const bNode = prefixTree.getChild('b')
     expect(bNode).toBeTruthy()
-    expect(Object.keys(bNode.children).length).toBe(1)
+    expect(bNode.children.size).toBe(1)
     expect(bNode.getChild('s')).toBeTruthy()
     expect(bNode.getChild('f')).toBeFalsy()
     expect(bNode.getChild('s')?.getChild('t')).toBeTruthy()
 
     const cNode = prefixTree.getChild('c')
     expect(cNode).toBeTruthy()
-    expect(Object.keys(cNode.children).length).toBe(1)
+    expect(cNode.children.size).toBe(1)
     expect(cNode.getChild('a')).toBeTruthy()
     expect(cNode.getChild('a').getChild('t')).toBeTruthy()
     expect(cNode.getChild('a')?.getChild('t')?.parent?.value).toBe('a')
@@ -124,8 +124,8 @@ describe('Test insert()', () => {
         .insert('ace')
         .insert('act', 10)
 
-    expect(Object.keys(prefixTreeOne.children).length).toBe(1)
-    expect(Object.keys(prefixTreeOne.getChild('a')?.getChild('c')?.children).length).toBe(2)
+    expect(prefixTreeOne.children.size).toBe(1)
+    expect(prefixTreeOne.getChild('a')?.getChild('c')?.children.size).toBe(2)
     expect(prefixTreeOne.getChild('a')?.getChild('c')?.getChild('t')).toBeTruthy()
     expect(prefixTreeOne.getChild('a')?.getChild('c')?.getChild('t').getChild('*').metadata?.get('popularity')).toBe(10)
     expect(prefixTreeOne.getChild('a')?.getChild('c')?.getChild('e')).toBeTruthy()
@@ -139,22 +139,61 @@ describe('Test insert()', () => {
         .insert('bake')
         .insert('batter')
         .insert('bat')
-    expect(Object.keys(prefixTreeTwo.children).length).toBe(1)
+    expect(prefixTreeTwo.children.size).toBe(1)
 
     const baNode = prefixTreeTwo.getChild('b')?.getChild('a')
     expect(baNode).toBeTruthy()
-    expect(Object.keys(baNode.children).length).toBe(3)
+    expect(baNode.children.size).toBe(3)
     expect(baNode.getChild('d')).toBeTruthy()
     expect(baNode.getChild('k')).toBeTruthy()
     expect(baNode.getChild('t')).toBeTruthy()
     expect(baNode.getChild('f')).toBeFalsy()
 
     const batNode = baNode.getChild('t')
-    expect(Object.keys(batNode.children).length).toBe(2)
+    expect(batNode.children.size).toBe(2)
     expect(batNode.getChild('t')).toBeTruthy()
     expect(batNode.getChild('*')).toBeTruthy()
     expect(batNode.getChild('t').getChild('e')).toBeTruthy()
     expect(batNode.getChild('t').getChild('t')).toBeFalsy()
+  })
+
+})
+
+describe('Test delete()', () => {
+
+  it('Should_DoNothing_WhenDeleteNonExistentWord', () => {
+    const first = new PrefixTree()
+    first.insert('abc').insert('def')
+
+    first.delete('ctg')
+    expect(first.getChild('a')).toBeTruthy()
+    expect(first.getChild('d')).toBeTruthy()
+  })
+
+  it('Should_DeleteWord_WhenDeleteCompleteWord', () => {
+    const first = new PrefixTree()
+    first.insert('abc').insert('def')
+
+    first.delete('abc')
+    expect(first.getChild('a')).toBeFalsy()
+    first.delete('de')
+    expect(first.getChild('d')).toBeTruthy()
+    expect(first.getChild('d').getChild('e')).toBeTruthy()
+    expect(first.getChild('d').getChild('e').getChild('f')).toBeTruthy()
+
+    const second = new PrefixTree()
+    second
+        .insert('bake')
+        .insert('batter')
+        .insert('bat')
+        .insert('bct')
+        .insert('bft')
+
+    second.delete('ba', true)
+    expect(second.getChild('b')?.getChild('a')).toBeFalsy()
+    expect(second.getChild('b')?.getChild('c')).toBeTruthy()
+    expect(second.getChild('b')?.getChild('f')).toBeTruthy()
+
   })
 
 })
