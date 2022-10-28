@@ -73,6 +73,7 @@ export class PrefixTree extends TreeNode<string> {
 
   suggest(prefix: string): string[] {
     // TODO: implementation
+    return []
   }
 
   insert(word: string, popularity: number = 0): PrefixTree {
