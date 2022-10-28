@@ -41,6 +41,31 @@ export class Graph<T = any> {
     return doDfs(firstVertex)
   }
 
+  bfs(onVisited?: (vertex: GraphVertex<T>) => any, expectedValue?: T): GraphVertex<T> | undefined {
+    const traceMap: Record<string, any> = {}
+    const firstVertex = this._vertices.get(Array.from(this._vertices.keys())[0])
+    const queue: GraphVertex<T>[] = [firstVertex]
+
+    while (queue.length > 0) {
+      const nextVx = queue.pop()
+      onVisited?.(nextVx)
+      traceMap[nextVx.key] = 1
+
+      if (expectedValue && expectedValue === nextVx.value) {
+        return nextVx
+      }
+
+      for (let adjVx of nextVx.adjVertices.values()) {
+        if (!traceMap[adjVx.des.key]) {
+          queue.unshift(adjVx.des)
+          traceMap[adjVx.des.key] = 1
+        }
+      }
+    }
+
+    return
+  }
+
   connect(src: T, des: T, weight: number = 0) {
     const srcVx = this.upsertVx(src)
     const desVx = this.upsertVx(des)
