@@ -67,8 +67,12 @@ export class PrefixTree extends TreeNode<string> {
 
     dfs(lastNode, prefix)
     return words
-        .sort((first, second) => first.popularity < second.popularity ? 1 : -1)
-        .map(word => word.word)
+    .sort((first, second) => first.popularity < second.popularity ? 1 : -1)
+    .map(word => word.word)
+  }
+
+  suggest(prefix: string): string[] {
+    // TODO: implementation
   }
 
   insert(word: string, popularity: number = 0): PrefixTree {
