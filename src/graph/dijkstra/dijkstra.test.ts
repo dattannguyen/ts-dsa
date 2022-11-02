@@ -88,5 +88,37 @@ describe('Test dijkstra()', () => {
 
   })
 
+  it('Should_ReturnExpectedPath_WhenGivenCustomWeightComparator', () => {
+    const directedGraph = new Graph()
+    directedGraph.connect('arizona', 'boston', 100)
+    directedGraph.connect('arizona', 'dallas', 160)
+    directedGraph.connect('boston', 'chicago', 120)
+    directedGraph.connect('boston', 'dallas', 180)
+    directedGraph.connect('dallas', 'chicago', 40)
+    directedGraph.connect('denver', 'california', 140)
+    directedGraph.connect('chicago', 'california', 80)
+    directedGraph.connect('california', 'boston', 100)
+
+    const shortestPath = dijkstra(
+        directedGraph.getVertex('arizona'),
+        directedGraph.getVertex('california'),
+    )
+
+    expect(shortestPath).toBeTruthy()
+    expect(shortestPath.weight).toBe(280)
+    expect(shortestPath.path.map(vx => vx.value).join(' -> ')).toBe('arizona -> dallas -> chicago -> california')
+
+    const longestPath = dijkstra(
+        directedGraph.getVertex('arizona'),
+        directedGraph.getVertex('california'),
+        (currentWeight, nextWeight) => currentWeight <= nextWeight
+    )
+
+    expect(longestPath).toBeTruthy()
+    expect(longestPath.weight).toBe(400)
+    expect(longestPath.path.map(vx => vx.value).join(' -> ')).toBe('arizona -> boston -> dallas -> chicago -> california')
+
+  })
+
 
 })

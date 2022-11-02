@@ -1,6 +1,11 @@
 import { GraphVertex } from '../graph-vertex'
 
-export const dijkstra = (src: GraphVertex, des: GraphVertex): { weight: number, path: GraphVertex[] } | undefined => {
+export const dijkstra = (
+    src: GraphVertex,
+    des: GraphVertex,
+    weightComparator?: (currentWeight: number, nextWeight: number) => boolean
+): { weight: number, path: GraphVertex[] } | undefined => {
+  weightComparator = weightComparator || ((currentWeight, nextWeight) => currentWeight >= nextWeight)
   const traceMap = new Map<string, number>([[src.key, 1]])
   const minWeightByDes = new Map<string, number>()
   const desByStopover = new Map<string, GraphVertex>()
@@ -15,7 +20,7 @@ export const dijkstra = (src: GraphVertex, des: GraphVertex): { weight: number, 
         const weightFromSrcToAdj = minWeightByDes.get(adjVx.des.key)
         const weightFromSrcToCurrent = minWeightByDes.get(current.key) || 0
 
-        if (!weightFromSrcToAdj || (weightFromSrcToAdj >= weightFromSrcToCurrent + adjVx.edge.weight)) {
+        if (!weightFromSrcToAdj || weightComparator(weightFromSrcToAdj, weightFromSrcToCurrent + adjVx.edge.weight)) {
           minWeightByDes.set(adjVx.des.key, weightFromSrcToCurrent + adjVx.edge.weight)
           desByStopover.set(adjVx.des.key, current)
         }
