@@ -18,8 +18,8 @@ export class GraphVertex<T = any> extends TreeNode<T> {
     return this._adjVertices.get(desVx.key)?.edge
   }
 
-  hasConnected(vertex: GraphVertex<T>): boolean {
-    return this._adjVertices.has(vertex.key)
+  isConnected(key: string): boolean {
+    return this._adjVertices.has(key)
   }
 
   addVertex(des: GraphVertex<T>, weight: number = 0, isDirected: boolean = true): GraphEdge {
@@ -28,7 +28,7 @@ export class GraphVertex<T = any> extends TreeNode<T> {
       this._adjVertices.set(des.key, { des, edge })
     }
 
-    if (!isDirected && !des.hasConnected(this)) {
+    if (!isDirected && !des.isConnected(this.key)) {
       des.addVertex(this, weight)
     }
 
