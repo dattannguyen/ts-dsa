@@ -22,6 +22,12 @@ export class GraphVertex<T = any> extends TreeNode<T> {
     return this._adjVertices.has(key)
   }
 
+  forEachAdjVertex(callback: (vx: GraphVertex<T>) => any) {
+    for (let adjVx of this._adjVertices.values()) {
+      callback(adjVx.des)
+    }
+  }
+
   addVertex(des: GraphVertex<T>, weight: number = 0, isDirected: boolean = true): GraphEdge {
     const edge = new GraphEdge(weight, this, des)
     if (!this._adjVertices.has(des.key)) {

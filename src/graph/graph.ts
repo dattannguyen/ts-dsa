@@ -13,6 +13,10 @@ export class Graph<T = any> {
     this._edges = new Map<string, GraphEdge>()
   }
 
+  get vertices() {
+    return this._vertices
+  }
+
   getVertex(key: string): GraphVertex<T> {
     return this._vertices.get(key)
   }
