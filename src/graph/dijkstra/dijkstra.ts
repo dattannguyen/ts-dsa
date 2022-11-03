@@ -7,7 +7,7 @@ export const dijkstra = (
 ): { weight: number, path: GraphVertex[] } | undefined => {
   weightComparator = weightComparator || ((currentWeight, nextWeight) => currentWeight >= nextWeight)
   const traceMap = new Map<string, number>([[src.key, 1]])
-  const minWeightByDes = new Map<string, number>()
+  const weightByDes = new Map<string, number>()
   const desByStopover = new Map<string, GraphVertex>()
 
   const queue = [src]
@@ -17,11 +17,11 @@ export const dijkstra = (
 
     for (let adjVx of current.adjVertices.values()) {
       if (!traceMap.has(adjVx.des.key)) {
-        const weightFromSrcToAdj = minWeightByDes.get(adjVx.des.key)
-        const weightFromSrcToCurrent = minWeightByDes.get(current.key) || 0
+        const weightFromSrcToAdj = weightByDes.get(adjVx.des.key)
+        const weightFromSrcToCurrent = weightByDes.get(current.key) || 0
 
         if (!weightFromSrcToAdj || weightComparator(weightFromSrcToAdj, weightFromSrcToCurrent + adjVx.edge.weight)) {
-          minWeightByDes.set(adjVx.des.key, weightFromSrcToCurrent + adjVx.edge.weight)
+          weightByDes.set(adjVx.des.key, weightFromSrcToCurrent + adjVx.edge.weight)
           desByStopover.set(adjVx.des.key, current)
         }
 
@@ -34,7 +34,7 @@ export const dijkstra = (
     return
   }
 
-  const weight = minWeightByDes.get(des.key)
+  const weight = weightByDes.get(des.key)
   const path = [des]
 
   let currentVx = des
