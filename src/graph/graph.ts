@@ -1,3 +1,4 @@
+import { dfs } from './dfs/dfs'
 import { GraphVertex } from './graph-vertex'
 import { GraphEdge } from './graph-edge'
 
@@ -22,27 +23,13 @@ export class Graph<T = any> {
   }
 
   dfs(onVisited?: (vertex: GraphVertex<T>) => any, expectedValue?: T): GraphVertex<T> | undefined {
-    const traceMap: Record<string, any> = {}
     const firstVertex = this._vertices.get(Array.from(this._vertices.keys())[0])
 
-    const doDfs = (vertex: GraphVertex<T>) => {
-      onVisited?.(vertex)
-      traceMap[vertex.key] = 1
-      if (expectedValue && expectedValue === vertex.value) {
-        return vertex
-      }
-
-      for (let adjVx of vertex.adjVertices.values()) {
-        if (!traceMap[adjVx.des.key]) {
-          const anyVx = doDfs(adjVx.des)
-          if (anyVx) {
-            return anyVx
-          }
-        }
-      }
-    }
-
-    return doDfs(firstVertex)
+    return dfs(
+      firstVertex,
+      onVisited,
+      expectedValue ? (vx: GraphVertex) => vx.value === expectedValue : undefined
+    )
   }
 
   bfs(onVisited?: (vertex: GraphVertex<T>) => any, expectedValue?: T): GraphVertex<T> | undefined {
