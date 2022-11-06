@@ -24,3 +24,9 @@ export const topologicalSortByDfs = (directedGraph: Graph, onVisited?: (vx: Grap
 
   return stackedVertices
 }
+
+export const topologicalSortByKahnAlg = (directedGraph: Graph, onVisited?: (vx: GraphVertex) => any): GraphVertex[] => {
+  const stackedVertices: GraphVertex[] = []
+
+  return stackedVertices
+}
