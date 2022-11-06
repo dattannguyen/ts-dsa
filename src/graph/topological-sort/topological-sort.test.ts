@@ -1,5 +1,5 @@
 import { Graph } from '../graph'
-import { topologicalSortByDfs } from './topological-sort'
+import { topologicalSortByDfs, topologicalSortByKahnAlg } from './topological-sort'
 import { GraphVertex } from '../graph-vertex'
 
 describe('Test topologicalSort()', () => {
@@ -60,7 +60,6 @@ describe('Test topologicalSort()', () => {
     expect(aaVx < ccVx).toBeTruthy()
     expect(ccVx < eeVx).toBeTruthy()
     expect(eeVx < hhVx).toBeTruthy()
-    expect(hhVx < ffVx).toBeTruthy()
     expect(ffVx < ggVx).toBeTruthy()
 
     const bbVx = orderedVertices.findIndex(vx => vx.key === 'bb')
@@ -72,7 +71,7 @@ describe('Test topologicalSort()', () => {
     expect(ddVx < ffVx).toBeTruthy()
   }
 
-  it('Should_ReturnAnOrder_WhenTraverseByDfs', () => {
+  it('Should_ReturnTopologicalOrderOfVertices_WhenTraverseByDfs', () => {
     const onVisited = jest.fn()
 
     const firstOrderedVertices = topologicalSortByDfs(directedGraphOne, onVisited)
@@ -81,6 +80,19 @@ describe('Test topologicalSort()', () => {
 
     onVisited.mockClear()
     const secondOrderedVertices = topologicalSortByDfs(directedGraphTwo, onVisited)
+    expect(onVisited).toHaveBeenCalledTimes(8)
+    graphTwoTestRunner(secondOrderedVertices)
+  })
+
+  it('Should_ReturnTopologicalOrderOfVertices_WhenTraverseByKahnAlg', () => {
+    const onVisited = jest.fn()
+
+    const firstOrderedVertices = topologicalSortByKahnAlg(directedGraphOne, onVisited)
+    expect(onVisited).toHaveBeenCalledTimes(7)
+    graphOneTestRunner(firstOrderedVertices)
+
+    onVisited.mockClear()
+    const secondOrderedVertices = topologicalSortByKahnAlg(directedGraphTwo, onVisited)
     expect(onVisited).toHaveBeenCalledTimes(8)
     graphTwoTestRunner(secondOrderedVertices)
   })
