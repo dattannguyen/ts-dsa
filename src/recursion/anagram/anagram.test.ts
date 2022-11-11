@@ -42,5 +42,9 @@ describe('Test anagram()', () => {
     expect(second.includes('yyxx')).toBeTruthy()
     expect(second.includes('yxyx')).toBeTruthy()
     expect(onGenerated).toHaveBeenCalledTimes(6)
+
+    const third = generateAnagram('f')
+    expect(third.length).toBe(1)
+    expect(third.includes('f')).toBeTruthy()
   })
 })

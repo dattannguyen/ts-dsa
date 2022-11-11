@@ -31,6 +31,10 @@ describe('Test fibonacci()', () => {
     const thirdSeries = generateFibonacci(9)
     expect(thirdSeries.length).toBe(9)
     expect(thirdSeries[thirdSeries.length - 1]).toBe(21)
+
+    const fourthSeries = generateFibonacci(1)
+    expect(fourthSeries.length).toBe(1)
+    expect(fourthSeries[fourthSeries.length - 1]).toBe(0)
   })
 
 })
