@@ -1,4 +1,4 @@
-export const fibonacci = (nth: number, onCalled?: (n: number) => any): number => {
+export const fibonacciAt = (nth: number, onCalled?: (n: number) => any): number => {
   const memo = new Map()
 
   const awesomeRecursion = (nth: number) => {
@@ -19,4 +19,21 @@ export const fibonacci = (nth: number, onCalled?: (n: number) => any): number =>
   }
 
   return awesomeRecursion(nth)
+}
+
+export const generateFibonacci = (n: number): number[] => {
+  if (n === 0) {
+    return []
+  }
+
+  if (n === 1) {
+    return [0]
+  }
+
+  const series = [0, 1]
+  for (let i = 2; i < n; i++) {
+    series[i] = series[i - 1] + series[i - 2]
+  }
+
+  return series
 }
