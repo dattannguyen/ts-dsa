@@ -21,11 +21,11 @@ export const quickSort = (numbers: number[], onTraversed?: () => any): number[] 
 
     let pivot = to
     let left = from
-    let right = pivot
+    let right = pivot - 1
 
     while (left < right) {
       onTraversed?.()
-      if (numbers[left] <= numbers[pivot]) {
+      if (numbers[left] < numbers[pivot]) {
         left++
       } else if (numbers[right] > numbers[pivot]) {
         right--
@@ -34,12 +34,13 @@ export const quickSort = (numbers: number[], onTraversed?: () => any): number[] 
       }
     }
 
-    if (numbers[pivot] < numbers[right]) {
-      swap(pivot, right)
+    if (numbers[left] > numbers[pivot]) {
+      swap(pivot, left)
+      awesomeRecursion(from, left - 1)
+      awesomeRecursion(left + 1, pivot)
+    } else {
+      awesomeRecursion(from, right)
     }
-
-    awesomeRecursion(from, right - 1)
-    awesomeRecursion(right + 1, pivot)
   }
 
   awesomeRecursion(0, numbers.length - 1)
