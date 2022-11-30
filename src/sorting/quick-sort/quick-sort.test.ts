@@ -1,4 +1,4 @@
-import { quickSort } from './quick-sort'
+import { quickSelect, quickSort } from './quick-sort'
 
 describe('Test quickSort()', () => {
   it('Should_ReturnOrderedArrayInTimeManner_WhenGiven', () => {
@@ -22,5 +22,24 @@ describe('Test quickSort()', () => {
 
     const fifth = quickSort([3, 8, 7, 9, 2, 6])
     expect(fifth.join(',')).toBe([2, 3, 6, 7, 8, 9].join(','))
+  })
+})
+
+describe('Test quickSelect()', () => {
+  it('Should_ExpectedNumberInKthPositionInTimeManner_WhenRandomUnsortedArray', () => {
+    const onTraverse = jest.fn()
+
+    const first = quickSelect([0, 5, 2, 1, 6, 3], 0, onTraverse)
+    expect(first).toBe(0)
+    expect(onTraverse.mock.calls.length).toBeLessThanOrEqual(12)
+
+    onTraverse.mockClear()
+    const second = quickSelect([9, 8, 7, 6, 5, 4, 3, 2, 1], 5, onTraverse)
+    expect(second).toBe(6)
+    expect(onTraverse.mock.calls.length).toBeLessThanOrEqual(18)
+
+    onTraverse.mockClear()
+    const third = quickSelect([15, 8, 5, 12, 10, 1, 16, 9, 11, 7, 20, 3, 2, 6, 17, 18, 4, 13, 14, 19], 18, onTraverse)
+    expect(third).toBe(19)
   })
 })
