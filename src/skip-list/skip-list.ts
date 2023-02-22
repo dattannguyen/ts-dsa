@@ -9,6 +9,10 @@ export class SkipList {
 
   private readonly _head: SkipListNode = new SkipListNode(-Infinity)
 
+  get head(): SkipListNode {
+    return this._head
+  }
+
   insert(value: number, _testOptions?: TestOptions): SkipListNode {
     const newNode = new SkipListNode(value)
     const expressLineStack = []
@@ -17,6 +21,8 @@ export class SkipList {
       while ((_testOptions?.coinFlip || this.coinFlip)() && expressLineStack.length > 0) {
         const expressNode = expressLineStack.pop()
         expressNode.append(newNode)
+
+
         if (newNode.above) {
           newNode.above.below = undefined
           newNode.above = undefined
@@ -43,11 +49,19 @@ export class SkipList {
       if (startAt.prev) {
         startAt.below = newNode
         newNode.above = startAt
-      } else {
+      } else if (startAt.value < newNode.value) {
         startAt.append(newNode)
+        doPromoteIfAny()
+      } else {
+        newNode.append(startAt)
+
+        startAt.above.below = newNode
+        newNode.above = startAt.above
+
+        startAt.above = undefined
+        startAt.below = undefined
       }
 
-      doPromoteIfAny()
       return newNode
     }
 

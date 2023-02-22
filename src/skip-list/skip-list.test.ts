@@ -3,6 +3,21 @@ import { SkipListNode } from './skip-list-node'
 
 describe('Test #skipList insert()', () => {
 
+  const randomize = (size: number = 100) => Math.floor(Math.random() * (size - 1) + 1)
+  const isSorted = (node: SkipListNode) => {
+    if (node?.next && node.value > node.next.value) {
+      return false
+    }
+
+    if (node?.below && !isSorted(node.below)) {
+      return false
+    }
+
+    return node.next
+        ? isSorted(node.next as SkipListNode)
+        : true
+  }
+
   it('Should_InsertNodeSuccessWithProperTimeComplexity_WhenGivenNodeAndCustomTestOption', () => {
     const firstSL = new SkipList()
 
@@ -60,6 +75,21 @@ describe('Test #skipList insert()', () => {
     const eightyNode = largerInsertionFirstSL.insert(80, { onTraversed })
     expect(eightyNode).toBeTruthy()
     expect(traversedNodeCount).toBeLessThanOrEqual(4)
+  })
+
+  it('Should_InsertInSortedOrder_WhenAddRandomizedNumber', () => {
+    const firstSL = new SkipList()
+    const secondSL = new SkipList()
+    const thirdSL = new SkipList()
+    for (let i = 0; i < 20; i++) {
+      firstSL.insert(randomize())
+      secondSL.insert(randomize())
+      thirdSL.insert(randomize())
+    }
+
+    expect(isSorted(firstSL.head)).toBeTruthy()
+    expect(isSorted(secondSL.head)).toBeTruthy()
+    expect(isSorted(thirdSL.head)).toBeTruthy()
   })
 
   // it('Should_InsertNodeSuccessWithAcceptanceTimeComplexity_WhenGivenMassiveNode', () => {
