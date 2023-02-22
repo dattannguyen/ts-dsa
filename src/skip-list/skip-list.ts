@@ -30,18 +30,22 @@ export class SkipList {
         return startAt
       }
 
+      /** Recursively start from next if larger than next **/
       if (startAt.next && startAt.next.value <= newNode.value) {
         return doRecursiveInsert(startAt.next as SkipListNode)
       }
 
-
-      expressLineStack.push(startAt)
       if (startAt.below) {
+        expressLineStack.push(startAt)
         return doRecursiveInsert(startAt.below)
       }
 
-      startAt.below = newNode
-      newNode.above = startAt
+      if (startAt.prev) {
+        startAt.below = newNode
+        newNode.above = startAt
+      } else {
+        startAt.append(newNode)
+      }
 
       doPromoteIfAny()
       return newNode

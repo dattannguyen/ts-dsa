@@ -1,7 +1,7 @@
 import { SkipList } from './skip-list'
 import { SkipListNode } from './skip-list-node'
 
-describe('Test insert()', () => {
+describe('Test #skipList insert()', () => {
 
   it('Should_InsertNodeSuccessWithProperTimeComplexity_WhenGivenNodeAndCustomTestOption', () => {
     const firstSL = new SkipList()
@@ -37,4 +37,47 @@ describe('Test insert()', () => {
     expect(node.prev?.value).toEqual(existingNode?.prev?.value)
     expect(traversedNodes.length < 6).toBeTruthy()
   })
+
+  it('Should_InsertNodeSuccessfully_WhenAddLargerNodeFirst', () => {
+    const largerInsertionFirstSL = new SkipList()
+
+    let traversedNodeCount: number = 0
+    const onTraversed = () => traversedNodeCount++
+
+    largerInsertionFirstSL.insert(100)
+    largerInsertionFirstSL.insert(99)
+
+    const fiftyNode = largerInsertionFirstSL.insert(50, { coinFlip: () => true, onTraversed })
+    expect(fiftyNode).toBeTruthy()
+    expect(traversedNodeCount).toBeLessThan(3)
+
+    traversedNodeCount = 0
+    const seventyNode = largerInsertionFirstSL.insert(70, { onTraversed })
+    expect(seventyNode).toBeTruthy()
+    expect(traversedNodeCount).toBeLessThan(3)
+
+    traversedNodeCount = 0
+    const eightyNode = largerInsertionFirstSL.insert(80, { onTraversed })
+    expect(eightyNode).toBeTruthy()
+    expect(traversedNodeCount).toBeLessThanOrEqual(4)
+  })
+
+  // it('Should_InsertNodeSuccessWithAcceptanceTimeComplexity_WhenGivenMassiveNode', () => {
+  //   const massiveSL = new SkipList()
+  //   const size = 100000
+  //   const randomize = () => Math.floor(Math.random() * (size - 1) + 1)
+  //
+  //   for (let i = 0; i < size; i++) {
+  //     massiveSL.insert(randomize())
+  //   }
+  //
+  //   let traversedCount = 0
+  //   const onTraversed = () => traversedCount++
+  //   const newNode = massiveSL.insert(randomize(), { onTraversed })
+  //
+  //   const errorRatePercentage = 0.1
+  //   const averageComplexity = Math.log2(size - 2)
+  //   const [minRate, maxRate] = [averageComplexity * (1 - errorRatePercentage), Math.log2(size - 1) * (1 +
+  // errorRatePercentage)]  expect(newNode).toBeTruthy() expect(traversedCount).toBeLessThanOrEqual(minRate)
+  // expect(traversedCount).not.toBeLessThan(maxRate) })
 })
