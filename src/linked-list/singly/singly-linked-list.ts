@@ -33,6 +33,27 @@ export class SinglyLinkedList<T = any> {
     }
   }
 
+  read(index: number): SinglyLinkedListNode<T> {
+    if (index < 0) {
+      return
+    }
+
+    if (index === 0) {
+      return this._head
+    }
+
+    let currentIndex = 0
+    let currentNode = this._head
+    while (currentNode) {
+      if (currentIndex === index) {
+        return currentNode
+      }
+
+      currentIndex++
+      currentNode = currentNode.next
+    }
+  }
+
   prepend(value: T, data?: unknown): SinglyLinkedList<T> {
     if (this._head) {
       this._tail = new SinglyLinkedListNode<T>(this._head.value, undefined, data)

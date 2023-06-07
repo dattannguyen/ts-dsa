@@ -1,5 +1,47 @@
 import { SinglyLinkedList } from './singly-linked-list'
 
+describe('Test SinglyLinkedList find() & read()', () => {
+
+  it('Should_ReturnUndefined_WhenHasNoMatchedValue', () => {
+    const ll = new SinglyLinkedList()
+    expect(ll.find('newHead')).toBeFalsy()
+
+    ll.prepend('head')
+    ll.append('b')
+
+    expect(ll.size).toBe(2)
+    expect(ll.find(2)).toBeFalsy()
+  })
+
+  it('Should_ReturnNode_WhenHasMatchedValue', () => {
+    const ll = new SinglyLinkedList()
+    ll.prepend('head')
+    ll.prepend('newHead')
+
+    expect(ll.size).toBe(2)
+    expect(ll.find('newHead')).toBeTruthy()
+
+    ll.append('heaD')
+    expect(ll.size).toBe(3)
+    expect(ll.find('heaD')).toBeTruthy()
+  })
+
+  it('Should_ReturnNode_WhenGivenIndex', () => {
+    const ll = new SinglyLinkedList()
+    ll.prepend('two')
+    ll.prepend('one')
+
+    expect(ll.size).toBe(2)
+    expect(ll.read(0)?.value).toBe('one')
+
+    ll.append('three')
+    expect(ll.size).toBe(3)
+    expect(ll.read(2)?.value).toBe('three')
+    expect(ll.read(-1)?.value).toBeFalsy()
+  })
+
+})
+
 describe('Test SinglyLinkedList prepend()', () => {
 
   it('Should_PrependNewNode_WhenHasNoHead', () => {
