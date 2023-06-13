@@ -128,22 +128,25 @@ export class SinglyLinkedList<T = any> {
   }
 
   reverse(): SinglyLinkedList<T> {
-    if (!this._head || !this.tail) {
+    if (!this._head) {
       return this
     }
 
-    let prevNode
+    const oldHead = this._head
+
     let node = this._head
     while (node) {
-      let nextNode = node.next
-      node.next = prevNode
+      const next = node.next
 
-      prevNode = node
-      node = nextNode
+      // Prepend
+      node.next = this._head
+      this._head = node
+
+      node = next
     }
 
-    this._tail = this._head
-    this._head = prevNode
+    oldHead.next = undefined
+    this._tail = oldHead
 
     return this
   }
