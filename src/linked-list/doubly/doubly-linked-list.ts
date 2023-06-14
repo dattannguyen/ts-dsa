@@ -142,22 +142,24 @@ export class DoublyLinkedList<T = any> {
 
   reverse(): DoublyLinkedList {
     if (!this._head || !this._tail) {
-      return this
+      return
     }
 
-    let node = this._tail
+    const oldTail = this._tail
+    let node = this._tail.prev
     while (node) {
-      const next = node.next
       const prev = node.prev
 
-      node.next = prev
-      node.prev = next
+      this._tail.next = node
+      node.next = undefined
+      node.prev = this._tail
+      this._tail = node
+
       node = prev
     }
 
-    const head = this._head
-    this._head = this._tail
-    this._tail = head
+    this._head = oldTail
+    this._head.prev = undefined
 
     return this
   }
