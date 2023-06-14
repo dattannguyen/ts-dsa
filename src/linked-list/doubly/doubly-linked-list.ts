@@ -1,4 +1,4 @@
-import { DoublyLinkedListNode } from './doubly-linked-list-node'
+import { DoublyLinkedListNode } from './_node/doubly-linked-list-node'
 
 export class DoublyLinkedList<T = any> {
 
