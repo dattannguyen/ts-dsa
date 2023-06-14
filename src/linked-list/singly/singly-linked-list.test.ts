@@ -1,4 +1,5 @@
 import { SinglyLinkedList } from './singly-linked-list'
+import { mergeSortedList } from './singly-linked-list.practice'
 
 describe('Test SinglyLinkedList find() & read()', () => {
 
@@ -211,4 +212,54 @@ describe('Test SinglyLinkedList delete()', () => {
     expect(ll.tail?.value).toBe('head4')
   })
 
+})
+
+describe('Test mergeSortedList()', () => {
+
+  it('Should_DoNothing_WhenGivenTwoEmptyList', () => {
+    const onTraversed = jest.fn(() => 1)
+    const ll = mergeSortedList(new SinglyLinkedList(), new SinglyLinkedList(), onTraversed)
+
+    expect(ll.head).toBeFalsy()
+    expect(onTraversed).toHaveBeenCalledTimes(0)
+  })
+
+  it('Should_MergedIntoSortedLinkedList_WhenGivenTwoSortedList', () => {
+    const onTraversed = jest.fn(() => 1)
+    const isSorted = (ll: SinglyLinkedList): boolean => {
+      let node = ll.head
+      while (node) {
+        if (node.next && node.value > node.next.value) {
+          return false
+        }
+
+        node = node.next
+      }
+
+      return true
+    }
+
+    const firstLL = mergeSortedList(
+        new SinglyLinkedList().append(1).append(2).append(4),
+        new SinglyLinkedList().append(1).append(3).append(4),
+        onTraversed,
+    )
+
+    expect(firstLL.head).toBeTruthy()
+    expect(firstLL.size).toBe(6)
+    expect(isSorted(firstLL)).toBeTruthy()
+    expect(onTraversed).toHaveBeenCalledTimes(6)
+
+    onTraversed.mockClear()
+    const secondLL = mergeSortedList(
+        new SinglyLinkedList().append(1).append(2).append(3).append(4).append(10).append(12),
+        new SinglyLinkedList().append(0).append(5).append(9).append(11),
+        onTraversed,
+    )
+
+    expect(secondLL.head).toBeTruthy()
+    expect(secondLL.size).toBe(10)
+    expect(isSorted(secondLL)).toBeTruthy()
+    expect(onTraversed).toHaveBeenCalledTimes(10)
+  })
 })
