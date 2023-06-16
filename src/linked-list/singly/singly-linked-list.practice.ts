@@ -111,7 +111,7 @@ export const removeNthNodeFromEndOfListUsingTwoPointer = (ll: SinglyLinkedList, 
     fastNode = fastNode.next
   }
 
-  if (slowPointer === 0) {
+  if (nth === fastPointer) {
     ll.deleteHead()
   } else {
     slowNode.next = slowNode.next?.next

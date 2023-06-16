@@ -284,29 +284,21 @@ describe('Test removeNthNodeFromEndOfList()', () => {
 
   it('Should_DoNothing_WhenGivenTwoEmptyListOrInvalidIndex', () => {
     const onTraversed = jest.fn(() => 1)
-    let emptyHeadLL = removeNthNodeFromEndOfList(new SinglyLinkedList(), 100, onTraversed)
+    const emptyHeadLL = removeNthNodeFromEndOfList(new SinglyLinkedList(), 100, onTraversed)
 
     expect(emptyHeadLL.head).toBeFalsy()
     expect(onTraversed).toHaveBeenCalledTimes(0)
 
-    emptyHeadLL = removeNthNodeFromEndOfListUsingTwoPointer(new SinglyLinkedList(), 100)
-    expect(emptyHeadLL.head).toBeFalsy()
-
     onTraversed.mockClear()
-    let invalidIndexLL = removeNthNodeFromEndOfList(new SinglyLinkedList().append(1), -10, onTraversed)
+    const invalidIndexLL = removeNthNodeFromEndOfList(new SinglyLinkedList().append(1), -10, onTraversed)
     expect(invalidIndexLL.head?.value).toBe(1)
     expect(onTraversed).toHaveBeenCalledTimes(0)
 
-    invalidIndexLL = removeNthNodeFromEndOfListUsingTwoPointer(new SinglyLinkedList().append(1), -10)
-    expect(invalidIndexLL.head?.value).toBe(1)
-
     onTraversed.mockClear()
-    let onlyOneNodeLL = removeNthNodeFromEndOfList(new SinglyLinkedList().append(1), 1, onTraversed)
+    const onlyOneNodeLL = removeNthNodeFromEndOfList(new SinglyLinkedList().append(1), 1, onTraversed)
     expect(onlyOneNodeLL).toBeFalsy()
     expect(onTraversed).toHaveBeenCalledTimes(0)
 
-    onlyOneNodeLL = removeNthNodeFromEndOfListUsingTwoPointer(new SinglyLinkedList().append(1), 1)
-    expect(onlyOneNodeLL).toBeFalsy()
   })
 
   it('Should_RemoveNthNodeFromEndOfList_WhenGivenValidInput', () => {
@@ -347,7 +339,23 @@ describe('Test removeNthNodeFromEndOfList()', () => {
     expect(thirdLL.head?.value).toBe(2)
     expect(thirdLL.head?.next).toBeFalsy()
     expect(onTraversed).toHaveBeenCalledTimes(2)
+  })
+})
 
+describe('Test removeNthNodeFromEndOfListUsingTwoPointer()', () => {
+
+  it('Should_DoNothing_WhenGivenTwoEmptyListOrInvalidIndex', () => {
+    const emptyHeadLL = removeNthNodeFromEndOfListUsingTwoPointer(new SinglyLinkedList(), 200)
+    expect(emptyHeadLL.head).toBeFalsy()
+
+    const invalidIndexLL = removeNthNodeFromEndOfListUsingTwoPointer(new SinglyLinkedList().append(1), -10)
+    expect(invalidIndexLL.head?.value).toBe(1)
+
+    const onlyOneNodeLL = removeNthNodeFromEndOfListUsingTwoPointer(new SinglyLinkedList().append(1), 1)
+    expect(onlyOneNodeLL).toBeFalsy()
+  })
+
+  it('Should_RemoveNthNodeFromEndOfList_WhenGivenValidInput', () => {
     const fourthLL = removeNthNodeFromEndOfListUsingTwoPointer(
         new SinglyLinkedList().append('a').append('b').append('c').append('d').append('e').append('f').append('g'),
         4,
@@ -364,5 +372,13 @@ describe('Test removeNthNodeFromEndOfList()', () => {
 
     expect(fifLL.head).toBeTruthy()
     expect(fifLL.head?.value).toBe('b')
+
+    const sixthLL = removeNthNodeFromEndOfListUsingTwoPointer(
+        new SinglyLinkedList().append('a').append('b'),
+        1,
+    )
+
+    expect(sixthLL.head).toBeTruthy()
+    expect(sixthLL.head?.value).toBe('a')
   })
 })
