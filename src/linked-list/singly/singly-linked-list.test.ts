@@ -382,3 +382,67 @@ describe('Test removeNthNodeFromEndOfListUsingTwoPointer()', () => {
     expect(sixthLL.head?.value).toBe('a')
   })
 })
+
+describe('Test hasCycle()', () => {
+
+  it('Should_DoNothing_WhenGivenInvalidList', () => {
+    const onTraversed = jest.fn(() => 1)
+    const emptyHeadLL = removeNthNodeFromEndOfList(new SinglyLinkedList(), 100, onTraversed)
+
+    expect(emptyHeadLL.head).toBeFalsy()
+    expect(onTraversed).toHaveBeenCalledTimes(0)
+
+    onTraversed.mockClear()
+    const invalidIndexLL = removeNthNodeFromEndOfList(new SinglyLinkedList().append(1), -10, onTraversed)
+    expect(invalidIndexLL.head?.value).toBe(1)
+    expect(onTraversed).toHaveBeenCalledTimes(0)
+
+    onTraversed.mockClear()
+    const onlyOneNodeLL = removeNthNodeFromEndOfList(new SinglyLinkedList().append(1), 1, onTraversed)
+    expect(onlyOneNodeLL).toBeFalsy()
+    expect(onTraversed).toHaveBeenCalledTimes(0)
+
+  })
+
+  it('Should_RemoveNthNodeFromEndOfList_WhenGivenValidInput', () => {
+    const onTraversed = jest.fn(() => 1)
+
+    const firstLL = removeNthNodeFromEndOfList(
+        new SinglyLinkedList().append(1).append(2).append(3).append(4).append(5),
+        2,
+        onTraversed,
+    )
+
+    expect(firstLL.head).toBeTruthy()
+    expect(firstLL.find(4)).toBeFalsy()
+    expect(firstLL.find(3)?.next?.value).toBe(5)
+    expect(onTraversed).toHaveBeenCalledTimes(5)
+
+    onTraversed.mockClear()
+    const secondLL = removeNthNodeFromEndOfList(
+        new SinglyLinkedList().append(1).append(2).append(3).append(4).append(10).append(12)
+            .append(0).append(5).append(9).append(11),
+        5,
+        onTraversed,
+    )
+
+    expect(secondLL.head).toBeTruthy()
+    expect(secondLL.find(12)).toBeFalsy()
+    expect(secondLL.find(10)?.next?.value).toBe(0)
+    expect(onTraversed).toHaveBeenCalledTimes(10)
+
+    onTraversed.mockClear()
+    const thirdLL = removeNthNodeFromEndOfList(
+        new SinglyLinkedList().append(1).append(2),
+        2,
+        onTraversed,
+    )
+
+    expect(thirdLL.head).toBeTruthy()
+    expect(thirdLL.head?.value).toBe(2)
+    expect(thirdLL.head?.next).toBeFalsy()
+    expect(onTraversed).toHaveBeenCalledTimes(2)
+  })
+})
+
+

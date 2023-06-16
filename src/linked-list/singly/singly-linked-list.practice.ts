@@ -78,7 +78,6 @@ export const removeNthNodeFromEndOfList = (ll: SinglyLinkedList, nth: number, on
   return ll
 }
 
-
 /**
  * https://leetcode.com/problems/remove-nth-node-from-end-of-list
  * Using two pointer technique as long as the distance between them less than nth
