@@ -11,12 +11,12 @@ export const mergeSortedList = (firstLL: SinglyLinkedList, secondLL: SinglyLinke
 
   while (nodeX || nodeY) {
     if (nodeX && nodeY) {
-      if (nodeX < nodeY) {
+      if (nodeX.value < nodeY.value) {
         mergedLL.append(nodeX.value)
         nodeX = nodeX.next
         onTraversed?.()
       } else {
-        mergedLL.append(nodeY)
+        mergedLL.append(nodeY.value)
         nodeY = nodeY.next
         onTraversed?.()
       }
@@ -29,7 +29,7 @@ export const mergeSortedList = (firstLL: SinglyLinkedList, secondLL: SinglyLinke
       nodeX = nodeX.next
       onTraversed?.()
     } else {
-      mergedLL.append(nodeY)
+      mergedLL.append(nodeY.value)
       nodeY = nodeY.next
       onTraversed?.()
     }

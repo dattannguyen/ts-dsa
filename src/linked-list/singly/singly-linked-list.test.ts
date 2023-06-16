@@ -261,6 +261,18 @@ describe('Test mergeSortedList()', () => {
     expect(secondLL.size).toBe(10)
     expect(isSorted(secondLL)).toBeTruthy()
     expect(onTraversed).toHaveBeenCalledTimes(10)
+
+    onTraversed.mockClear()
+    const thirdLL = mergeSortedList(
+        new SinglyLinkedList().append(100),
+        new SinglyLinkedList().append(1).append(2).append(3).append(4).append(10).append(12),
+        onTraversed,
+    )
+
+    expect(thirdLL.head).toBeTruthy()
+    expect(thirdLL.size).toBe(7)
+    expect(isSorted(thirdLL)).toBeTruthy()
+    expect(onTraversed).toHaveBeenCalledTimes(7)
   })
 })
 
