@@ -38,3 +38,36 @@ export const mergeSortedList = (firstLL: SinglyLinkedList, secondLL: SinglyLinke
 
   return mergedLL
 }
+
+export const removeNthNodeFromEndOfList = (ll: SinglyLinkedList, nth: number, onTraversed?: () => any): SinglyLinkedList => {
+  if (!ll?.head || nth <= 0) {
+    return ll
+  }
+
+  if (!ll?.head?.next && nth === 1) {
+    return
+  }
+
+  const nodeByIndex = new Map()
+  let index = 0
+  let node = ll.head
+  while (node) {
+    nodeByIndex.set(index, node)
+    onTraversed?.()
+
+    node = node.next
+    index++
+  }
+
+  const removedIndex = index - nth
+  if (removedIndex === 0) {
+    ll.deleteHead()
+  } else {
+    const prev = nodeByIndex.get(removedIndex - 1)
+    if (prev) {
+      prev.next = nodeByIndex.get(removedIndex + 1)
+    }
+  }
+
+  return ll
+}
