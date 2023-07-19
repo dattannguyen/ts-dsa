@@ -161,4 +161,9 @@ export class SinglyLinkedList<T = any> {
 
     return nodes
   }
+
+  toString(): string {
+    const nodes = this.toArray()
+    return nodes.map(node => node.value).join(',')
+  }
 }

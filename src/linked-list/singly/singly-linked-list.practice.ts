@@ -7,7 +7,7 @@ export const mergeSortedList = (firstLL: SinglyLinkedList, secondLL: SinglyLinke
   const mergedLL = new SinglyLinkedList()
 
   let nodeX = firstLL.head
-  let nodeY = secondLL.head
+  let nodeY = secondLL?.head
 
   while (nodeX || nodeY) {
     if (nodeX && nodeY) {
@@ -117,4 +117,27 @@ export const removeNthNodeFromEndOfListUsingTwoPointer = (ll: SinglyLinkedList, 
   }
 
   return ll
+}
+
+
+/**
+ * https://leetcode.com/problems/merge-k-sorted-lists/
+ * Loop through the list then just merging 2 sorted list one by one
+ * Time: O(n^2 * k) where k is the size of the list, n is the largest size of the linked list item.
+ */
+export const mergeKSortedListByBruteForce = (lls: SinglyLinkedList[], onTraversed?: () => any): SinglyLinkedList => {
+  if (lls?.length <= 0) {
+    return
+  }
+
+  if (lls.length === 1) {
+    return lls[0]
+  }
+
+  let mergedLL = new SinglyLinkedList()
+  for (let ll of lls) {
+    mergedLL = mergeSortedList(mergedLL, ll)
+  }
+
+  return mergedLL
 }
