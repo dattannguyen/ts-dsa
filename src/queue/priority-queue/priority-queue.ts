@@ -21,11 +21,16 @@ export class PriorityQueue<T = any> {
     return this
   }
 
-  dequeue(): QueueItem<T> {
-    const head = this._heap.shift()
-    this.heapifyDown()
+  dequeue(_onTraversed?: any): QueueItem<T> {
+    if (this._heap.length <= 1) {
+      return this._heap.shift()
+    }
 
-    return head
+    this.swap(0, this._heap.length - 1)
+    const item = this._heap.pop()
+    this.heapifyDown(_onTraversed)
+
+    return item
   }
 
   private heapifyUp(_onTraversed?: any): PriorityQueue<T> {
@@ -46,8 +51,26 @@ export class PriorityQueue<T = any> {
     return this
   }
 
-  private heapifyDown(): PriorityQueue<T> {
+  private heapifyDown(_onTraversed?: any): PriorityQueue<T> {
+    let nodeIndex = 0
 
+    while (this._heap[nodeIndex * 2 + 1]) {
+      const leftIndex = nodeIndex * 2 + 1
+      const rightIndex = nodeIndex * 2 + 2
+
+      let swapIndex = leftIndex
+      if (this._heap[rightIndex] && !this._heapifyUpComparator(this._heap[swapIndex], this._heap[rightIndex])) {
+        swapIndex = rightIndex
+      }
+
+      if (this._heapifyUpComparator(this._heap[nodeIndex], this._heap[swapIndex])) {
+        break
+      }
+
+      this.swap(nodeIndex, swapIndex)
+      nodeIndex = swapIndex
+      _onTraversed?.()
+    }
 
     return this
   }
