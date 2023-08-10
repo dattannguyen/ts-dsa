@@ -1,6 +1,7 @@
 import { SinglyLinkedList } from './singly-linked-list'
 import {
   mergeKSortedListByBruteForce,
+  mergeKSortedListByHeap,
   mergeSortedList,
   removeNthNodeFromEndOfList,
   removeNthNodeFromEndOfListUsingTwoPointer
@@ -396,19 +397,55 @@ describe('Test mergeKSortedList()', () => {
   })
 
   it('Should_MergedIntoOneSortedList_WhenGivenValidInput', () => {
-    const onTraversed = jest.fn(() => 1)
-
     const firstLL = mergeKSortedListByBruteForce(
         [
           new SinglyLinkedList().append(1).append(4).append(5),
           new SinglyLinkedList().append(1).append(3).append(4),
           new SinglyLinkedList().append(2).append(6)
         ],
-        onTraversed,
     )
-
     expect(firstLL.toString()).toBe('1,1,2,3,4,4,5,6')
-    onTraversed.mockClear()
+
+    const randomize = (size: number = 100) => Math.floor(Math.random() * (size - 1) + 1)
+    const isSorted = (ll: SinglyLinkedList) => {
+      let node = ll.head
+      while (node && node.next) {
+        if (node.value > node.next.value) {
+          return false
+        }
+
+        node = node.next
+      }
+
+      return true
+    }
+
+    const runTest = (totalNode: number, sizeOfEachLL: number) => {
+      let traversedCount = 0
+      const onTraversed = () => traversedCount++
+
+      const lls: SinglyLinkedList[] = []
+      for (let i = 0; i < totalNode; i = i + sizeOfEachLL) {
+        const ll = new SinglyLinkedList()
+        for (let j = 0; j < sizeOfEachLL; j++) {
+          ll.append(randomize(totalNode))
+        }
+
+        lls.push(ll)
+      }
+
+      const sortedLLs = mergeKSortedListByHeap(lls, onTraversed)
+      expect(sortedLLs?.head).toBeTruthy()
+      expect(isSorted(sortedLLs)).toBeTruthy()
+
+      const expectedBigO = totalNode * Math.log2(totalNode)
+      expect(traversedCount).toBeLessThanOrEqual(expectedBigO)
+    }
+
+    runTest(1000, 1)
+    runTest(10000, 2)
+    runTest(100000, 3)
+    runTest(500000, 1)
   })
 })
 

@@ -1,4 +1,5 @@
 import { SinglyLinkedList } from './singly-linked-list'
+import { PriorityQueue } from '../../queue/priority-queue/priority-queue'
 
 /**
  * Leetcode question: https://leetcode.com/problems/merge-two-sorted-lists/
@@ -125,7 +126,7 @@ export const removeNthNodeFromEndOfListUsingTwoPointer = (ll: SinglyLinkedList, 
  * Loop through the list then just merging 2 sorted list one by one
  * Time: O(n^2 * k) where k is the size of the list, n is the largest size of the linked list item.
  */
-export const mergeKSortedListByBruteForce = (lls: SinglyLinkedList[], onTraversed?: () => any): SinglyLinkedList => {
+export const mergeKSortedListByBruteForce = (lls: SinglyLinkedList[]): SinglyLinkedList => {
   if (lls?.length <= 0) {
     return
   }
@@ -137,6 +138,29 @@ export const mergeKSortedListByBruteForce = (lls: SinglyLinkedList[], onTraverse
   let mergedLL = new SinglyLinkedList()
   for (let ll of lls) {
     mergedLL = mergeSortedList(mergedLL, ll)
+  }
+
+  return mergedLL
+}
+
+export const mergeKSortedListByHeap = (lls: SinglyLinkedList[], onTraversed?: () => any): SinglyLinkedList => {
+  let mergedLL = new SinglyLinkedList()
+
+  const priorityQueue = new PriorityQueue((parent, child) => parent.priority > child.priority)
+  for (let ll of lls) {
+    let node = ll.head
+    while (node) {
+      onTraversed?.()
+
+      priorityQueue.enqueue(node, node.value, onTraversed)
+      node = node.next
+    }
+  }
+
+  let node = priorityQueue.peek()
+  while (node) {
+    mergedLL.append(priorityQueue.dequeue(onTraversed))
+    node = priorityQueue.peek()
   }
 
   return mergedLL
