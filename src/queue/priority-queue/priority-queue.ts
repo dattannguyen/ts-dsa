@@ -59,7 +59,7 @@ export class PriorityQueue<T = any> {
       const rightIndex = nodeIndex * 2 + 2
 
       let swapIndex = leftIndex
-      if (this._heap[rightIndex] && !this._heapifyUpComparator(this._heap[swapIndex], this._heap[rightIndex])) {
+      if (this._heap[rightIndex] !== undefined && !this._heapifyUpComparator(this._heap[swapIndex], this._heap[rightIndex])) {
         swapIndex = rightIndex
       }
 
