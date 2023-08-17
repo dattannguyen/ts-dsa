@@ -67,54 +67,37 @@ export class BinaryTree<T = any> extends TreeNode<T> {
   }
 
   traverseInOrder(onTraverse?: (traversalNode: BinaryTree<T>) => any): T[] {
-    const result = []
     onTraverse?.(this)
 
-    if (this.left) {
-      const traverseLeft = this.left.traverseInOrder(onTraverse)
-      result.push(...traverseLeft)
-    }
+    const result = []
+    const traverse = (node: BinaryTree<T>) => result.push(...node.traverseInOrder(onTraverse))
 
+    this.left && traverse(this.left)
     result.push(this.value)
-
-    if (this.right) {
-      const traverseRight = this.right.traverseInOrder(onTraverse)
-      result.push(...traverseRight)
-    }
+    this.right && traverse(this.right)
 
     return result
   }
 
   traversePreOrder(): T[] {
     const result = []
+    const traverse = (node: BinaryTree<T>) => result.push(...node.traversePreOrder())
+
     result.push(this.value)
-
-    if (this.left) {
-      const traverseLeft = this.left.traversePreOrder()
-      result.push(...traverseLeft)
-    }
-
-    if (this.right) {
-      const traverseRight = this.right.traversePreOrder()
-      result.push(...traverseRight)
-    }
+    this.left && traverse(this.left)
+    this.right && traverse(this.right)
 
     return result
   }
 
   traversePostOrder(): T[] {
     const result = []
-    if (this.left) {
-      const traverseLeft = this.left.traversePostOrder()
-      result.push(...traverseLeft)
-    }
+    const traverse = (node: BinaryTree<T>) => result.push(...node.traversePostOrder())
 
-    if (this.right) {
-      const traverseRight = this.right.traversePostOrder()
-      result.push(...traverseRight)
-    }
-
+    this.left && traverse(this.left)
+    this.right && traverse(this.right)
     result.push(this.value)
+
     return result
   }
 

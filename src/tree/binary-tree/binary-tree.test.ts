@@ -201,9 +201,12 @@ describe('Test insert()', () => {
 
   it('Should_InsertInCorrectOrder_WhenGivenValue', () => {
     const root = new BinaryTree<number>(50)
-    root.insert(25)
-    root.insert(75)
 
+    const twentyFiveNode = root.insert(25)
+    expect(root.left.isEqual(twentyFiveNode)).toBeTruthy()
+    expect(root.left.parent.isEqual(root)).toBeTruthy()
+
+    root.insert(75)
     root.insert(10)
     expect(root.left?.left?.value).toBe(10)
 
