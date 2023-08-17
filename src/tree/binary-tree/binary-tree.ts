@@ -172,7 +172,6 @@ export class BinaryTree<T = any> extends TreeNode<T> {
       if (successor.right) {
         successor.right.parent = successor.parent
         successor.parent.left = successor.right
-        successor.right = undefined
       } else {
         // Remove left of successor's parent if successor has no children
         successor.parent.left = undefined
@@ -188,9 +187,7 @@ export class BinaryTree<T = any> extends TreeNode<T> {
       this.right.parent = successor
       if (isRoot) {
         this.copy(successor)
-      }
-
-      if (!isRoot) {
+      } else {
         this.parent.isLeft(this)
             ? this.parent.left = successor
             : this.parent.right = successor
