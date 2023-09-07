@@ -118,6 +118,42 @@ describe('Test height()', () => {
 
 })
 
+describe('Test depth()', () => {
+
+  it('Should_ReturnZero_WhenGivenOnlyRootTree', () => {
+    const firstRoot = new BinaryTree(0)
+    expect(firstRoot.depth).toBe(0)
+
+    const secondRoot = new BinaryTree(1)
+    expect(secondRoot.depth).toBe(0)
+  })
+
+  it('Should_ReturnExpectedDepth_WhenGivenTree', () => {
+    const deeperLeft = new BinaryTree(50)
+    deeperLeft.insert(25)
+    deeperLeft.insert(75)
+    deeperLeft.insert(10)
+    deeperLeft.insert(33)
+    deeperLeft.insert(56)
+    deeperLeft.insert(89)
+    deeperLeft.insert(4)
+    deeperLeft.insert(2)
+    deeperLeft.insert(5)
+    deeperLeft.insert(8)
+    expect(deeperLeft.depth).toBe(5)
+
+    const deeperRight = new BinaryTree(50)
+    deeperRight.insert(25)
+    deeperRight.insert(75)
+    deeperRight.insert(56)
+    deeperRight.insert(89)
+    deeperRight.insert(82)
+    deeperRight.insert(95)
+    deeperRight.insert(100)
+    expect(deeperRight.depth).toBe(4)
+  })
+})
+
 describe('Test find()', () => {
 
   it('Should_ReturnUndefined_WhenFindUndefinedNode', () => {

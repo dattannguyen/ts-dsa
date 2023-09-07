@@ -62,6 +62,13 @@ export class BinaryTree<T = any> extends TreeNode<T> {
     return Math.max(this.leftHeight, this.rightHeight)
   }
 
+  get depth(): number {
+    const leftDepth = this.left ? (1 + this.left.depth) : 0
+    const rightDepth = this.right ? (1 + this.right.depth) : 0
+
+    return Math.max(leftDepth, rightDepth)
+  }
+
   isLeft(node: TreeNode): boolean {
     return this._compareLeftOrder(this.value, node.value)
   }
