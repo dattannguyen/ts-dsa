@@ -69,6 +69,25 @@ export class BinaryTree<T = any> extends TreeNode<T> {
     return Math.max(leftDepth, rightDepth)
   }
 
+  isBalanced(): boolean {
+    const recursion = (node: BinaryTree<T>): [boolean, number] => {
+      const [isLeftBalanced, leftDepth] = node.left
+          ? recursion(node.left)
+          : [true, 0]
+
+      const [isRightBalanced, rightDepth] = node.right
+          ? recursion(node.right)
+          : [true, 0]
+
+      const nodeDepth = 1 + Math.max(leftDepth, rightDepth)
+      const isNodeBalanced = isLeftBalanced && isRightBalanced && Math.abs(leftDepth - rightDepth) <= 1
+      return [isNodeBalanced, nodeDepth]
+    }
+
+    const [isBalanced] = recursion(this)
+    return isBalanced
+  }
+
   isLeft(node: TreeNode): boolean {
     return this._compareLeftOrder(this.value, node.value)
   }

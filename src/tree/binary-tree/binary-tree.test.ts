@@ -154,6 +154,50 @@ describe('Test depth()', () => {
   })
 })
 
+describe('Test isBalanced()', () => {
+
+  it('Should_ReturnTrue_WhenGivenOnlyRootTree', () => {
+    const firstRoot = new BinaryTree(0)
+    expect(firstRoot.isBalanced()).toBeTruthy()
+
+    const secondRoot = new BinaryTree(1)
+    expect(secondRoot.isBalanced()).toBeTruthy()
+  })
+
+  it('Should_ReturnExpectedResult_WhenGivenTree', () => {
+    const unbalancedTree = new BinaryTree(50)
+    unbalancedTree.insert(25)
+    unbalancedTree.insert(75)
+    unbalancedTree.insert(10)
+    unbalancedTree.insert(33)
+    unbalancedTree.insert(56)
+    unbalancedTree.insert(89)
+    unbalancedTree.insert(4)
+    unbalancedTree.insert(2)
+    unbalancedTree.insert(5)
+    unbalancedTree.insert(8)
+    expect(unbalancedTree.isBalanced()).toBeFalsy()
+
+    const otherUnbalancedTree = new BinaryTree(100)
+    otherUnbalancedTree.insert(90)
+    otherUnbalancedTree.insert(101)
+    otherUnbalancedTree.insert(80)
+    otherUnbalancedTree.insert(91)
+    otherUnbalancedTree.insert(70)
+    otherUnbalancedTree.insert(81)
+    otherUnbalancedTree.insert(60)
+    otherUnbalancedTree.insert(71)
+    expect(otherUnbalancedTree.isBalanced()).toBeFalsy()
+
+    const balancedTree = new BinaryTree(100)
+    balancedTree.insert(50)
+    balancedTree.insert(150)
+    balancedTree.insert(60)
+    balancedTree.insert(25)
+    expect(balancedTree.isBalanced()).toBeTruthy()
+  })
+})
+
 describe('Test find()', () => {
 
   it('Should_ReturnUndefined_WhenFindUndefinedNode', () => {
