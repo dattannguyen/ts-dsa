@@ -1,4 +1,5 @@
-import { subsets } from './backtracking.practice'
+import { graphColoring, subsets } from './backtracking.practice'
+import { Graph } from '../../graph/graph'
 
 describe('Test subsets()', () => {
 
@@ -33,3 +34,20 @@ describe('Test subsets()', () => {
   })
 
 })
+
+describe('Test graphColoring()', () => {
+
+  it('Should_ReturnAllCombinations_WhenGivenParameter', () => {
+    const colors: string[] = ['R', 'G', 'B']
+    const graph = new Graph<string>()
+    graph.connect('A', 'B')
+    graph.connect('B', 'C')
+    graph.connect('C', 'D')
+    graph.connect('D', 'A')
+
+    const combinations = graphColoring(graph, colors)
+    expect(combinations.length).toBe(96)
+  })
+
+})
+
