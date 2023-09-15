@@ -57,3 +57,33 @@ export const graphColoring = (graph: Graph<string>, colors: string[]): string[] 
 
   return paths
 }
+
+export const hamiltonianPath = (graph: Graph<string>): string[] => {
+  const dfs = (vertex: GraphVertex<string>, trace: Map<string, string>, path: string[]): string[] => {
+    const adjVertices = [...vertex.adjVertices.values()]
+        .filter(({ des }) => !trace.has(des.key))
+        .map(({ des }) => des)
+
+    if (adjVertices.length === 0) {
+      if (trace.size === graph.vertices.size && vertex.isConnected(path[0])) {
+        return path
+      }
+
+      return
+    }
+
+    for (let adjVertex of adjVertices) {
+      path.push(adjVertex.key)
+      const hamiltonian = dfs(adjVertex, trace.set(adjVertex.key, adjVertex.key), path)
+      if (hamiltonian) {
+        return hamiltonian
+      }
+
+      path = path.slice(0, -1)
+      trace.delete(adjVertex.key)
+    }
+  }
+
+  const randomVertex = [...graph.vertices.values()][0]
+  return dfs(randomVertex, new Map([[randomVertex.key, randomVertex.key]]), [randomVertex.key])
+}

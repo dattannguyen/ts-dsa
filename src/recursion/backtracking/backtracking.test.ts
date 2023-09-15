@@ -1,4 +1,4 @@
-import { graphColoring, subsets } from './backtracking.practice'
+import { graphColoring, hamiltonianPath, subsets } from './backtracking.practice'
 import { Graph } from '../../graph/graph'
 
 describe('Test subsets()', () => {
@@ -47,6 +47,33 @@ describe('Test graphColoring()', () => {
 
     const combinations = graphColoring(graph, colors)
     expect(combinations.length).toBe(96)
+  })
+})
+
+describe('Test hamiltonianPath', () => {
+
+  it('Should_ReturnHamiltonianPathIfExist_WhenGivenAGraph', () => {
+    const graphOne = new Graph<string>()
+    graphOne.connect('A', 'B')
+    graphOne.connect('B', 'C')
+    graphOne.connect('C', 'D')
+    graphOne.connect('D', 'A')
+
+    const hamiltonianOne = hamiltonianPath(graphOne)
+    expect(hamiltonianPath).toBeTruthy()
+    expect(hamiltonianOne.join(',')).toBe('A,B,C,D')
+
+    const graphTwo = new Graph<string>()
+    graphTwo.connect('1', '2')
+    graphTwo.connect('1', '4')
+    graphTwo.connect('2', '3')
+    graphTwo.connect('2', '4')
+    graphTwo.connect('3', '4')
+    graphTwo.connect('4', '5')
+    graphTwo.connect('5', '3')
+
+    const hamiltonianTwo = hamiltonianPath(graphTwo)
+    expect(hamiltonianTwo).toBeFalsy()
   })
 
 })
