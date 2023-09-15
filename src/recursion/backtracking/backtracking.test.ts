@@ -1,4 +1,4 @@
-import { graphColoring, hamiltonianPath, subsets } from './backtracking.practice'
+import { graphColoring, hamiltonianPath, subsets, wordSearch } from './backtracking.practice'
 import { Graph } from '../../graph/graph'
 
 describe('Test subsets()', () => {
@@ -75,6 +75,36 @@ describe('Test hamiltonianPath', () => {
     const hamiltonianTwo = hamiltonianPath(graphTwo)
     expect(hamiltonianTwo).toBeFalsy()
   })
+
+})
+
+describe('Test wordSearch', () => {
+
+  it('Should_ReturnExpectedWord_WhenGivenMatrixAndWord', () => {
+    const matrixOne = [['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']]
+    const wordOne = 'ABCCED'
+    expect(wordSearch(matrixOne, wordOne)).toBeTruthy()
+
+    const matrixTwo = [['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']]
+    const wordTwo = 'SEE'
+    expect(wordSearch(matrixTwo, wordTwo)).toBeTruthy()
+  })
+
+
+  it('Should_ReturnFalse_WhenGivenMatrixAndWord', () => {
+    const matrixOne = [['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']]
+    const wordOne = 'CCXY'
+    expect(wordSearch(matrixOne, wordOne)).toBeFalsy()
+
+    const matrixTwo = [['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']]
+    const wordTwo = 'ABCCFDS'
+    expect(wordSearch(matrixTwo, wordTwo)).toBeFalsy()
+
+    const matrixThree = [['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']]
+    const wordThree = 'ABCB'
+    expect(wordSearch(matrixThree, wordThree)).toBeFalsy()
+  })
+
 
 })
 

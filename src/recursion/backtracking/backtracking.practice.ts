@@ -87,3 +87,47 @@ export const hamiltonianPath = (graph: Graph<string>): string[] => {
   const randomVertex = [...graph.vertices.values()][0]
   return dfs(randomVertex, new Map([[randomVertex.key, randomVertex.key]]), [randomVertex.key])
 }
+
+/**
+ * https://leetcode.com/problems/word-search/
+ */
+export const wordSearch = (board: string[][], word: string): boolean => {
+  const dfs = (i: number, j: number, trace: Map<string, string>, count: number): boolean => {
+    const adjLetters = [
+      [i, j + 1],
+      [i, j - 1],
+      [i + 1, j],
+      [i - 1, j]
+    ].filter(([row, col]) => board[row]?.[col] && board[row][col] === word[count] && !trace.has(`${row}_${col}`))
+
+    if (adjLetters.length === 0) {
+      return count >= word.length
+    }
+
+    for (let [row, col] of adjLetters) {
+      const isExisted = dfs(row, col, trace.set(`${row}_${col}`, 'yes'), ++count)
+      if (isExisted) {
+        return true
+      }
+
+      count--
+      trace.delete(`${row}_${col}`)
+    }
+
+    return false
+  }
+
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      const letter = board[i][j]
+      if (letter === word[0]) {
+        const isExisted = dfs(i, j, new Map<string, string>([[`${i}_${j}`, 'yes']]), 1)
+        if (isExisted) {
+          return true
+        }
+      }
+    }
+  }
+
+  return false
+}
