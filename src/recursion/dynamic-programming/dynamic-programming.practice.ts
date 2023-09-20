@@ -32,3 +32,38 @@ export const fibonacciAtByBottomUp = (nth: number, onCalled?: () => any): number
 
   return fibonacci[nth - 1]
 }
+
+export const gridTraveler = (srcRow: number, srcCol: number, desRow: number, desCol: number, onCalled?: () => any) => {
+  if (srcRow > desRow || srcCol > desCol) {
+    return 0
+  }
+
+  if (srcRow === desRow || srcCol === desCol) {
+    return 1
+  }
+
+  const memo = new Map()
+  const recur = (row: number, col: number) => {
+    if (memo.has(`${row}:${col}`)) {
+      return memo.get(`${row}:${col}`)
+    }
+
+    if (row > desRow || col > desCol) {
+      return 0
+    }
+
+    onCalled?.()
+    if (row === desRow && col === desCol) {
+      return 1
+    }
+
+    const rowNext = recur(row + 1, col)
+    const colNext = recur(row, col + 1)
+
+    const way = rowNext + colNext
+    memo.set(`${row}:${col}`, way)
+    return way
+  }
+
+  return recur(srcRow, srcCol)
+}
