@@ -67,3 +67,37 @@ export const gridTraveler = (srcRow: number, srcCol: number, desRow: number, des
 
   return recur(srcRow, srcCol)
 }
+
+/**
+ * https://leetcode.com/problems/climbing-stairs/
+ */
+export const stairCase = (top: number, onCalled?: () => any): number => {
+  if (top <= 2) {
+    return top
+  }
+
+  const memo = new Map()
+  const recur = (num: number): number => {
+    if (memo.has(num)) {
+      return memo.get(num)
+    }
+
+    if (num > top) {
+      return 0
+    }
+
+    onCalled?.()
+    if (num === top) {
+      return 1
+    }
+
+    const oneStep = recur(num + 1)
+    const twoStep = recur(num + 2)
+
+    const totalWay = oneStep + twoStep
+    memo.set(num, totalWay)
+    return totalWay
+  }
+
+  return recur(0)
+}

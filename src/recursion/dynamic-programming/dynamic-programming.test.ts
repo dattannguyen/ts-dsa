@@ -1,4 +1,4 @@
-import { fibonacciAtByBottomUp, fibonacciAtByMemo, gridTraveler } from './dynamic-programming.practice'
+import { fibonacciAtByBottomUp, fibonacciAtByMemo, gridTraveler, stairCase } from './dynamic-programming.practice'
 
 describe('Test fibonacci()', () => {
 
@@ -76,6 +76,33 @@ describe('Test gridTraveler()', () => {
     const second = gridTraveler(1, 1, 18, 18, onCalled)
     expect(second).toBe(2333606220)
     expect(step).toBeLessThan(Math.pow(2, 18))
+  })
+
+})
+
+describe('Test stairCase()', () => {
+
+  it('Should_ReturnExpectedNumberOfWay_WhenGivenTotalStep', () => {
+    let step = 0
+    const onCalled = jest.fn(() => step++)
+
+    const oneStepStairCase = stairCase(1, onCalled)
+    expect(oneStepStairCase).toBe(1)
+    expect(step).toBe(0)
+
+    const twoStepStairCase = stairCase(2, onCalled)
+    expect(twoStepStairCase).toBe(2)
+    expect(step).toBe(0)
+
+    step = 0
+    const threeStepStairCase = stairCase(3)
+    expect(threeStepStairCase).toBe(3)
+    expect(step).toBeLessThan(Math.pow(2, 3))
+
+    step = 0
+    const fourStepStairCase = stairCase(4)
+    expect(fourStepStairCase).toBe(5)
+    expect(step).toBeLessThan(Math.pow(2, 4))
   })
 
 })
