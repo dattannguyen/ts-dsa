@@ -101,3 +101,37 @@ export const stairCase = (top: number, onCalled?: () => any): number => {
 
   return recur(0)
 }
+
+/**
+ * https://leetcode.com/problems/house-robber/
+ */
+export const houseRobber = (nums: number[], onCalled?: () => any): number => {
+  if (nums.length <= 2) {
+    return Math.max(...nums)
+  }
+
+  const memo = {}
+  const recur = (i: number): number => {
+    if (memo[i] !== undefined) {
+      return memo[i]
+    }
+
+    onCalled?.()
+    if (i === nums.length - 1) {
+      return nums[i]
+    }
+
+    let maxAtI = nums[i]
+    for (let j = i + 2; j < nums.length; j++) {
+      const maxOfChildren = memo[j] || recur(j)
+      memo[j] = maxOfChildren
+
+      maxAtI = Math.max(nums[i] + maxOfChildren, maxAtI)
+    }
+
+    memo[i] = maxAtI
+    return maxAtI
+  }
+
+  return Math.max(recur(0), recur(1))
+}

@@ -1,4 +1,10 @@
-import { fibonacciAtByBottomUp, fibonacciAtByMemo, gridTraveler, stairCase } from './dynamic-programming.practice'
+import {
+  fibonacciAtByBottomUp,
+  fibonacciAtByMemo,
+  gridTraveler,
+  houseRobber,
+  stairCase
+} from './dynamic-programming.practice'
 
 describe('Test fibonacci()', () => {
 
@@ -103,6 +109,42 @@ describe('Test stairCase()', () => {
     const fourStepStairCase = stairCase(4)
     expect(fourStepStairCase).toBe(5)
     expect(step).toBeLessThan(Math.pow(2, 4))
+  })
+
+})
+
+describe('Test houseRobber()', () => {
+
+  it('Should_ReturnMaxRobbedMoney_WhenGivenListOfHouse', () => {
+    const randomize = (size: number = 100) => Math.floor(Math.random() * (size - 1) + 1)
+
+    let traversed = 0
+    const onCalled = jest.fn(() => traversed++)
+
+    const first = houseRobber([1, 2, 3, 1], onCalled)
+    expect(first).toBe(4)
+
+    traversed = 0
+    const second = houseRobber([2, 7, 9, 3, 1])
+    expect(second).toBe(12)
+
+    traversed = 0
+    const third = houseRobber([1, 2, 3, 4, 5, 6, 7, 100, 1], onCalled)
+    expect(third).toBe(112)
+    expect(traversed).toBeLessThan(Math.pow(8, 8))
+
+    const fourth = houseRobber([1, 2])
+    expect(fourth).toBe(2)
+
+    traversed = 0
+    const massiveNums = []
+    const size = 1000
+    for (let i = 0; i < size; i++) {
+      massiveNums.push(randomize(size))
+    }
+
+    houseRobber(massiveNums, onCalled)
+    expect(traversed).toBeLessThan(Math.pow(massiveNums.length, massiveNums.length))
   })
 
 })
