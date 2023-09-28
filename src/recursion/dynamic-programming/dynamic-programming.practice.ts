@@ -135,3 +135,52 @@ export const houseRobber = (nums: number[], onCalled?: () => any): number => {
 
   return Math.max(recur(0), recur(1))
 }
+
+/**
+ * https://leetcode.com/problems/house-robber-ii/description/
+ */
+export const houseRobberII = (nums: number[], onCalled?: () => any): number => {
+  if (nums.length <= 2) {
+    return Math.max(...nums)
+  }
+
+  const rob = (start: number, end: number): number => {
+    const memo = {}
+    const recur = (i: number): number => {
+      if (memo[i] !== undefined) {
+        return memo[i]
+      }
+
+      onCalled?.()
+      if (i >= end) {
+        return nums[i]
+      }
+
+      let max = nums[i]
+      for (let j = i + 2; j <= end; j++) {
+        let maxOfChildren
+        if (memo[j] !== undefined) {
+          maxOfChildren = memo[j]
+        } else {
+          maxOfChildren = recur(j)
+          memo[j] = maxOfChildren
+        }
+
+        max = Math.max(max, nums[i] + maxOfChildren)
+      }
+
+      memo[i] = max
+      return max
+    }
+
+    const first = recur(start)
+    const second = recur(start + 1)
+
+    return Math.max(first, second)
+  }
+
+  const robbedFirst = rob(0, nums.length - 2)
+  const robbedSecond = rob(1, nums.length - 1)
+
+  return Math.max(robbedFirst, robbedSecond)
+}
