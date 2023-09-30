@@ -198,10 +198,13 @@ describe('Test howSum()', () => {
     const first = howSum(7, [2, 4])
     expect(first.length).toBe(0)
 
+    const second = howSum(112, [])
+    expect(second.length).toBe(0)
+
     let traversed = 0
     const onCalled = jest.fn(() => traversed++)
-    const second = howSum(300, [7, 14], onCalled)
-    expect(second.length).toBe(0)
+    const third = howSum(300, [7, 14], onCalled)
+    expect(third.length).toBe(0)
     expect(traversed).toBeLessThan(Math.pow(2, 100))
   })
 
