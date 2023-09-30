@@ -68,6 +68,44 @@ export const gridTraveler = (srcRow: number, srcCol: number, desRow: number, des
   return recur(srcRow, srcCol)
 }
 
+export const howSum = (target: number, nums: number[], onCalled?: () => any): number[] => {
+  if (nums.length <= 0) {
+    return []
+  }
+
+  const memo = {}
+  const recur = (i: number, sum: number, acc: number[]): [number, number[]] => {
+    if (memo[sum] !== undefined) {
+      return memo[sum]
+    }
+
+    onCalled?.()
+    if (sum >= target) {
+      return [sum, acc]
+    }
+
+    for (let j = 0; j < nums.length; j++) {
+      let [recursiveSum, recursiveAcc] = recur(j, sum + nums[j], acc.concat(nums[j]))
+      if (recursiveSum === target) {
+        return [recursiveSum, recursiveAcc]
+      }
+
+      memo[recursiveSum] = [recursiveSum, recursiveAcc]
+    }
+
+    return [sum, acc]
+  }
+
+  for (let i = 0; i < nums.length; i++) {
+    const [sum, acc] = recur(i, nums[i], [nums[i]])
+    if (sum === target) {
+      return acc
+    }
+  }
+
+  return []
+}
+
 /**
  * https://leetcode.com/problems/climbing-stairs/
  */

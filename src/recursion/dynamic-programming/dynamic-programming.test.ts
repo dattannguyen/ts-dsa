@@ -4,6 +4,7 @@ import {
   gridTraveler,
   houseRobber,
   houseRobberII,
+  howSum,
   stairCase
 } from './dynamic-programming.practice'
 
@@ -189,4 +190,45 @@ describe('Test houseRobber()', () => {
     expect(traversed).toBeLessThan(Math.pow(massiveNums.length, massiveNums.length))
   })
 
+})
+
+describe('Test howSum()', () => {
+
+  it('Should_ReturnEmpty_WhenGivenInvalidInput', () => {
+    const first = howSum(7, [2, 4])
+    expect(first.length).toBe(0)
+
+    let traversed = 0
+    const onCalled = jest.fn(() => traversed++)
+    const second = howSum(300, [7, 14], onCalled)
+    expect(second.length).toBe(0)
+    expect(traversed).toBeLessThan(Math.pow(2, 100))
+  })
+
+  it('Should_ReturnListOfNumber_WhenGivenInvalidInput', () => {
+    const first = howSum(7, [2, 3])
+    expect(first.length).toBe(3)
+    expect(first.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('2,2,3')
+
+    const second = howSum(7, [5, 3, 4, 8])
+    expect(second.length).toBe(2)
+    expect(second.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('3,4')
+
+    const third = howSum(8, [2, 5, 7])
+    expect(third.length).toBe(4)
+    expect(third.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('2,2,2,2')
+
+    let traversed = 0
+    const onCalled = jest.fn(() => traversed++)
+
+    const massiveNums = []
+    const size = 1000
+    const randomTarget = randomize(size)
+    for (let i = 0; i < size; i++) {
+      massiveNums.push(randomize(size))
+    }
+
+    howSum(randomize(size), massiveNums, onCalled)
+    expect(traversed).toBeLessThan(Math.pow(massiveNums.length, randomTarget))
+  })
 })
