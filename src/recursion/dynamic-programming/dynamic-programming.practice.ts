@@ -111,8 +111,7 @@ export const howSumByBottomUp = (target: number, nums: number[], onCalled?: () =
     return []
   }
 
-  const memo = {}
-  const table = [true]
+  const table = [[]]
   for (let i = 0; i <= target; i++) {
     if (table[i] === undefined) {
       continue
@@ -120,17 +119,16 @@ export const howSumByBottomUp = (target: number, nums: number[], onCalled?: () =
 
     for (let num of nums) {
       const sum = i + num
-      if (memo[sum] !== undefined) {
+      if (table[sum] !== undefined) {
         continue
       }
 
       onCalled?.()
       if (sum === target) {
-        return [...(memo[i] || []), num]
+        return [...(table[i] || []), num]
       }
 
-      table[sum] = true
-      memo[sum] = [...(memo[i] || []), num]
+      table[sum] = [...(table[i] || []), num]
     }
   }
 
