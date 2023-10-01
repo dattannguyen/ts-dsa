@@ -135,6 +135,72 @@ export const howSumByBottomUp = (target: number, nums: number[], onCalled?: () =
   return []
 }
 
+export const bestSum = (target: number, nums: number[], onCalled?: () => any): number[] => {
+  if (nums.length <= 0) {
+    return []
+  }
+
+  const memo = {}
+  const recur = (i: number, sum: number, acc: number[]) => {
+    onCalled?.()
+
+    memo[sum] = acc
+    for (let j = 0; j < nums.length; j++) {
+      const nextSum = sum + nums[j]
+      const nextAcc = acc.concat(nums[j])
+
+      if (nextSum > target || (memo[nextSum] && memo[nextSum].length <= nextAcc.length)) {
+        continue
+      }
+
+      if (nextSum === target) {
+        memo[nextSum] = memo[nextSum]
+            ? (nextAcc.length < memo[nextSum].length ? nextAcc : memo[nextSum])
+            : nextAcc
+
+        continue
+      }
+
+      recur(j, nextSum, nextAcc)
+    }
+  }
+
+  for (let i = 0; i < nums.length; i++) {
+    recur(i, nums[i], [nums[i]])
+  }
+
+  return memo[target] || []
+}
+
+export const bestSumByBottomUp = (target: number, nums: number[], onCalled?: () => any): number[] => {
+  if (nums.length <= 0) {
+    return []
+  }
+
+  const table = [[]]
+  for (let i = 0; i <= target; i++) {
+    if (!table[i]) {
+      continue
+    }
+
+    onCalled?.()
+    for (let num of nums) {
+      const sum = i + num
+      if (!table[sum]) {
+        table[sum] = [...(table[i] || []), num]
+        continue
+      }
+
+      const acc = [...table[i], num]
+      if (acc.length < table[sum].length) {
+        table[sum] = acc
+      }
+    }
+  }
+
+  return table[target] || []
+}
+
 /**
  * https://leetcode.com/problems/climbing-stairs/
  */

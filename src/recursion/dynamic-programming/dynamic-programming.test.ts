@@ -1,4 +1,6 @@
 import {
+  bestSum,
+  bestSumByBottomUp,
   fibonacciAtByBottomUp,
   fibonacciAtByMemo,
   gridTraveler,
@@ -89,6 +91,172 @@ describe('Test gridTraveler()', () => {
     expect(step).toBeLessThan(Math.pow(2, 18))
   })
 
+})
+
+describe('Test howSum()', () => {
+
+  it('Should_ReturnEmpty_WhenGivenInvalidInput', () => {
+    let first = howSum(7, [2, 4])
+    expect(first.length).toBe(0)
+
+    first = howSumByBottomUp(7, [2, 4])
+    expect(first.length).toBe(0)
+
+    let second = howSum(112, [])
+    expect(second.length).toBe(0)
+
+    second = howSumByBottomUp(112, [])
+    expect(second.length).toBe(0)
+
+    let traversed = 0
+    const onCalled = jest.fn(() => traversed++)
+
+    let third = howSum(300, [7, 14], onCalled)
+    expect(third.length).toBe(0)
+    expect(traversed).toBeLessThan(Math.pow(2, 300))
+
+    traversed = 0
+    third = howSumByBottomUp(300, [7, 14], onCalled)
+    expect(third.length).toBe(0)
+    expect(traversed).toBeLessThan(Math.pow(2, 300))
+  })
+
+  it('Should_ReturnListOfNumber_WhenGivenInvalidInput', () => {
+    const firstTest = result => {
+      expect(result.length).toBe(3)
+      expect(result.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('2,2,3')
+    }
+
+    let first = howSum(7, [2, 3])
+    firstTest(first)
+
+    first = howSumByBottomUp(7, [2, 3])
+    firstTest(first)
+
+
+    const secondTest = (result) => {
+      expect(result.length).toBe(2)
+      expect(result.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('3,4')
+    }
+
+    let second = howSum(7, [5, 3, 4, 8])
+    secondTest(second)
+
+    second = howSumByBottomUp(7, [5, 3, 4, 8])
+    secondTest(second)
+
+
+    const thirdTest = (result) => {
+      expect(result.length).toBe(4)
+      expect(result.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('2,2,2,2')
+    }
+
+    let third = howSum(8, [2, 5, 7])
+    thirdTest(third)
+
+    third = howSumByBottomUp(8, [2, 5, 7])
+    thirdTest(third)
+
+    let traversed = 0
+    const onCalled = jest.fn(() => traversed++)
+
+    const massiveNums = []
+    const size = 5000
+    const randomTarget = randomize(size)
+    for (let i = 0; i < size; i++) {
+      massiveNums.push(randomize(size))
+    }
+
+    howSum(randomTarget, massiveNums, onCalled)
+    expect(traversed).toBeLessThan(Math.pow(massiveNums.length, randomTarget))
+
+    traversed = 0
+    howSumByBottomUp(randomTarget, massiveNums, onCalled)
+    expect(traversed).toBeLessThan(Math.pow(massiveNums.length, randomTarget))
+  })
+})
+
+describe('Test bestSum()', () => {
+
+  it('Should_ReturnEmpty_WhenGivenInvalidInput', () => {
+    let first = bestSum(7, [2, 4])
+    expect(first.length).toBe(0)
+
+    first = bestSumByBottomUp(7, [2, 4])
+    expect(first.length).toBe(0)
+
+    let second = bestSum(112, [])
+    expect(second.length).toBe(0)
+
+    second = howSumByBottomUp(112, [])
+    expect(second.length).toBe(0)
+
+    let traversed = 0
+    const onCalled = jest.fn(() => traversed++)
+
+    let third = bestSum(300, [7, 14], onCalled)
+    expect(third.length).toBe(0)
+    expect(traversed).toBeLessThan(Math.pow(2, 300))
+
+    traversed = 0
+    third = bestSumByBottomUp(300, [7, 14], onCalled)
+    expect(third.length).toBe(0)
+    expect(traversed).toBeLessThan(Math.pow(2, 300))
+  })
+
+  it('Should_ReturnListOfNumber_WhenGivenInvalidInput', () => {
+    const firstTest = result => {
+      expect(result.length).toBe(4)
+      expect(result.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('25,25,25,25')
+    }
+
+    let first = bestSum(100, [1, 2, 5, 25])
+    firstTest(first)
+
+    first = bestSumByBottomUp(100, [1, 2, 5, 25])
+    firstTest(first)
+
+
+    const secondTest = (result) => {
+      expect(result.length).toBe(1)
+      expect(result.join(',')).toBe('7')
+    }
+
+    let second = bestSum(7, [5, 3, 4, 7])
+    secondTest(second)
+
+    second = bestSumByBottomUp(7, [5, 3, 4, 7])
+    secondTest(second)
+
+
+    const thirdTest = (result) => {
+      expect(result.length).toBe(2)
+      expect(result.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('3,5')
+    }
+
+    let third = bestSum(8, [2, 5, 3])
+    thirdTest(third)
+
+    third = bestSumByBottomUp(8, [2, 5, 3])
+    thirdTest(third)
+
+    let traversed = 0
+    const onCalled = jest.fn(() => traversed++)
+
+    const massiveNums = []
+    const size = 1000
+    const randomTarget = randomize(size)
+    for (let i = 0; i < size; i++) {
+      massiveNums.push(randomize(size))
+    }
+
+    bestSum(randomTarget, massiveNums, onCalled)
+    expect(traversed).toBeLessThan(Math.pow(massiveNums.length, randomTarget))
+
+    traversed = 0
+    bestSumByBottomUp(randomTarget, massiveNums, onCalled)
+    expect(traversed).toBeLessThan(Math.pow(massiveNums.length, randomTarget))
+  })
 })
 
 describe('Test stairCase()', () => {
@@ -191,86 +359,4 @@ describe('Test houseRobber()', () => {
     expect(traversed).toBeLessThan(Math.pow(massiveNums.length, massiveNums.length))
   })
 
-})
-
-describe('Test howSum()', () => {
-
-  it('Should_ReturnEmpty_WhenGivenInvalidInput', () => {
-    let first = howSum(7, [2, 4])
-    expect(first.length).toBe(0)
-
-    first = howSumByBottomUp(7, [2, 4])
-    expect(first.length).toBe(0)
-
-    let second = howSum(112, [])
-    expect(second.length).toBe(0)
-
-    second = howSumByBottomUp(112, [])
-    expect(second.length).toBe(0)
-
-    let traversed = 0
-    const onCalled = jest.fn(() => traversed++)
-
-    let third = howSum(300, [7, 14], onCalled)
-    expect(third.length).toBe(0)
-    expect(traversed).toBeLessThan(Math.pow(2, 300))
-
-    traversed = 0
-    third = howSumByBottomUp(300, [7, 14], onCalled)
-    expect(third.length).toBe(0)
-    expect(traversed).toBeLessThan(Math.pow(2, 300))
-  })
-
-  it('Should_ReturnListOfNumber_WhenGivenInvalidInput', () => {
-    const firstTest = result => {
-      expect(result.length).toBe(3)
-      expect(result.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('2,2,3')
-    }
-
-    let first = howSum(7, [2, 3])
-    firstTest(first)
-
-    first = howSumByBottomUp(7, [2, 3])
-    firstTest(first)
-
-
-    const secondTest = (result) => {
-      expect(result.length).toBe(2)
-      expect(result.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('3,4')
-    }
-
-    let second = howSum(7, [5, 3, 4, 8])
-    secondTest(second)
-
-    second = howSumByBottomUp(7, [5, 3, 4, 8])
-    secondTest(second)
-
-
-    const thirdTest = (result) => {
-      expect(result.length).toBe(4)
-      expect(result.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('2,2,2,2')
-    }
-
-    let third = howSum(8, [2, 5, 7])
-    thirdTest(third)
-
-    third = howSumByBottomUp(8, [2, 5, 7])
-    thirdTest(third)
-
-    let traversed = 0
-    const onCalled = jest.fn(() => traversed++)
-
-    const massiveNums = []
-    const size = 1000
-    const randomTarget = randomize(size)
-    for (let i = 0; i < size; i++) {
-      massiveNums.push(randomize(size))
-    }
-
-    howSum(randomize(size), massiveNums, onCalled)
-    expect(traversed).toBeLessThan(Math.pow(massiveNums.length, randomTarget))
-
-    traversed = 0
-    howSumByBottomUp(randomize(size), massiveNums, onCalled)
-  })
 })
