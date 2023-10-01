@@ -247,8 +247,8 @@ describe('Test howSum()', () => {
 
 
     const thirdTest = (result) => {
-      expect(third.length).toBe(4)
-      expect(third.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('2,2,2,2')
+      expect(result.length).toBe(4)
+      expect(result.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('2,2,2,2')
     }
 
     let third = howSum(8, [2, 5, 7])
