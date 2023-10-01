@@ -106,6 +106,37 @@ export const howSum = (target: number, nums: number[], onCalled?: () => any): nu
   return []
 }
 
+export const howSumByBottomUp = (target: number, nums: number[], onCalled?: () => any): number[] => {
+  if (nums.length <= 0) {
+    return []
+  }
+
+  const memo = {}
+  const table = [true]
+  for (let i = 0; i <= target; i++) {
+    if (table[i] === undefined) {
+      continue
+    }
+
+    for (let num of nums) {
+      const sum = i + num
+      if (memo[sum] !== undefined) {
+        continue
+      }
+
+      onCalled?.()
+      if (sum === target) {
+        return [...(memo[i] || []), num]
+      }
+
+      table[sum] = true
+      memo[sum] = [...(memo[i] || []), num]
+    }
+  }
+
+  return []
+}
+
 /**
  * https://leetcode.com/problems/climbing-stairs/
  */

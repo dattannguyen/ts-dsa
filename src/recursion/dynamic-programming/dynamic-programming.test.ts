@@ -5,6 +5,7 @@ import {
   houseRobber,
   houseRobberII,
   howSum,
+  howSumByBottomUp,
   stairCase
 } from './dynamic-programming.practice'
 
@@ -195,31 +196,66 @@ describe('Test houseRobber()', () => {
 describe('Test howSum()', () => {
 
   it('Should_ReturnEmpty_WhenGivenInvalidInput', () => {
-    const first = howSum(7, [2, 4])
+    let first = howSum(7, [2, 4])
     expect(first.length).toBe(0)
 
-    const second = howSum(112, [])
+    first = howSumByBottomUp(7, [2, 4])
+    expect(first.length).toBe(0)
+
+    let second = howSum(112, [])
+    expect(second.length).toBe(0)
+
+    second = howSumByBottomUp(112, [])
     expect(second.length).toBe(0)
 
     let traversed = 0
     const onCalled = jest.fn(() => traversed++)
-    const third = howSum(300, [7, 14], onCalled)
+
+    let third = howSum(300, [7, 14], onCalled)
     expect(third.length).toBe(0)
-    expect(traversed).toBeLessThan(Math.pow(2, 100))
+    expect(traversed).toBeLessThan(Math.pow(2, 300))
+
+    traversed = 0
+    third = howSumByBottomUp(300, [7, 14], onCalled)
+    expect(third.length).toBe(0)
+    expect(traversed).toBeLessThan(Math.pow(2, 300))
   })
 
   it('Should_ReturnListOfNumber_WhenGivenInvalidInput', () => {
-    const first = howSum(7, [2, 3])
-    expect(first.length).toBe(3)
-    expect(first.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('2,2,3')
+    const firstTest = result => {
+      expect(result.length).toBe(3)
+      expect(result.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('2,2,3')
+    }
 
-    const second = howSum(7, [5, 3, 4, 8])
-    expect(second.length).toBe(2)
-    expect(second.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('3,4')
+    let first = howSum(7, [2, 3])
+    firstTest(first)
 
-    const third = howSum(8, [2, 5, 7])
-    expect(third.length).toBe(4)
-    expect(third.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('2,2,2,2')
+    first = howSumByBottomUp(7, [2, 3])
+    firstTest(first)
+
+
+    const secondTest = (result) => {
+      expect(result.length).toBe(2)
+      expect(result.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('3,4')
+    }
+
+    let second = howSum(7, [5, 3, 4, 8])
+    secondTest(second)
+
+    second = howSumByBottomUp(7, [5, 3, 4, 8])
+    secondTest(second)
+
+
+    const thirdTest = (result) => {
+      expect(third.length).toBe(4)
+      expect(third.sort((a, b) => a >= b ? 1 : -1).join(',')).toBe('2,2,2,2')
+    }
+
+    let third = howSum(8, [2, 5, 7])
+    thirdTest(third)
+
+    third = howSumByBottomUp(8, [2, 5, 7])
+    thirdTest(third)
 
     let traversed = 0
     const onCalled = jest.fn(() => traversed++)
@@ -233,5 +269,8 @@ describe('Test howSum()', () => {
 
     howSum(randomize(size), massiveNums, onCalled)
     expect(traversed).toBeLessThan(Math.pow(massiveNums.length, randomTarget))
+
+    traversed = 0
+    howSumByBottomUp(randomize(size), massiveNums, onCalled)
   })
 })
