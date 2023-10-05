@@ -8,6 +8,7 @@ import {
   houseRobberII,
   howSum,
   howSumByBottomUp,
+  knapsack,
   stairCase
 } from './dynamic-programming.practice'
 
@@ -256,6 +257,49 @@ describe('Test bestSum()', () => {
     traversed = 0
     bestSumByBottomUp(randomTarget, massiveNums, onCalled)
     expect(traversed).toBeLessThan(Math.pow(massiveNums.length, randomTarget))
+  })
+})
+
+describe('Test knapsack()', () => {
+
+  it('Should_ReturnListOfObject_WhenGivenInvalidInput', () => {
+    const first = knapsack(
+        8,
+        [
+          { name: 'B', weight: 3, profit: 2 }, { name: 'A', weight: 2, profit: 1 },
+          { name: 'D', weight: 5, profit: 6 }, { name: 'C', weight: 4, profit: 5 }
+        ]
+    )
+    expect(first.max).toBe(8)
+    expect(first.objects.join(',')).toBe('B,D')
+
+    const second = knapsack(
+        8,
+        [
+          { name: 'A', weight: 3, profit: 2 }, { name: 'B', weight: 4, profit: 3 },
+          { name: 'C', weight: 6, profit: 1 }, { name: 'D', weight: 5, profit: 4 }
+        ]
+    )
+
+    expect(second.max).toBe(6)
+    expect(second.objects.join(',')).toBe('A,D')
+
+    let traversed = 0
+    const onCalled = jest.fn(() => traversed++)
+
+    const massiveObjects = []
+    const size = 1000
+    const randomWeight = randomize(size)
+    for (let i = 0; i < size; i++) {
+      massiveObjects.push({
+        name: (i + 1).toString(),
+        weight: randomize(size),
+        profit: randomize(size)
+      })
+    }
+
+    knapsack(randomWeight, massiveObjects, onCalled)
+    expect(traversed).toBeLessThan(Math.pow(2, size))
   })
 })
 

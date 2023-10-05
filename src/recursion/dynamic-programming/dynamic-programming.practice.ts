@@ -201,6 +201,52 @@ export const bestSumByBottomUp = (target: number, nums: number[], onCalled?: () 
   return table[target] || []
 }
 
+export const knapsack = (weight: number, objects: Array<{ name: string, weight: number, profit: number }>, onCalled?: () => any): { objects: string[], max: number } => {
+  objects.unshift({ name: '0s', weight: 0, profit: 0 })
+
+  const matrix: number[][] = []
+  for (let i = 0; i < objects.length; i++) {
+    if (!matrix[i]) {
+      matrix[i] = []
+    }
+
+    let object = objects[i]
+    for (let j = 0; j <= weight; j++) {
+      onCalled?.()
+      if (i === 0 || j === 0) {
+        matrix[i][j] = 0
+        continue
+      }
+
+      const profitExcludeCurrent = matrix[i - 1][j]
+      if (object.weight > j) {
+        matrix[i][j] = profitExcludeCurrent
+        continue
+      }
+
+      const profitIncludeCurrent = object.profit
+      const profitOfRemainingAfterExcludeCurrentWeight = matrix[i - 1][j - object.weight]
+      matrix[i][j] = Math.max(profitExcludeCurrent, profitIncludeCurrent + profitOfRemainingAfterExcludeCurrentWeight)
+    }
+  }
+
+  const result = []
+  let i = objects.length - 1
+  let j = weight
+  while (i > 0) {
+    const profit = matrix[i][j]
+
+    if (profit !== matrix[i - 1][j]) {
+      result.unshift(objects[i].name)
+      j = j - objects[i].weight
+    }
+
+    i--
+  }
+
+  return { objects: result, max: matrix[objects.length - 1][weight] }
+}
+
 /**
  * https://leetcode.com/problems/climbing-stairs/
  */
