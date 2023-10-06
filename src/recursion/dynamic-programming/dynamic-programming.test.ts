@@ -409,7 +409,10 @@ describe('Test houseRobber()', () => {
 
 describe('Test coinChange()', () => {
 
-  const runTests = (func: (target: number, coins: number[], onCalled?: () => any) => number[]) => {
+  const runTests = (
+      func: (target: number, coins: number[], onCalled?: () => any) => number[],
+      testSize: number = 1000,
+  ) => {
     const first = func(0, [1])
     expect(first.join(',')).toBe('0')
 
@@ -426,7 +429,7 @@ describe('Test coinChange()', () => {
     let traversed = 0
     const onCalled = jest.fn(() => traversed++)
     const massiveNums = []
-    const size = 20
+    const size = testSize
     const randomTarget = randomize(size)
     for (let i = 0; i < size; i++) {
       massiveNums.push(randomize(size))
@@ -437,7 +440,7 @@ describe('Test coinChange()', () => {
   }
 
   it('Should_ReturnListOfFewestCoin_WhenGivenListOfCoin&TargetAmount', () => {
-    runTests(coinChange)
+    runTests(coinChange, 100)
     runTests(coinChangeByBottomUp)
   })
 

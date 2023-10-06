@@ -378,7 +378,7 @@ export const coinChange = (target: number, coins: number[], onCalled?: () => any
 
   const memo = {}
   const recur = (coin: number, sum: number, acc: number[]) => {
-    if (memo[coin] && memo[coin].length < acc.length) {
+    if (memo[sum] && memo[sum].length < acc.length) {
       return memo[coin]
     }
 
