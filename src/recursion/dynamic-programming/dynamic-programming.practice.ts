@@ -363,3 +363,47 @@ export const houseRobberII = (nums: number[], onCalled?: () => any): number => {
 
   return Math.max(robbedFirst, robbedSecond)
 }
+
+/**
+ * https://leetcode.com/problems/coin-change/
+ */
+export const coinChange = (target: number, coins: number[], onCalled?: () => any): number[] => {
+  return []
+}
+
+/**
+ * https://leetcode.com/problems/coin-change/
+ */
+export const coinChangeByBottomUp = (target: number, coins: number[], onCalled?: () => any): number[] => {
+  if (target === 0) {
+    return [0]
+  }
+
+  if (coins.length <= 0) {
+    return
+  }
+
+  const table = [[]]
+  for (let amount = 0; amount <= target; amount++) {
+    const components = table[amount]
+    if (!components) {
+      continue
+    }
+
+    for (let coin of coins) {
+      const nextSum = amount + coin
+      const nextComponents = components.concat(coin)
+
+      onCalled?.()
+      if (!table[nextSum]) {
+        table[nextSum] = nextComponents
+      }
+
+      if (table[nextSum].length > nextComponents.length) {
+        table[nextSum] = nextComponents
+      }
+    }
+  }
+
+  return table[target] || []
+}

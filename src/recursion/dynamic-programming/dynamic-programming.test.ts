@@ -1,6 +1,7 @@
 import {
   bestSum,
   bestSumByBottomUp,
+  coinChangeByBottomUp,
   fibonacciAtByBottomUp,
   fibonacciAtByMemo,
   gridTraveler,
@@ -401,6 +402,42 @@ describe('Test houseRobber()', () => {
 
     houseRobberII(massiveNums, onCalled)
     expect(traversed).toBeLessThan(Math.pow(massiveNums.length, massiveNums.length))
+  })
+
+})
+
+describe('Test coinChange()', () => {
+
+  const runTests = (caller: (target: number, coins: number[], onCalled?: () => any) => number[]) => {
+    const first = caller(0, [1])
+    expect(first.join(',')).toBe('0')
+
+    const second = caller(3, [])
+    expect(second).toBeFalsy()
+
+    const third = caller(11, [1, 2, 5])
+    expect(third.length).toBe(3)
+    expect(third.sort((a, b) => a > b ? 1 : -1).join(',')).toBe('1,5,5')
+
+    const fourth = caller(20, [3, 21, 22])
+    expect(fourth.length).toBe(0)
+
+    let traversed = 0
+    const onCalled = jest.fn(() => traversed++)
+    const massiveNums = []
+    const size = 1000
+    const randomTarget = randomize(size)
+    for (let i = 0; i < size; i++) {
+      massiveNums.push(randomize(size))
+    }
+
+    caller(randomTarget, massiveNums, onCalled)
+    expect(traversed).toBeLessThan(Math.pow(massiveNums.length, randomTarget))
+  }
+
+  it('Should_ReturnListOfFewestCoin_WhenGivenListOfCoin&TargetAmount', () => {
+    // runTests(coinChange)
+    runTests(coinChangeByBottomUp)
   })
 
 })
