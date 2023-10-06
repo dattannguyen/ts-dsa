@@ -368,7 +368,41 @@ export const houseRobberII = (nums: number[], onCalled?: () => any): number => {
  * https://leetcode.com/problems/coin-change/
  */
 export const coinChange = (target: number, coins: number[], onCalled?: () => any): number[] => {
-  return []
+  if (target === 0) {
+    return [0]
+  }
+
+  if (coins.length <= 0) {
+    return
+  }
+
+  const memo = {}
+  const recur = (coin: number, sum: number, acc: number[]) => {
+    if (memo[coin] && memo[coin].length < acc.length) {
+      return memo[coin]
+    }
+
+    onCalled?.()
+    if (sum >= target) {
+      if (sum === target) {
+        memo[sum] = acc
+      }
+
+      return
+    }
+
+    memo[sum] = acc
+    for (let nextCoin of coins) {
+      recur(nextCoin, sum + nextCoin, acc.concat(nextCoin))
+    }
+
+  }
+
+  for (let coin of coins) {
+    recur(coin, coin, [coin])
+  }
+
+  return memo[target] || []
 }
 
 /**
