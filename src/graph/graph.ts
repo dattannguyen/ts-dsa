@@ -27,25 +27,32 @@ export class Graph<T = any> {
     return this._vertices.get(key)
   }
 
+  randomize(): GraphVertex<T> {
+    const keys = Array.from(this.vertices.keys())
+    const randomIndex = Math.floor(Math.random() * (keys.length - 1) + 1)
+
+    return this.vertices.get(keys[randomIndex] || keys[0])
+  }
+
   dfs(onVisited?: (vertex: GraphVertex<T>) => any, expectedValue?: T): GraphVertex<T> | undefined {
     const firstVertex = this._vertices.get(Array.from(this._vertices.keys())[0])
     return dfs(
-      firstVertex,
-      onVisited,
-      expectedValue ? (vx: GraphVertex) => vx.value === expectedValue : undefined
+        firstVertex,
+        onVisited,
+        expectedValue ? (vx: GraphVertex) => vx.value === expectedValue : undefined
     )
   }
 
   bfs(onVisited?: (vertex: GraphVertex<T>) => any, expectedValue?: T): GraphVertex<T> | undefined {
     const firstVertex = this._vertices.get(Array.from(this._vertices.keys())[0])
     return bfs(
-      firstVertex,
-      onVisited,
-      expectedValue ? (vx: GraphVertex) => vx.value === expectedValue : undefined
+        firstVertex,
+        onVisited,
+        expectedValue ? (vx: GraphVertex) => vx.value === expectedValue : undefined
     )
   }
 
-  connect(src: T, des: T, weight: number = 0) {
+  connect(src: T, des: T, weight: number = 0): Graph<T> {
     const srcVx = this.upsertVx(src)
     const desVx = this.upsertVx(des)
 
@@ -56,6 +63,8 @@ export class Graph<T = any> {
       const desEdge = desVx.getEdge(srcVx)
       this._edges.set(desEdge.key, desEdge)
     }
+
+    return this
   }
 
   private upsertVx(value: T): GraphVertex<T> {

@@ -1,5 +1,6 @@
 import { Graph } from '../graph'
 import { GraphVertex } from '../graph-vertex'
+import { dfsByStack } from './dfs'
 
 describe('Test dfs()', () => {
 
@@ -63,4 +64,38 @@ describe('Test dfs()', () => {
     expect(nonExistedVx).toBeFalsy()
   })
 
+})
+
+describe('Test dfsByStack()', () => {
+  it('Should_VisitedAllVertexOnce_WhenGivenUndirectedGraph', () => {
+    const undirected = new Graph()
+        .connect('a', 'b')
+        .connect('b', 'c')
+        .connect('c', 'd')
+        .connect('d', 'e')
+        .connect('e', 'a')
+
+    const vertices = []
+    const onVisited = jest.fn(vx => vertices.push(vx))
+    dfsByStack(undirected, onVisited)
+
+    expect(onVisited).toHaveBeenCalledTimes(vertices.length)
+    expect(vertices.length).toBe(undirected.vertices.size)
+  })
+
+  it('Should_VisitedVertexOnce_WhenGivenDirectedAndAcyclicGraph', () => {
+    const directedGraph = new Graph(true)
+        .connect('a', 'b')
+        .connect('b', 'c')
+        .connect('c', 'd')
+        .connect('d', 'e')
+        .connect('e', 'f')
+
+    const vertices = []
+    const onVisited = jest.fn(vx => vertices.push(vx))
+    dfsByStack(directedGraph, onVisited)
+
+    expect(onVisited).toHaveBeenCalledTimes(vertices.length)
+    expect(vertices.length).not.toBe(directedGraph.vertices.size)
+  })
 })
