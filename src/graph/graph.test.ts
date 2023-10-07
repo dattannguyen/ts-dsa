@@ -1,5 +1,5 @@
 import { Graph } from './graph'
-import { hasPath } from './graph.practice'
+import { hasPath, longestPath } from './graph.practice'
 
 describe('Test connect()', () => {
 
@@ -146,6 +146,55 @@ describe('Test hasPath', () => {
         'i', 'h'
     )
     expect(second.join('-')).toBe('i-g-h')
+  })
+
+})
+
+describe('Test longestPath', () => {
+
+  it('Should_ReturnLongestPath_WhenGivenUndirectedGraph', () => {
+    const first = longestPath({})
+    expect(first.length).toBe(0)
+
+    const second = longestPath({
+      0: [{ name: '8' }, { name: '1' }, { name: '5' }],
+      1: [{ name: '0' }],
+      5: [{ name: '0' }, { name: '8' }],
+      8: [{ name: '0' }, { name: '5' }],
+      2: [{ name: '3' }, { name: '4' }],
+      3: [{ name: '2' }, { name: '4' }],
+      4: [{ name: '3' }, { name: '2' }],
+    })
+
+    expect(second.length).toBe(4)
+    expect(second.sort((a, b) => Number(a) > Number(b) ? 1 : -1).join('-')).toBe('0-1-5-8')
+
+    const third = longestPath({
+      1: [{ name: '2' }],
+      2: [{ name: '1' }, { name: '8' }],
+      6: [{ name: '7' }],
+      9: [{ name: '8' }],
+      7: [{ name: '6' }, { name: '8' }],
+      8: [{ name: '9' }, { name: '7' }, { name: '2' }]
+    })
+
+    expect(third.length).toBe(6)
+    expect(third.sort((a, b) => Number(a) > Number(b) ? 1 : -1).join('-')).toBe('1-2-6-7-8-9')
+
+    const fourth = longestPath({
+      0: [{ name: '4' }, { name: '7' }],
+      1: [],
+      2: [],
+      3: [{ name: '6' }],
+      4: [{ name: '0' }],
+      6: [{ name: '3' }],
+      7: [{ name: '0' }],
+      8: []
+    })
+
+    expect(fourth.length).toBe(3)
+    expect(fourth.sort((a, b) => Number(a) > Number(b) ? 1 : -1).join('-')).toBe('0-4-7')
+
   })
 
 })

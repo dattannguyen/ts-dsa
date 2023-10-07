@@ -26,3 +26,32 @@ export const hasPath = (graph: GraphAsHash, src: string, des: string): string[] 
 
   return dfs(src, [src])
 }
+
+export const longestPath = (graph: GraphAsHash): string[] => {
+  let longestPath = []
+  if (Object.keys(graph).length === 0) {
+    return longestPath
+  }
+
+  const trace = {}
+  const dfs = (vx: string, path: string[]): string[] => {
+    trace[vx] = 1
+
+    for (let adjVx of graph[vx]) {
+      if (!trace[adjVx.name]) {
+        path.push(...dfs(adjVx.name, [adjVx.name]))
+      }
+    }
+
+    return path
+  }
+
+  for (let vx of Object.keys(graph)) {
+    if (!trace[vx]) {
+      const path = dfs(vx, [vx])
+      longestPath = path.length >= longestPath.length ? path : longestPath
+    }
+  }
+
+  return longestPath
+}
