@@ -1,5 +1,4 @@
 import { GraphVertex } from '../graph-vertex'
-import { Queue } from '../../queue/queue'
 
 export const bfs = (
   vertex: GraphVertex,
@@ -7,11 +6,10 @@ export const bfs = (
   onStop?: (vx: GraphVertex) => boolean
 ): GraphVertex | undefined => {
   const traceMap = new Map<string, number>([[vertex.key, 1]])
-  const queue = new Queue<GraphVertex>()
-  queue.enqueue(vertex)
+  const queue = [vertex]
 
-  while (queue.first()) {
-    const vx = queue.dequeue()
+  while (queue.length > 0) {
+    const vx = queue.pop()
     onVisited?.(vx)
 
     if (onStop?.(vx)) {
@@ -20,7 +18,7 @@ export const bfs = (
 
     vx.forEachAdjVertex(adjVx => {
       if (!traceMap.has(adjVx.key)) {
-        queue.enqueue(adjVx)
+        queue.unshift(adjVx)
         traceMap.set(adjVx.key, 1)
       }
     })
