@@ -1,4 +1,5 @@
 import { Graph } from './graph'
+import { hasPath } from './graph.practice'
 
 describe('Test connect()', () => {
 
@@ -98,6 +99,53 @@ describe('Test connect()', () => {
 
     expect(helenVx.getEdge(aliceVx)).toBeFalsy()
     expect(aliceVx.getEdge(fredVx)).toBeFalsy()
+  })
+
+})
+
+describe('Test hasPath', () => {
+
+  it('Should_ReturnEmpty_WhenGivenNoPathBetweenVertices', () => {
+    const first = hasPath({}, 'a', 'b')
+    expect(first.length).toBe(0)
+
+    const second = hasPath({ v: [{ name: 'x' }, { name: 'w' }], y: [{ name: 'z' }], w: [], z: [] }, 'v', 'z')
+    expect(second.length).toBe(0)
+
+    const third = hasPath(
+        {
+          f: [{ name: 'g' }, { name: 'i' }],
+          g: [{ name: 'h' }],
+          i: [{ name: 'g' }, { name: 'k' }],
+          j: [{ name: 'i' }],
+          h: [],
+          k: []
+        },
+        'f', 'j'
+    )
+    expect(third.length).toBe(0)
+  })
+
+  it('Should_ReturnPath_WhenGivenValidVertices', () => {
+    const first = hasPath(
+        {
+          f: [{ name: 'g' }, { name: 'i' }], g: [{ name: 'h' }],
+          i: [{ name: 'h' }, { name: 'k' }], j: [{ name: 'i' }],
+          h: [], k: []
+        },
+        'f', 'k'
+    )
+    expect(first.join('-')).toBe('f-i-k')
+
+    const second = hasPath(
+        {
+          f: [{ name: 'g' }, { name: 'i' }], g: [{ name: 'h' }],
+          i: [{ name: 'g' }, { name: 'k' }], j: [{ name: 'i' }],
+          h: [], k: []
+        },
+        'i', 'h'
+    )
+    expect(second.join('-')).toBe('i-g-h')
   })
 
 })
