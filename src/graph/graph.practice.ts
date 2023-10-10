@@ -98,3 +98,51 @@ export const countIsland = (matrix: string[][], onCalled?: () => any): number =>
 
   return count
 }
+
+export const minIsland = (matrix: string[][], onCalled?: () => any): string[] => {
+  if (matrix.length === 0) {
+    return []
+  }
+
+  const trace = {}
+  const dfs = (row: number, col: number, island: string[]): string[] | undefined => {
+    if (trace[`${row}_${col}`] || !matrix[row]?.[col]) {
+      return
+    }
+
+    onCalled?.()
+    if (matrix[row][col] === 'W') {
+      trace[`${row}_${col}`] = 1
+      return
+    }
+
+    island.push(`${row}_${col}`)
+    trace[`${row}_${col}`] = 1
+    const adjVx = [
+      [row + 1, col],
+      [row, col + 1],
+      [row - 1, col],
+      [row, col - 1]
+    ]
+
+    for (let [adjRow, adjCol] of adjVx) {
+      island.push(...(dfs(adjRow, adjCol, []) || []))
+    }
+
+    return island
+  }
+
+  let minIsland
+  for (let row = 0; row < matrix.length; row++) {
+    for (let col = 0; col < matrix.length; col++) {
+      const island = dfs(row, col, [])
+      if (island) {
+        minIsland = !minIsland
+            ? island
+            : minIsland.length < island.length ? minIsland : island
+      }
+    }
+  }
+
+  return minIsland
+}

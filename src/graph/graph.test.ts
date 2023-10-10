@@ -1,5 +1,5 @@
 import { Graph } from './graph'
-import { countIsland, hasPath, longestPath } from './graph.practice'
+import { countIsland, hasPath, longestPath, minIsland } from './graph.practice'
 
 describe('Test connect()', () => {
 
@@ -243,5 +243,60 @@ describe('Test countIsland', () => {
 
     const fifth = countIsland([['W', 'W'], ['W', 'W'], ['W', 'W'],])
     expect(fifth).toBe(0)
+  })
+})
+
+describe('Test minIsland', () => {
+  it('Should_ReturnMinIsland_WhenGivenUndirectedGraphAsMatrix', () => {
+    const onCalled = jest.fn()
+
+    const first = minIsland([], onCalled)
+    expect(first.length).toBe(0)
+    expect(onCalled).toHaveBeenCalledTimes(0)
+
+    onCalled.mockClear()
+    const secondMatrix = [
+      ['W', 'L', 'W', 'W', 'W'],
+      ['W', 'L', 'W', 'W', 'W'],
+      ['W', 'W', 'W', 'L', 'W'],
+      ['W', 'W', 'W', 'L', 'W'],
+      ['W', 'W', 'W', 'L', 'L'],
+      ['W', 'L', 'W', 'W', 'W'],
+    ]
+
+    const second = minIsland(secondMatrix, onCalled)
+    expect(second.join(',')).toBe('5_1')
+    expect(onCalled).toHaveBeenCalledTimes(secondMatrix.length * secondMatrix[0].length)
+
+    onCalled.mockClear()
+    const thirdMatrix = [
+      ['L', 'W', 'W', 'L', 'W'],
+      ['L', 'W', 'W', 'L', 'L'],
+      ['W', 'L', 'W', 'L', 'W'],
+      ['W', 'L', 'L', 'W', 'W'],
+      ['W', 'W', 'L', 'L', 'L'],
+    ]
+
+    const third = minIsland(thirdMatrix, onCalled)
+    expect(third.join(',')).toBe('0_0,1_0')
+    expect(onCalled).toHaveBeenCalledTimes(thirdMatrix.length * thirdMatrix[0].length)
+
+    onCalled.mockClear()
+    const fourthMatrix = [['L', 'L', 'L'], ['L', 'L', 'L'], ['L', 'L', 'L']]
+
+    const fourth = minIsland(fourthMatrix, onCalled)
+    expect(fourth.length).toBe(9)
+    expect(onCalled).toHaveBeenCalledTimes(fourthMatrix.length * fourthMatrix[0].length)
+
+    onCalled.mockClear()
+    const fifthMatrix = [
+      ['W', 'W'],
+      ['L', 'L'],
+      ['W', 'W'],
+      ['W', 'L']
+    ]
+
+    const fifth = minIsland(fifthMatrix)
+    expect(fifth.join(',')).toBe('3_1')
   })
 })
