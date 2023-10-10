@@ -55,3 +55,46 @@ export const longestPath = (graph: GraphAsHash): string[] => {
 
   return longestPath
 }
+
+export const countIsland = (matrix: string[][], onCalled?: () => any): number => {
+  if (matrix.length === 0) {
+    return 0
+  }
+
+  const trace = {}
+  const dfs = (row: number, col: number) => {
+    if (trace[`${row}_${col}`] || matrix[row]?.[col] === undefined) {
+      return 0
+    }
+
+    onCalled?.()
+    if (matrix[row][col] === 'W') {
+      trace[`${row}_${col}`] = 1
+      return 0
+    }
+
+    trace[`${row}_${col}`] = 1
+    const adjVx = [
+      [row + 1, col],
+      [row, col + 1],
+      [row - 1, col],
+      [row, col - 1]
+    ]
+
+    for (let [adjRow, adjCol] of adjVx) {
+      dfs(adjRow, adjCol)
+    }
+
+    return 1
+  }
+
+  let count = 0
+  for (let row = 0; row < matrix.length; row++) {
+    for (let col = 0; col < matrix.length; col++) {
+      const islandCount = dfs(row, col)
+      count += islandCount
+    }
+  }
+
+  return count
+}

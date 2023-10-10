@@ -1,5 +1,5 @@
 import { Graph } from './graph'
-import { hasPath, longestPath } from './graph.practice'
+import { countIsland, hasPath, longestPath } from './graph.practice'
 
 describe('Test connect()', () => {
 
@@ -197,4 +197,51 @@ describe('Test longestPath', () => {
 
   })
 
+})
+
+describe('Test countIsland', () => {
+  it('Should_ReturnNumberOfIsland_WhenGivenUndirectedGraphAsMatrix', () => {
+    const onCalled = jest.fn()
+
+    const first = countIsland([], onCalled)
+    expect(first).toBe(0)
+    expect(onCalled).toHaveBeenCalledTimes(0)
+
+    onCalled.mockClear()
+    const secondMatrix = [
+      ['W', 'L', 'W', 'W', 'W'],
+      ['W', 'L', 'W', 'W', 'W'],
+      ['W', 'W', 'W', 'L', 'W'],
+      ['W', 'W', 'L', 'L', 'W'],
+      ['L', 'W', 'W', 'L', 'L'],
+      ['L', 'L', 'W', 'W', 'W'],
+    ]
+
+    const second = countIsland(secondMatrix, onCalled)
+    expect(second).toBe(3)
+    expect(onCalled).toHaveBeenCalledTimes(secondMatrix.length * secondMatrix[0].length)
+
+    onCalled.mockClear()
+    const thirdMatrix = [
+      ['L', 'W', 'W', 'L', 'W'],
+      ['L', 'W', 'W', 'L', 'L'],
+      ['W', 'L', 'W', 'L', 'W'],
+      ['W', 'W', 'W', 'W', 'W'],
+      ['W', 'W', 'L', 'L', 'L'],
+    ]
+
+    const third = countIsland(thirdMatrix, onCalled)
+    expect(third).toBe(4)
+    expect(onCalled).toHaveBeenCalledTimes(thirdMatrix.length * thirdMatrix[0].length)
+
+    onCalled.mockClear()
+    const fourthMatrix = [['L', 'L', 'L'], ['L', 'L', 'L'], ['L', 'L', 'L']]
+
+    const fourth = countIsland(fourthMatrix, onCalled)
+    expect(fourth).toBe(1)
+    expect(onCalled).toHaveBeenCalledTimes(fourthMatrix.length * fourthMatrix[0].length)
+
+    const fifth = countIsland([['W', 'W'], ['W', 'W'], ['W', 'W'],])
+    expect(fifth).toBe(0)
+  })
 })
