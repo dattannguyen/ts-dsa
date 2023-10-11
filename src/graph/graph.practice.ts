@@ -56,7 +56,10 @@ export const longestPath = (graph: GraphAsHash): string[] => {
   return longestPath
 }
 
-export const countIsland = (matrix: string[][], onCalled?: () => any): number => {
+/**
+ * https://leetcode.com/problems/number-of-islands/
+ */
+export const countIsland = (matrix: string[][], onCalled?: () => any, depthFirstSearch: boolean = true): number => {
   if (matrix.length === 0) {
     return 0
   }
@@ -88,10 +91,51 @@ export const countIsland = (matrix: string[][], onCalled?: () => any): number =>
     return 1
   }
 
+  const bfs = (row: number, col: number) => {
+    if (trace[`${row}_${col}`] || !matrix[row]?.[col]) {
+      return 0
+    }
+
+    onCalled?.()
+    if (matrix[row][col] === 'W') {
+      trace[`${row}_${col}`] = 1
+      return 0
+    }
+
+    const queue = [[row, col]]
+    while (queue.length > 0) {
+      const [x, y] = queue.pop()
+      if (trace[`${x}_${y}`]) {
+        continue
+      }
+
+      onCalled?.()
+      trace[`${x}_${y}`] = 1
+      if (matrix[x][y] === 'W') {
+        continue
+      }
+
+      const adjVx = [
+        [x + 1, y],
+        [x, y + 1],
+        [x - 1, y],
+        [x, y - 1]
+      ]
+
+      for (let [adjRow, adjCol] of adjVx) {
+        if (matrix[adjRow]?.[adjCol]) {
+          queue.unshift([adjRow, adjCol])
+        }
+      }
+    }
+
+    return 1
+  }
+
   let count = 0
   for (let row = 0; row < matrix.length; row++) {
-    for (let col = 0; col < matrix.length; col++) {
-      const islandCount = dfs(row, col)
+    for (let col = 0; col < matrix[row].length; col++) {
+      const islandCount = depthFirstSearch ? dfs(row, col) : bfs(row, col)
       count += islandCount
     }
   }
