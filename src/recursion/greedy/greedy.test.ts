@@ -42,6 +42,12 @@ describe('Test fractionalKnapsack()', () => {
     let traversed = 0
     const onCalled = jest.fn(() => traversed++)
 
+    const third = fractionalKnapsack(0, [], onCalled)
+    expect(third.objects.length).toBe(0)
+    expect(third.max).toBe(0)
+    expect(onCalled).toHaveBeenCalledTimes(0)
+
+    traversed = 0
     const massiveObjects = []
     const size = 10000
     const randomWeight = randomize(size)
