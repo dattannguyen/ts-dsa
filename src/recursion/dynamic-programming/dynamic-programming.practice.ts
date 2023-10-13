@@ -201,7 +201,7 @@ export const bestSumByBottomUp = (target: number, nums: number[], onCalled?: () 
   return table[target] || []
 }
 
-export const knapsack = (weight: number, objects: Array<{ name: string, weight: number, profit: number }>, onCalled?: () => any): { objects: string[], max: number } => {
+export const zeroOneKnapsack = (weight: number, objects: Array<{ name: string, weight: number, profit: number }>, onCalled?: () => any): { objects: string[], max: number } => {
   objects.unshift({ name: '0s', weight: 0, profit: 0 })
 
   const matrix: number[][] = []

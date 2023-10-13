@@ -10,11 +10,11 @@ import {
   houseRobberII,
   howSum,
   howSumByBottomUp,
-  knapsack,
-  stairCase
+  stairCase,
+  zeroOneKnapsack
 } from './dynamic-programming.practice'
 
-const randomize = (size: number = 100) => Math.floor(Math.random() * (size - 1) + 1)
+export const randomize = (size: number = 100) => Math.floor(Math.random() * (size - 1) + 1)
 
 describe('Test fibonacci()', () => {
 
@@ -262,10 +262,10 @@ describe('Test bestSum()', () => {
   })
 })
 
-describe('Test knapsack()', () => {
+describe('Test zeroOneKnapsack()', () => {
 
   it('Should_ReturnListOfObject_WhenGivenInvalidInput', () => {
-    const first = knapsack(
+    const first = zeroOneKnapsack(
         8,
         [
           { name: 'B', weight: 3, profit: 2 }, { name: 'A', weight: 2, profit: 1 },
@@ -275,7 +275,7 @@ describe('Test knapsack()', () => {
     expect(first.max).toBe(8)
     expect(first.objects.join(',')).toBe('B,D')
 
-    const second = knapsack(
+    const second = zeroOneKnapsack(
         8,
         [
           { name: 'A', weight: 3, profit: 2 }, { name: 'B', weight: 4, profit: 3 },
@@ -300,7 +300,7 @@ describe('Test knapsack()', () => {
       })
     }
 
-    knapsack(randomWeight, massiveObjects, onCalled)
+    zeroOneKnapsack(randomWeight, massiveObjects, onCalled)
     expect(traversed).toBeLessThan(Math.pow(2, size))
   })
 })
