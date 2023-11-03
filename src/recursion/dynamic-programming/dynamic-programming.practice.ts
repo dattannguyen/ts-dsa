@@ -201,6 +201,42 @@ export const bestSumByBottomUp = (target: number, nums: number[], onCalled?: () 
   return table[target] || []
 }
 
+export const allConstruct = (target: string, words: string[], onCalled?: () => any): string[] => {
+  if (target.length === 0 || words.length === 0) {
+    return []
+  }
+
+  const memo = {}
+  const recur = (nextTarget: string): string[] => {
+    if (memo[nextTarget]) {
+      return memo[nextTarget]
+    }
+
+    return loop(nextTarget)
+  }
+
+  const loop = (nextTarget: string): string[] => {
+    const ways = []
+    for (let word of words) {
+      onCalled?.()
+      if (nextTarget.startsWith(word)) {
+        const subTarget = nextTarget.substring(word.length)
+        if (subTarget.length === 0) {
+          ways.push([word])
+        } else {
+          const recursiveResults = recur(subTarget)
+          ways.push(...recursiveResults.map(result => word.concat('-', result)))
+        }
+      }
+    }
+
+    memo[nextTarget] = [...(memo[nextTarget] || []), ...ways]
+    return ways
+  }
+
+  return loop(target)
+}
+
 export const zeroOneKnapsack = (weight: number, objects: Array<{ name: string, weight: number, profit: number }>, onCalled?: () => any): { objects: string[], max: number } => {
   objects.unshift({ name: '0s', weight: 0, profit: 0 })
 

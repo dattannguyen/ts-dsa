@@ -1,4 +1,5 @@
 import {
+  allConstruct,
   bestSum,
   bestSumByBottomUp,
   coinChange,
@@ -260,6 +261,46 @@ describe('Test bestSum()', () => {
     bestSumByBottomUp(randomTarget, massiveNums, onCalled)
     expect(traversed).toBeLessThan(Math.pow(massiveNums.length, randomTarget))
   })
+})
+
+describe('Test allConstruct()', () => {
+
+  it('Should_ReturnAllWord_WhenGivenInvalidInput', () => {
+    const first = allConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd', 'ef', 'c'])
+    expect(first.length).toBe(4)
+    expect(first.includes('ab-cd-ef')).toBeTruthy()
+    expect(first.includes('abcd-ef')).toBeTruthy()
+
+    let traversed = 0
+    const onCalled = jest.fn(() => traversed++)
+
+    const second = allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl', 'e'], onCalled)
+    expect(second.length).toBe(3)
+    expect(second.includes('purp-le')).toBeTruthy()
+    expect(second.includes('p-ur-p-le')).toBeTruthy()
+    expect(second.includes('purpl-e')).toBeTruthy()
+
+    expect(traversed).toBeLessThan(Math.pow(6, 6))
+  })
+
+  it('Should_ReturnEmpty_WhenGivenInvalidInput', () => {
+    const first = allConstruct('', [])
+    expect(first.length).toBe(0)
+
+    const second = allConstruct('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar'])
+    expect(second.length).toBe(0)
+
+
+    let traversed = 0
+    const onCalled = jest.fn(() => traversed++)
+    const target = 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef'
+    const words = ['e', 'ee', 'eee', 'eeee', 'eeeee', 'eeeeee']
+
+    const third = allConstruct(target, words, onCalled)
+    expect(third.length).toBe(0)
+    expect(traversed).toBeLessThan(Math.pow(words.length, target.length))
+  })
+
 })
 
 describe('Test zeroOneKnapsack()', () => {
