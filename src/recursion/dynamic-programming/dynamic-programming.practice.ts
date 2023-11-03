@@ -237,6 +237,41 @@ export const allConstruct = (target: string, words: string[], onCalled?: () => a
   return loop(target)
 }
 
+export const allConstructByBottomUp = (target: string, words: string[], onCalled?: () => any): string[] => {
+  if (target.length === 0 || words.length === 0) {
+    return []
+  }
+
+  target = ` ${target.trim()}`
+  const table: string[][] = [[]]
+  for (let i = 0; i < target.length; i++) {
+    onCalled?.()
+    const components = table[i]
+    if (!components) {
+      continue
+    }
+
+    for (let word of words) {
+      onCalled?.()
+
+      const letterIndex = i + 1
+      if (target.startsWith(word, letterIndex)) {
+        const nextComponents = components.length === 0
+            ? [word]
+            : components.map(component => component.concat('-', word))
+
+        if (!table[word.length - 1 + letterIndex]) {
+          table[word.length - 1 + letterIndex] = nextComponents
+        } else {
+          table[word.length - 1 + letterIndex].push(...nextComponents)
+        }
+      }
+    }
+  }
+
+  return table[target.length - 1] || []
+}
+
 export const zeroOneKnapsack = (weight: number, objects: Array<{ name: string, weight: number, profit: number }>, onCalled?: () => any): { objects: string[], max: number } => {
   objects.unshift({ name: '0s', weight: 0, profit: 0 })
 

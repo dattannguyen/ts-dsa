@@ -1,5 +1,6 @@
 import {
   allConstruct,
+  allConstructByBottomUp,
   bestSum,
   bestSumByBottomUp,
   coinChange,
@@ -266,39 +267,48 @@ describe('Test bestSum()', () => {
 describe('Test allConstruct()', () => {
 
   it('Should_ReturnAllWord_WhenGivenInvalidInput', () => {
-    const first = allConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd', 'ef', 'c'])
-    expect(first.length).toBe(4)
-    expect(first.includes('ab-cd-ef')).toBeTruthy()
-    expect(first.includes('abcd-ef')).toBeTruthy()
+    const runTest = (func: (target: string, words: string[], onCalled?: () => any) => string[]) => {
+      const first = func('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd', 'ef', 'c'])
+      expect(first.length).toBe(4)
+      expect(first.includes('ab-cd-ef')).toBeTruthy()
+      expect(first.includes('abcd-ef')).toBeTruthy()
 
-    let traversed = 0
-    const onCalled = jest.fn(() => traversed++)
+      let traversed = 0
+      const onCalled = jest.fn(() => traversed++)
 
-    const second = allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl', 'e'], onCalled)
-    expect(second.length).toBe(3)
-    expect(second.includes('purp-le')).toBeTruthy()
-    expect(second.includes('p-ur-p-le')).toBeTruthy()
-    expect(second.includes('purpl-e')).toBeTruthy()
+      const second = func('purple', ['purp', 'p', 'ur', 'le', 'purpl', 'e'], onCalled)
+      expect(second.length).toBe(3)
+      expect(second.includes('purp-le')).toBeTruthy()
+      expect(second.includes('p-ur-p-le')).toBeTruthy()
+      expect(second.includes('purpl-e')).toBeTruthy()
 
-    expect(traversed).toBeLessThan(Math.pow(6, 6))
+      expect(traversed).toBeLessThan(Math.pow(6, 6))
+    }
+
+    runTest(allConstruct)
+    runTest(allConstructByBottomUp)
   })
 
   it('Should_ReturnEmpty_WhenGivenInvalidInput', () => {
-    const first = allConstruct('', [])
-    expect(first.length).toBe(0)
+    const runTest = (func: (target: string, words: string[], onCalled?: () => any) => string[]) => {
+      const first = func('', [])
+      expect(first.length).toBe(0)
 
-    const second = allConstruct('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar'])
-    expect(second.length).toBe(0)
+      const second = func('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar'])
+      expect(second.length).toBe(0)
 
+      let traversed = 0
+      const onCalled = jest.fn(() => traversed++)
+      const target = 'eeeeeeeeeeeeeeeef'
+      const words = ['e', 'ee', 'eee', 'eeee', 'eeeee', 'eeeeee']
 
-    let traversed = 0
-    const onCalled = jest.fn(() => traversed++)
-    const target = 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef'
-    const words = ['e', 'ee', 'eee', 'eeee', 'eeeee', 'eeeeee']
+      const third = func(target, words, onCalled)
+      expect(third.length).toBe(0)
+      expect(traversed).toBeLessThan(Math.pow(words.length, target.length))
+    }
 
-    const third = allConstruct(target, words, onCalled)
-    expect(third.length).toBe(0)
-    expect(traversed).toBeLessThan(Math.pow(words.length, target.length))
+    runTest(allConstruct)
+    runTest(allConstructByBottomUp)
   })
 
 })
